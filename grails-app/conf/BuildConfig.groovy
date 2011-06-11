@@ -12,7 +12,6 @@ grails.project.dependency.resolution = {
     repositories {
         grailsPlugins()
         grailsHome()
-		mavenRepo "http://localhost:8081/artifactory/remote-repos"
 		mavenRepo "http://localhost:8081/artifactory/libs-release"
 		mavenRepo "http://localhost:8081/artifactory/libs-snapshot"
 		mavenRepo "http://localhost:8081/artifactory/plugins-release"
