@@ -1,0 +1,128 @@
+
+<%@ page import="com.teravin.catalogue.ProductDetail" %>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="layout" content="main" />
+        <g:set var="entityName" value="${message(code: 'productDetail.label', default: 'ProductDetail')}" />
+        <title><g:message code="default.show.label" args="[entityName]" /></title>
+    </head>
+    <body>
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+        </div>
+        <div class="body">
+            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
+            <g:if test="${flash.message}">
+            <div class="message">${flash.message}</div>
+            </g:if>
+            <div class="dialog">
+                <table>
+                    <tbody>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.id.label" default="Id" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "id")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.product.label" default="Product" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="product" action="show" id="${productDetailInstance?.product?.id}">${productDetailInstance?.product?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.material.label" default="Material" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="material" action="show" id="${productDetailInstance?.material?.id}">${productDetailInstance?.material?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.unitType.label" default="Unit Type" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="unitType" action="show" id="${productDetailInstance?.unitType?.id}">${productDetailInstance?.unitType?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.price.label" default="Price" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "price")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.idxx.label" default="Idxx" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "idxx")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.isPriceOverwrite.label" default="Is Price Overwrite" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "isPriceOverwrite")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.idx.label" default="Idx" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "idx")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.createdBy.label" default="Created By" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "createdBy")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.dateCreated.label" default="Date Created" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${productDetailInstance?.dateCreated}" /></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.updatedBy.label" default="Updated By" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "updatedBy")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.lastUpdated.label" default="Last Updated" /></td>
+                            
+                            <td valign="top" class="value"><g:formatDate date="${productDetailInstance?.lastUpdated}" /></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productDetail.deleteFlag.label" default="Delete Flag" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productDetailInstance, field: "deleteFlag")}</td>
+                            
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="buttons">
+                <g:form>
+                    <g:hiddenField name="id" value="${productDetailInstance?.id}" />
+                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
+                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                </g:form>
+            </div>
+        </div>
+    </body>
+</html>
