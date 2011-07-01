@@ -1,7 +1,7 @@
 package com.teravin.catalogue
 
-import grails.converters.XML
 import grails.converters.JSON
+import grails.converters.XML
 
 class MaterialController {
 
@@ -47,7 +47,7 @@ class MaterialController {
         materialInstance.createdBy = springSecurityService.principal.username
         withFormat {
 			html {
-                if (materialInstance.save(flush: true)) {
+                if (materialInstance.save(flush: true,failOnError:true)) {
                     flash.message = "${message(code: 'default.created.message', args: [message(code: 'material.label', default: 'Material'), materialInstance.id])}"
                     redirect(action: "show", id: materialInstance.id)
                 }
@@ -56,7 +56,7 @@ class MaterialController {
                 }
 			}
 			xml {
-				if(materialInstance.save(flush: true)) {
+				if(materialInstance.save(flush: true,failOnError:true)) {
 					materialInstance as XML
 				}
 				else {
@@ -64,7 +64,7 @@ class MaterialController {
 				}
 			}
 			json {
-				if(materialInstance.save(flush: true)) {
+				if(materialInstance.save(flush: true,failOnError:true)) {
 					response.status = 201
 					if(params.callback) {
 						render "${params.callback}(${materialInstance as JSON})"

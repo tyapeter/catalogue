@@ -22,9 +22,9 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
                       css: 'text/css',
                       csv: 'text/csv',
                       all: '*/*',
-                      json: ['application/json','text/json'],
-                      form: 'application/x-www-form-urlencoded',
-                      multipartForm: 'multipart/form-data'
+                      json: ['application/json','text/json']
+//                      form: 'application/x-www-form-urlencoded',
+//                      multipartForm: 'multipart/form-data'
                     ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -84,4 +84,13 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+	
+	debug  'org.teravin'
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.teravin.catalogue.security.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'com.teravin.catalogue.security.UserRole'
+grails.plugins.springsecurity.authority.className = 'com.teravin.catalogue.security.Role'
+grails.plugins.springsecurity.requestMap.className = 'com.teravin.catalogue.security.RequestMap'
+grails.plugins.springsecurity.securityConfigType = grails.plugins.springsecurity.SecurityConfigType.Requestmap
