@@ -30,9 +30,11 @@
                         
                             <g:sortableColumn property="description" title="${message(code: 'model.description.label', default: 'Description')}" />
                         
-                            <g:sortableColumn property="idx" title="${message(code: 'model.idx.label', default: 'Idx')}" />
+                            <g:sortableColumn property="width" title="${message(code: 'model.width.label', default: 'Width')}" />
                         
-                            <g:sortableColumn property="createdBy" title="${message(code: 'model.createdBy.label', default: 'Created By')}" />
+                            <g:sortableColumn property="heigth" title="${message(code: 'model.heigth.label', default: 'Heigth')}" />
+                            
+                             <g:sortableColumn property="imageFile" title="${message(code: 'model.imageFile.label', default: 'Image File')}" />
                         
                         </tr>
                     </thead>
@@ -48,9 +50,11 @@
                         
                             <td>${fieldValue(bean: modelInstance, field: "description")}</td>
                         
-                            <td>${fieldValue(bean: modelInstance, field: "idx")}</td>
+                            <td>${fieldValue(bean: modelInstance, field: "width")}</td>
                         
-                            <td>${fieldValue(bean: modelInstance, field: "createdBy")}</td>
+                            <td>${fieldValue(bean: modelInstance, field: "heigth")}</td>
+                            
+                            <td><img src="${createLinkTo(dir:'images', file: modelInstance.id+'.jpg' )}" /> </td>
                         
                         </tr>
                     </g:each>

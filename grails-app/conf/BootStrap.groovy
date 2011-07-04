@@ -57,6 +57,14 @@ class BootStrap {
         }
       }
     }
-    def destroy = {
+	def getFile(String fileName) {
+		def filePath = "resources/${fileName}.png"
+		println "Importing ${filePath}"
+		InputStream is = this.getClass().getResourceAsStream(filePath)
+		byte[] image = IOUtils.toByteArray(is)
+		println "File size ${image.size()}"
+		  return image
+	}
+	def destroy = {
     }
 }

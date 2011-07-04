@@ -51,6 +51,48 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.width.label" default="Width" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "width")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.heigth.label" default="Heigth" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "heigth")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.length.label" default="Length" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "length")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.seatHeight.label" default="Seat Height" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "seatHeight")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.estLoad.label" default="Est Load" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "estLoad")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.cbm.label" default="Cbm" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "cbm")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="model.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "idx")}</td>
@@ -89,6 +131,18 @@
                             <td valign="top" class="name"><g:message code="model.deleteFlag.label" default="Delete Flag" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "deleteFlag")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.imageFile.label" default="Image File" /></td>
+                            <td><img src="${createLinkTo(dir:'images', file: modelInstance.id+'.jpg' )}" /> </td>
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.modelCategory.label" default="Model Category" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="modelCategory" action="show" id="${modelInstance?.modelCategory?.id}">${modelInstance?.modelCategory?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

@@ -23,7 +23,7 @@
                 <g:renderErrors bean="${modelInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="save"  enctype="multipart/form-data">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -52,6 +52,60 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'description', 'errors')}">
                                     <g:textArea name="description" cols="40" rows="5" value="${modelInstance?.description}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="width"><g:message code="model.width.label" default="Width" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'width', 'errors')}">
+                                    <g:textField name="width" value="${fieldValue(bean: modelInstance, field: 'width')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="heigth"><g:message code="model.heigth.label" default="Heigth" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'heigth', 'errors')}">
+                                    <g:textField name="heigth" value="${fieldValue(bean: modelInstance, field: 'heigth')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="length"><g:message code="model.length.label" default="Length" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'length', 'errors')}">
+                                    <g:textField name="length" value="${fieldValue(bean: modelInstance, field: 'length')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="seatHeight"><g:message code="model.seatHeight.label" default="Seat Height" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatHeight', 'errors')}">
+                                    <g:textField name="seatHeight" value="${fieldValue(bean: modelInstance, field: 'seatHeight')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="estLoad"><g:message code="model.estLoad.label" default="Est Load" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'estLoad', 'errors')}">
+                                    <g:textField name="estLoad" value="${fieldValue(bean: modelInstance, field: 'estLoad')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="cbm"><g:message code="model.cbm.label" default="Cbm" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'cbm', 'errors')}">
+                                    <g:textField name="cbm" value="${fieldValue(bean: modelInstance, field: 'cbm')}" />
                                 </td>
                             </tr>
                         
@@ -88,6 +142,24 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'deleteFlag', 'errors')}">
                                     <g:textField name="deleteFlag" value="${modelInstance?.deleteFlag}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="imageFile"><g:message code="model.imageFile.label" default="Image File" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'imageFile', 'errors')}">
+                                    <input type="file" id="imageFile" name="imageFile" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="modelCategory"><g:message code="model.modelCategory.label" default="Model Category" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'modelCategory', 'errors')}">
+                                    <g:select name="modelCategory.id" from="${com.teravin.catalogue.ModelCategory.list()}" optionKey="id" value="${modelInstance?.modelCategory?.id}"  />
                                 </td>
                             </tr>
                         

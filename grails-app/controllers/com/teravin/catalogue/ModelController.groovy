@@ -2,6 +2,7 @@ package com.teravin.catalogue
 
 import grails.converters.XML
 import grails.converters.JSON
+import org.grails.plugins.imagetools.*
 
 class ModelController {
 
@@ -45,9 +46,20 @@ class ModelController {
     def save = {
         def modelInstance = new Model(params)
         modelInstance.createdBy = springSecurityService.principal.username
+		def downloadedfile = request.getFile('imageFile')
+		def imageTool = new ImageTool()
+		
         withFormat {
 			html {
-                if (modelInstance.save(flush: true)) {
+                if (modelInstance.save(flush: true && downloadedfile)) {
+					String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${modelInstance.id}.jpg"
+					downloadedfile.transferTo(new File(imagepath))
+					println ""+imagepath
+					imageTool.load(imagepath)
+					imageTool.thumbnail(360)
+					
+					imageTool.writeResult(imagepath, "JPEG")
+					imageTool.square()
                     flash.message = "${message(code: 'default.created.message', args: [message(code: 'model.label', default: 'Model'), modelInstance.id])}"
                     redirect(action: "show", id: modelInstance.id)
                 }
@@ -355,7 +367,7 @@ class ModelController {
 		def totalRecord=Model.count()
 
 		
-		listData.each{list <<[it.id,it.code,it.name,it.createdBy,it.dateCreated,it.deleteFlag]}
+		listData.each{list <<[it.id,it.code,it.name,it.width,it.heigth,it.length]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -366,9 +378,9 @@ class ModelController {
 		if ( index == '0' ) return "id";
 					else if ( index == '1' ) return "code";
 					else if ( index == '2' ) return "name";
-					else if ( index == '3' ) return "createdBy";
-					else if ( index == '4' ) return "dateCreated";
-					else if ( index == '5' ) return "deleteFlag";
+					else if ( index == '3' ) return "width";
+					else if ( index == '4' ) return "heigth";
+					else if ( index == '5' ) return "length";
 					
 	}
 	

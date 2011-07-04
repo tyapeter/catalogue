@@ -1,22 +1,11 @@
 package com.teravin.catalogue
 
-import com.teravin.catalogue.ModelCategory
-
-class Model {
+class ModelCategory {
 
     static auditable = true
-	
-	String code
+
     String name
-	ModelCategory modelCategory
-	byte[] imageFile
     String description = ""
-	Double width
-	Double heigth
-	Double length
-	Double seatHeight
-	Double estLoad
-	Double cbm
 	String deleteFlag = "N"
     int idx = 99
     String createdBy
@@ -25,15 +14,8 @@ class Model {
     Date lastUpdated
 
     static constraints = {
-        code(blank:false,maxSize:100)
         name(blank:false,maxSize:100)
         description(maxSize:500)
-		width()
-		heigth()
-		length()
-		seatHeight()
-		estLoad()
-		cbm()
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)
@@ -62,15 +44,15 @@ class Model {
      * Audit Logging
      */
     def onSave = {
-		println "new Model inserted"
+		println "new ModelCategory inserted"
 		// may optionally refer to newState map
 	}
 	def onDelete = {
-		println "Model was deleted"
+		println "ModelCategory was deleted"
                 // may optionally refer to oldState map
 	}
 	def onChange = { oldMap,newMap ->
-		println "Model was changed ..."
+		println "ModelCategory was changed ..."
 		oldMap.each({ key, oldVal ->
 			if(oldVal != newMap[key]) {
 				println " * $key changed from $oldVal to " + newMap[key]
