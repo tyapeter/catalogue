@@ -1,6 +1,7 @@
 package com.teravin.catalogue
 
-import com.teravin.catalogue.maintenance.UnitType
+import com.teravin.catalogue.Product
+import com.teravin.catalogue.Material
 
 class ProductDetail {
 

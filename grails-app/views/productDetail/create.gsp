@@ -23,6 +23,7 @@
                 <g:renderErrors bean="${productDetailInstance}" as="list" />
             </div>
             </g:hasErrors>
+            <g:javascript library="jquery" plugin="jquery"/>
             <g:form action="save" >
                 <div class="dialog">
                     <table>
@@ -33,10 +34,116 @@
                                     <label for="product"><g:message code="productDetail.product.label" default="Product" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'product', 'errors')}">
-                                    <g:select name="product.id" from="${com.teravin.catalogue.Product.list()}" optionKey="id" value="${productDetailInstance?.product?.id}"  />
+                                    <g:select name="product.id" from="${com.teravin.catalogue.Model.list()}" optionKey="id" value="${productDetailInstance?.product?.model?.id}"  />
                                 </td>
                             </tr>
-                        
+                        	<!-- Material -->
+                        	<tr class="prop">
+                                <td valign="top" class="name" colspan=2>
+                                    <label for="product"><g:message code="productDetail.material.label" default="Materials" /></label>
+                                </td>
+                               
+                            </tr>
+                        	<tr class="prop">
+                                <td valign="top" class="name" colspan="2">
+                                    <table id="materialTbl">
+                                    	<g:each in="${materialList}" status="i" var="materials">
+                                    	<tbody id="material${i}">
+		                    				<tr>
+		                    					<td width="90%">
+		                                    		<g:textField class="materialName" name="materialName" id="materialName${i}" value="${material}" size="30"/>
+		                                		</td>
+		                                		<td width="10%">
+		                                		<g:if test="${i == 0}">		                                		
+			                                    		&nbsp;		                                    	
+		                                    	</g:if>
+		                                    	<g:else>
+		                                    		<input type="button" class="ui-icon ui-icon-trash" value="Remove" onclick="removeMaterial(${i })"/>
+		                                    	</g:else>
+		                                    	</td>
+		                    				</tr>
+										</tbody>
+		                    			</g:each>
+                                    </table>
+                                </td>
+                            </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name" colspan="2">
+                                    <input type="button" value="${message(code: 'default.button.add.label')}" default="Add Material" onclick="addMaterial()"/>
+                                </td>
+                            </tr>
+                        	 <script type="text/javascript">
+										var materialCount = ${materialList?.size()} + 0;
+										$(document).ready(function(){
+											$('.materialName').live('keyup.autocomplete', function(){
+												$(this).autocomplete({
+													source: function( request, response ) {
+														var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeName'])}";
+														$.ajax({
+															url: url,
+															dataType: "jsonp",
+															data: { name: request.term },
+															success: function( data ) {
+																response( $.map( data, function( item ) {
+																	return {
+																		label: item.name,
+																		value: item.name,
+																		aa: item.id
+																	}
+																}));
+															}
+														});
+													},
+													minLength: 2,
+													delay: 2000
+												});
+											});
+										
+											$('.materialName').live("blur", function(){
+												var id = ($(this).attr('id'));
+												id = id.replace("materialName","");
+												var duplicate = false;
+												var oval
+												for(var i = 0; i<materialCount;i++){
+													if(i != id){
+														oval = $("#materialName" + i).val();
+														if((oval != null) && (oval == $(this).val())){
+															duplicate = true;
+															break;
+														}
+													}
+												}
+												if(duplicate == true){
+													alert("material exist");
+													$(this).val("");
+												}
+										  	});
+										  
+										});
+							
+										
+							
+										function addMaterial() {
+											var htmlId = "material" + materialCount;
+											var templateHtml = "<tbody id='" + htmlId + "'>\n";
+											templateHtml += "<tr>";
+											templateHtml += "<td width='90%'><input type='text' class='materialName' name='materialName' size='30' value='' id='roleName" + materialCount + "'/></td>\n";
+											//templateHtml += "<input type='hidden' name='roleID' value='' id='roleID" + roleCount + "'/></td>\n";
+											templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeMaterial("+materialCount+")'/></td>\n";
+											templateHtml += "</tr>\n";
+											templateHtml += "</tbody>\n";
+											$("#materialTbl").append(templateHtml);
+											materialCount++;
+										}
+							
+										function removeMaterial(idx) {
+											$("#material"+idx+"").remove()
+										}
+						
+							</script>
+                        	
+                        	<!-- 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="material"><g:message code="productDetail.material.label" default="Material" /></label>
@@ -45,13 +152,13 @@
                                     <g:select name="material.id" from="${com.teravin.catalogue.Material.list()}" optionKey="id" value="${productDetailInstance?.material?.id}"  />
                                 </td>
                             </tr>
-                        
+                         -->
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="unitType"><g:message code="productDetail.unitType.label" default="Unit Type" /></label>
+                                    <label for="unit"><g:message code="productDetail.unit.label" default="Unit" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'unitType', 'errors')}">
-                                    <g:select name="unitType.id" from="${com.teravin.catalogue.maintenance.UnitType.list()}" optionKey="id" value="${productDetailInstance?.unitType?.id}"  />
+                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'unit', 'errors')}">
+                                    <g:textField name="unit" value="${fieldValue(bean: productDetailInstance, field: 'unit')}" />
                                 </td>
                             </tr>
                         

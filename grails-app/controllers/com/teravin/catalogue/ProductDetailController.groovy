@@ -39,11 +39,13 @@ class ProductDetailController {
     def create = {
         def productDetailInstance = new ProductDetail()
         productDetailInstance.properties = params
-        return [productDetailInstance: productDetailInstance]
+		def materialList = new ArrayList()
+        return [productDetailInstance: productDetailInstance, materialList:materialList]
     }
 
     def save = {
         def productDetailInstance = new ProductDetail(params)
+		 
         productDetailInstance.createdBy = springSecurityService.principal.username
         withFormat {
 			html {
@@ -355,7 +357,7 @@ class ProductDetailController {
 		def totalRecord=ProductDetail.count()
 
 		
-		listData.each{list <<[it.id,it.product,it.material,it.unitType,it.price,it.idxx]}
+		listData.each{list <<[it.id,it.product,it.material,it.unit,it.price,it.idxx]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -366,7 +368,7 @@ class ProductDetailController {
 		if ( index == '0' ) return "id";
 					else if ( index == '1' ) return "product";
 					else if ( index == '2' ) return "material";
-					else if ( index == '3' ) return "unitType";
+					else if ( index == '3' ) return "unit";
 					else if ( index == '4' ) return "price";
 					else if ( index == '5' ) return "idxx";
 					

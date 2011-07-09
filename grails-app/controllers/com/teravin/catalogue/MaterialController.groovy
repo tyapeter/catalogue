@@ -12,7 +12,15 @@ class MaterialController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	def getMaterialLikeName = {
+		if( params.name ) {
+			def m = Material.createCriteria()
+			
+			def materials = like('name',params.name+'%')
+	 
+			render materials as JSON
+		}
+	}
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
