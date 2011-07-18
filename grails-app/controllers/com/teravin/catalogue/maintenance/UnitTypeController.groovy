@@ -12,7 +12,15 @@ class UnitTypeController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	def getUnitTypeById = {
+		if( params.id ) {
+			
+			
+			def unitType = UnitType.get( params.id )
+				 
+			render unitType as JSON
+		}
+	}
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"

@@ -2,6 +2,10 @@ package com.teravin.catalogue
 
 import com.teravin.catalogue.Product
 import com.teravin.catalogue.Material
+import com.teravin.catalogue.Accesories
+import com.teravin.catalogue.Miscellaneous
+import org.apache.commons.collections.list.LazyList;
+import org.apache.commons.collections.FactoryUtils;
 
 class ProductDetail {
 
@@ -9,6 +13,8 @@ class ProductDetail {
 
     Product product
 	Material material
+	Accesories accesories
+	Miscellaneous miscellaneous
 	Double unit
 	Double price
 	Double idxx
@@ -22,9 +28,8 @@ class ProductDetail {
 
     static constraints = {
 		product()
-		material()
-		unit()
-		price()
+		unit(nullable:true)
+		price(nullable:true)
 		idxx()
 		isPriceOverwrite()
         idx(maxSize:3)

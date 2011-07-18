@@ -1,6 +1,7 @@
 package com.teravin.catalogue
 
 import com.teravin.catalogue.ModelCategory
+import com.teravin.catalogue.Product
 
 class Model {
 
@@ -9,10 +10,11 @@ class Model {
 	String code
     String name
 	ModelCategory modelCategory
-	byte[] imageFile
+//	byte[] imageFile
+	String imagePath
     String description = ""
 	Double width
-	Double heigth
+	Double height
 	Double length
 	Double seatHeight
 	Double estLoad
@@ -29,7 +31,7 @@ class Model {
         name(blank:false,maxSize:100)
         description(maxSize:500)
 		width()
-		heigth()
+		height()
 		length()
 		seatHeight()
 		estLoad()
@@ -39,13 +41,17 @@ class Model {
         dateCreated(blank:false)
         updatedBy(maxSize:50)
         lastUpdated()
+		imagePath(nullable:true)
     }
 
     String toString() {
       "$name"
     }
 
-
+	static hasMany = [products:Product]
+	static mapping = {
+		products cascade:"all-delete-orphan"
+	}
   /**
     *
     */

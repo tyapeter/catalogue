@@ -32,7 +32,7 @@
                         
                             <g:sortableColumn property="width" title="${message(code: 'model.width.label', default: 'Width')}" />
                         
-                            <g:sortableColumn property="heigth" title="${message(code: 'model.heigth.label', default: 'Heigth')}" />
+                            <g:sortableColumn property="height" title="${message(code: 'model.height.label', default: 'height')}" />
                             
                              <g:sortableColumn property="imageFile" title="${message(code: 'model.imageFile.label', default: 'Image File')}" />
                         
@@ -52,7 +52,7 @@
                         
                             <td>${fieldValue(bean: modelInstance, field: "width")}</td>
                         
-                            <td>${fieldValue(bean: modelInstance, field: "heigth")}</td>
+                            <td>${fieldValue(bean: modelInstance, field: "height")}</td>
                             
                             <td><img src="${createLinkTo(dir:'images', file: modelInstance.id+'.jpg' )}" /> </td>
                         

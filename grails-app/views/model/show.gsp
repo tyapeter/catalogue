@@ -58,9 +58,9 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="model.heigth.label" default="Heigth" /></td>
+                            <td valign="top" class="name"><g:message code="model.height.label" default="height" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "heigth")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "height")}</td>
                             
                         </tr>
                     

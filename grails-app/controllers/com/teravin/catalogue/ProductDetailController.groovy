@@ -2,6 +2,11 @@ package com.teravin.catalogue
 
 import grails.converters.XML
 import grails.converters.JSON
+import com.teravin.catalogue.Product
+import com.teravin.catalogue.Model
+import com.teravin.catalogue.Material
+import com.teravin.catalogue.Accesories
+import com.teravin.catalogue.Miscellaneous
 
 class ProductDetailController {
 
@@ -44,8 +49,34 @@ class ProductDetailController {
     }
 
     def save = {
+		println(params)
         def productDetailInstance = new ProductDetail(params)
-		 
+		
+		def product = new Product()
+		product.width=Double.parseDouble(params.modelWidth)
+		product.length=Double.parseDouble(params.modelLength)
+		product.height=Double.parseDouble(params.modelHeight)
+		product.estLoad=Double.parseDouble(params.modelEstLoad)
+		product.seatHeight=Double.parseDouble(params.modelSeatHeight)
+		product.cbm=Double.parseDouble(params.modelCbm)
+		product.createdBy= springSecurityService.principal.username
+		product.idx=99
+		
+		product.model	 = Model.get(params.modelID)
+		
+		product.save(flush: true)
+		
+		productDetailInstance.product = product
+		
+		def materialList = new ArrayList()
+		if(params.materialID.class == String){
+			materialList.add(params.materialID)
+		}
+		else{
+			for(def i = 0; i<params.materialName.size(); i++){
+				meterialList.add(params.materialID[i])
+			}
+		}
         productDetailInstance.createdBy = springSecurityService.principal.username
         withFormat {
 			html {
@@ -54,7 +85,7 @@ class ProductDetailController {
                     redirect(action: "show", id: productDetailInstance.id)
                 }
                 else {
-                    render(view: "create", model: [productDetailInstance: productDetailInstance])
+                    render(view: "create", model: [productDetailInstance: productDetailInstance,materialList:materialList])
                 }
 			}
 			xml {

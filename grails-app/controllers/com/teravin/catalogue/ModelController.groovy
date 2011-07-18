@@ -13,7 +13,28 @@ class ModelController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	def getModelLikeName = {
+		params.max = Math.min(params.max ? params.int('max') : 5, 100)
+		
+		if( params.name ) {
+			def model = Model.createCriteria()
+			def results = []
+			
+			def models = model.list(params){ like('name','%'+params.name+'%')}
+			
+			def counts = Model.createCriteria().count { like('name','%'+params.name+'%') }
+			
+			
+			
+			results.add(models)
+			results.add(counts)
+			
+			render results as JSON
+			
+		}
+	}
+	
+	
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
@@ -60,6 +81,7 @@ class ModelController {
 					
 					imageTool.writeResult(imagepath, "JPEG")
 					imageTool.square()
+					modelInstance.imagePath=imagepath
                     flash.message = "${message(code: 'default.created.message', args: [message(code: 'model.label', default: 'Model'), modelInstance.id])}"
                     redirect(action: "show", id: modelInstance.id)
                 }

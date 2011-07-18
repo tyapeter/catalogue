@@ -13,7 +13,7 @@ class Product {
 	ProductType productType
 	Color color
     Double width
-	Double heigth
+	Double height
 	Double length
 	Double seatHeight
 	Double estLoad
@@ -26,11 +26,12 @@ class Product {
     Date lastUpdated
 
     static constraints = {
+		code(nullable:true)
         model()
-        productType()
-		color()
+        productType(nullable:true)
+		color(nullable:true)
 		width()
-		heigth()
+		height()
 		length()
 		seatHeight()
 		estLoad()
@@ -47,6 +48,8 @@ class Product {
     }
 	
 	static hasMany = [productdetails:ProductDetail]
+	
+	static belongsTo =[model:Model]
 	
 	Set<ProductDetail> getProductDetail() {
 		ProductDetail.findByProduct(this).collect { it.productdetail } as Set

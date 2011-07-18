@@ -66,10 +66,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="heigth"><g:message code="model.heigth.label" default="Heigth" /></label>
+                                    <label for="height"><g:message code="model.height.label" default="height" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'heigth', 'errors')}">
-                                    <g:textField name="heigth" value="${fieldValue(bean: modelInstance, field: 'heigth')}" />
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'height', 'errors')}">
+                                    <g:textField name="height" value="${fieldValue(bean: modelInstance, field: 'height')}" />
                                 </td>
                             </tr>
                         

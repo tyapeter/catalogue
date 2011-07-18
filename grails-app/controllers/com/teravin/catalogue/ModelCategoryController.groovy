@@ -13,6 +13,13 @@ class ModelCategoryController {
         redirect(action: "list", params: params)
     }
 
+	def getModelCategory = {
+		
+		def modelCategoryInstance = ModelCategory.get( params.id )
+			
+		render modelCategoryInstance as JSON
+	}
+	
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"

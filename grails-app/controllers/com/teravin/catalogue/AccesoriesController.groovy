@@ -12,7 +12,15 @@ class AccesoriesController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	def getAccesoriesLikeName = {
+		if( params.name ) {
+			def acc = Accesories.createCriteria()
+			
+			def Accesoriess = acc.list{ like('name','%'+params.name+'%')}
+				 
+			render Accesoriess as JSON
+		}
+	}
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"

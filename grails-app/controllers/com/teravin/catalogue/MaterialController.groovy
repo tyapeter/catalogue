@@ -16,9 +16,18 @@ class MaterialController {
 		if( params.name ) {
 			def m = Material.createCriteria()
 			
-			def materials = like('name',params.name+'%')
-	 
+			def materials = m.list{ like('name','%'+params.name+'%')}
+				 
 			render materials as JSON
+		}
+	}
+	def getMaterialById = {
+		if( params.id ) {
+			
+			
+			def material = Material.get( params.id )
+				 
+			render material as JSON
 		}
 	}
     def list = {
