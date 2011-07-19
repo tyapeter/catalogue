@@ -20,108 +20,231 @@ class ProductDetailController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		params.sort = "idx"
+		params.sort = "id"
 		params.order = "asc"
+		
         withFormat {
 			html {
-				[productDetailInstanceList: ProductDetail.list(params), productDetailInstanceTotal: ProductDetail.count()]
+				[productInstanceList: Product.list(params), productInstanceTotal: Product.count()]
 			}
 			xml {
-				render ProductDetail.list( params ) as XML
+				render Product.list( params ) as XML
 			}
 			json {
 				response.status = 200
 				if(params.callback) {
-					render "${params.callback}(${ProductDetail.list( params ) as JSON})"
+					render "${params.callback}(${Product.list( params ) as JSON})"
 				}
 				else {
-					render "${ProductDetail.list( params ) as JSON}"
+					render "${Product.list( params ) as JSON}"
 				}
 			}
 		}
+		
     }
 
     def create = {
         def productDetailInstance = new ProductDetail()
         productDetailInstance.properties = params
-		def materialList = new ArrayList()
-        return [productDetailInstance: productDetailInstance, materialList:materialList]
+		
+        return [productDetailInstance: productDetailInstance]
     }
 
     def save = {
 		println(params)
-        def productDetailInstance = new ProductDetail(params)
-		
+		def index=0
+        def productDetailInstances = new ArrayList()
+		def productDetailInstance
 		def product = new Product()
-		product.width=Double.parseDouble(params.modelWidth)
-		product.length=Double.parseDouble(params.modelLength)
-		product.height=Double.parseDouble(params.modelHeight)
-		product.estLoad=Double.parseDouble(params.modelEstLoad)
-		product.seatHeight=Double.parseDouble(params.modelSeatHeight)
-		product.cbm=Double.parseDouble(params.modelCbm)
-		product.createdBy= springSecurityService.principal.username
-		product.idx=99
-		
-		product.model	 = Model.get(params.modelID)
-		
-		product.save(flush: true)
-		
-		productDetailInstance.product = product
-		
-		def materialList = new ArrayList()
-		if(params.materialID.class == String){
-			materialList.add(params.materialID)
-		}
-		else{
-			for(def i = 0; i<params.materialName.size(); i++){
-				meterialList.add(params.materialID[i])
+		def error = false
+		try{
+				product.width=Double.parseDouble(params.modelWidth)
+				product.length=Double.parseDouble(params.modelLength)
+				product.height=Double.parseDouble(params.modelHeight)
+				product.estLoad=Double.parseDouble(params.modelEstLoad)
+				product.seatHeight=Double.parseDouble(params.modelSeatHeight)
+				product.cbm=Double.parseDouble(params.modelCbm)
+				product.createdBy= springSecurityService.principal.username
+				product.idx=Double.parseDouble(params.idx);
+				
+				product.model	 = Model.get(params.modelID)
+				
+				product.save(flush: true)
+				
+				
+				def sizes
+				if(params.materialName!=null)
+				{
+					
+					if(params.materialName.class == String)
+						sizes=1
+					else
+						sizes = params.materialName.size()
+						
+					for(def i = 0; i<sizes; i++){
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.materialID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.materialPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+						}
+						
+							
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = product
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+				if(params.accesoriesName!=null)
+				{
+					if(params.accesoriesName.class == String)
+						sizes=1
+					else
+						sizes = params.accesoriesName.size()
+					for(def i = 0; i<sizes; i++){
+						
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.accesoriesID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+						}
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = product
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+				if(params.miscellaneousName !=null)
+				{
+					if(params.miscellaneousName.class == String)
+						sizes=1
+					else
+						sizes = params.miscellaneousName.size()
+					
+					for(def i = 0; i< sizes; i++){
+						
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.miscellaneousID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+						}
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = product
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+				for(def i=0; i < index;i++ ){
+					productDetailInstance = productDetailInstances[i]
+					productDetailInstances[i].save(flush: true) 
+					
+				}
+		}catch(RuntimeException e){			
+			println e
+			error = true
+			if (e instanceof MissingResourceException) {
+				println "aa"+e.getMessage()
+				flash.message = e.getMessage()
 			}
+			
 		}
-        productDetailInstance.createdBy = springSecurityService.principal.username
         withFormat {
 			html {
-                if (productDetailInstance.save(flush: true)) {
-                    flash.message = "${message(code: 'default.created.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), productDetailInstance.id])}"
-                    redirect(action: "show", id: productDetailInstance.id)
-                }
-                else {
-                    render(view: "create", model: [productDetailInstance: productDetailInstance,materialList:materialList])
-                }
-			}
-			xml {
-				if(productDetailInstance.save(flush: true)) {
-					productDetailInstance as XML
+				if (!error) {
+					flash.message = "${message(code: 'default.created.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), product.id])}"
+					redirect(action: "show", id: product.id)
 				}
 				else {
-					render "ProductDetail not valid" as XML
+					render(view: "create", model: [productDetailInstance: productDetailInstance])
+				}
+			}
+			xml {
+				if (!error) {
+					result as XML
+				}
+				else {
+					render "Product not valid" as XML
 				}
 			}
 			json {
-				if(productDetailInstance.save(flush: true)) {
+				if (!error) {
 					response.status = 201
 					if(params.callback) {
-						render "${params.callback}(${productDetailInstance as JSON})"
+						render "${params.callback}(${result as JSON})"
 					}
 					else {
-						render "${productDetailInstance as JSON}"
+						render "${result as JSON}"
 					}
 				}
 				else {
-					sendValidationFailedResponse(params.callback,productDetailInstance,400)
+					sendValidationFailedResponse(params.callback,productDetail,400)
 				}
 			}
 		}
     }
 
     def show = {   
+      def productInstance = Product.get(params.id)
+	  def materialList = ProductDetail.createCriteria().list{ 
+							product{
+								eq('id',productInstance.id)
+							}
+		  					material{
+								  materialCategory{
+									  materialType{
+										  eq('name','material')
+									  }
+								  }
+							  }
+					}
+	  def accesoriesList = ProductDetail.createCriteria().list{
+		  product{
+			  eq('id',productInstance.id)
+		  }
+			material{
+				materialCategory{
+					materialType{
+						eq('name','accesories')
+					}
+				}
+			}
+	  }
+	  def miscellaneousList = ProductDetail.createCriteria().list{
+		  product{
+			  eq('id',productInstance.id)
+		  }
+			material{
+				materialCategory{
+					materialType{
+						eq('name','material')
+					}
+				}
+			}
+	  }
+	 
       withFormat {
         html {
-            def productDetailInstance = ProductDetail.get( params.id )
-            if(!productDetailInstance) {
+           
+            if(!productInstance) {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
                 redirect(action: "list")
             }
-            else { return [ productDetailInstance : productDetailInstance ] }
+            else { return [ productInstance : productInstance,materialList:materialList,accesoriesList:accesoriesList,miscellaneousList:miscellaneousList ] }
           }
           xml {
               if(params.id && ProductDetail.get(params.id)) {
@@ -159,13 +282,13 @@ class ProductDetailController {
     }
 
     def edit = {
-        def productDetailInstance = ProductDetail.get(params.id)
-        if (!productDetailInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+        def productInstance = Product.get(params.id)
+        if (!productInstance) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'Product'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [productDetailInstance: productDetailInstance]
+            return [productInstance: productInstance]
         }
     }
 

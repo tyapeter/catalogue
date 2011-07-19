@@ -85,6 +85,13 @@
                             
                         </tr>
                     
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="materialCategory.materialType.label" default="Material Type" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="materialType" action="show" id="${materialCategoryInstance?.materialType?.id}">${materialCategoryInstance?.materialType?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
                     </tbody>
                 </table>
             </div>

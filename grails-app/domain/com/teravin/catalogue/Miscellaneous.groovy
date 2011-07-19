@@ -16,7 +16,8 @@ class Miscellaneous {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-
+	MaterialCategory materialCategory
+	
     static constraints = {
         name(blank:false,maxSize:100)
         description(maxSize:500)

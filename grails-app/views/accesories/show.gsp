@@ -86,6 +86,13 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="accesories.materialCategory.label" default="Material Category" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="materialCategory" action="show" id="${accesoriesInstance?.materialCategory?.id}">${accesoriesInstance?.materialCategory?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="accesories.price.label" default="Price" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: accesoriesInstance, field: "price")}</td>

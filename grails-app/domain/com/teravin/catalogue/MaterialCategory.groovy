@@ -12,7 +12,8 @@ class MaterialCategory {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-
+	MaterialType materialType
+	
     static constraints = {
         name(blank:false,maxSize:100)
         description(maxSize:500)

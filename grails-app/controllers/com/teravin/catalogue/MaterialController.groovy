@@ -12,12 +12,20 @@ class MaterialController {
     def index = {
         redirect(action: "list", params: params)
     }
-	def getMaterialLikeName = {
+	def getMaterialLikeNameAndMaterialCategoryIs = {
 		if( params.name ) {
 			def m = Material.createCriteria()
 			
-			def materials = m.list{ like('name','%'+params.name+'%')}
-				 
+			def materials = m.list{ 
+				like('name','%'+params.name+'%')
+				materialCategory{
+					materialType{
+						eq('name',params.materialTypeName)
+					}
+				}
+			}
+
+			
 			render materials as JSON
 		}
 	}

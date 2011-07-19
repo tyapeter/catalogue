@@ -84,6 +84,15 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
+                                    <label for="materialCategory"><g:message code="miscellaneous.materialCategory.label" default="Material Category" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: miscellaneousInstance, field: 'materialCategory', 'errors')}">
+                                    <g:select name="materialCategory.id" from="${com.teravin.catalogue.MaterialCategory.list()}" optionKey="id" value="${miscellaneousInstance?.materialCategory?.id}"  />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
                                     <label for="price"><g:message code="miscellaneous.price.label" default="Price" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: miscellaneousInstance, field: 'price', 'errors')}">

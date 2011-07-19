@@ -86,6 +86,13 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="miscellaneous.materialCategory.label" default="Material Category" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="materialCategory" action="show" id="${miscellaneousInstance?.materialCategory?.id}">${miscellaneousInstance?.materialCategory?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="miscellaneous.price.label" default="Price" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: miscellaneousInstance, field: "price")}</td>

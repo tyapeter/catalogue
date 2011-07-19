@@ -355,7 +355,7 @@ class ProductController {
 		def totalRecord=Product.count()
 
 		
-		listData.each{list <<[it.id,it.model,it.productType,it.color,it.width,it.heigth]}
+		listData.each{list <<[it.id,it.code,it.model,it.productType,it.color,it.width]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -364,11 +364,11 @@ class ProductController {
 	String getColumnToField (String index)
 	{
 		if ( index == '0' ) return "id";
-					else if ( index == '1' ) return "model";
-					else if ( index == '2' ) return "productType";
-					else if ( index == '3' ) return "color";
-					else if ( index == '4' ) return "width";
-					else if ( index == '5' ) return "heigth";
+					else if ( index == '1' ) return "code";
+					else if ( index == '2' ) return "model";
+					else if ( index == '3' ) return "productType";
+					else if ( index == '4' ) return "color";
+					else if ( index == '5' ) return "width";
 					
 	}
 	

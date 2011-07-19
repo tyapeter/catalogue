@@ -310,12 +310,13 @@
                                 </td>
                             </tr>
                         
+                            
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="idxx"><g:message code="productDetail.idxx.label" default="Idxx" /></label>
+                                    <label for="idx"><g:message code="productDetail.idx.label" default="Idx" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'idxx', 'errors')}">
-                                    <g:textField name="idxx" value="${fieldValue(bean: productDetailInstance, field: 'idxx')}" />
+                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'idx', 'errors')}">
+                                    <g:textField name="idx" value="${fieldValue(bean: productDetailInstance, field: 'idx')}" />
                                 </td>
                             </tr>
 							
@@ -373,11 +374,11 @@
 														$('.materialName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
 																source: function( request, response ) {
-																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeName'])}";
+																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeNameAndMaterialCategoryIs'])}";
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { name: request.term },
+																		data: { name: request.term , materialTypeName: 'material'},
 																		success: function( data ) {
 																			
 																			response( $.map( data, function( item ) {
@@ -509,22 +510,22 @@
 														$('.accesoriesName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
 																source: function( request, response ) {
-																	var url = "${createLink(url: [controller: 'accesories', action: 'getAccesoriesLikeName'])}";
+																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeNameAndMaterialCategoryIs'])}";
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { name: request.term },
+																		data: { name: request.term , materialTypeName: 'accesories'},
 																		success: function( data ) {
 																			
 																			response( $.map( data, function( item ) {
-																				accId=item.id;
+																				materialId=item.id;
 																				return {
 																					label: item.name,
 																					value: item.name,
 																					id: item.id,
-																					index:item.idx,
+																					index:item.idxx,
 																					price:item.price,
-																					unit:item.unitType.id
+																				    unit:item.unitType.id
 																				}
 																			}));
 																		}
@@ -643,22 +644,22 @@
 														$('.miscellaneousName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
 																source: function( request, response ) {
-																	var url = "${createLink(url: [controller: 'miscellaneous', action: 'getMiscellaneousLikeName'])}";
+																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeNameAndMaterialCategoryIs'])}";
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { name: request.term },
+																		data: { name: request.term , materialTypeName: 'miscellaneous'},
 																		success: function( data ) {
 																			
 																			response( $.map( data, function( item ) {
-																				accId=item.id;
+																				materialId=item.id;
 																				return {
 																					label: item.name,
 																					value: item.name,
 																					id: item.id,
-																					index:item.idx,
+																					index:item.idxx,
 																					price:item.price,
-																					unit:item.unitType.id
+																				    unit:item.unitType.id
 																				}
 																			}));
 																		}
@@ -737,14 +738,6 @@
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="idx"><g:message code="productDetail.idx.label" default="Idx" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'idx', 'errors')}">
-                                    <g:textField name="idx" value="${fieldValue(bean: productDetailInstance, field: 'idx')}" />
-                                </td>
-                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

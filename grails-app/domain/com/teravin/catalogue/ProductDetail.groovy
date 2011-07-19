@@ -13,8 +13,7 @@ class ProductDetail {
 
     Product product
 	Material material
-	Accesories accesories
-	Miscellaneous miscellaneous
+	
 	Double unit
 	Double price
 	Double idxx

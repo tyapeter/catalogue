@@ -30,6 +30,15 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
+                                    <label for="code"><g:message code="product.code.label" default="Code" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'code', 'errors')}">
+                                    <g:textField name="code" value="${productInstance?.code}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
                                     <label for="model"><g:message code="product.model.label" default="Model" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'model', 'errors')}">
@@ -42,7 +51,7 @@
                                     <label for="productType"><g:message code="product.productType.label" default="Product Type" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'productType', 'errors')}">
-                                    <g:select name="productType.id" from="${com.teravin.catalogue.ProductType.list()}" optionKey="id" value="${productInstance?.productType?.id}"  />
+                                    <g:select name="productType.id" from="${com.teravin.catalogue.ProductType.list()}" optionKey="id" value="${productInstance?.productType?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
                         
@@ -51,11 +60,10 @@
                                     <label for="color"><g:message code="product.color.label" default="Color" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'color', 'errors')}">
-                                    <g:select name="color.id" from="${com.teravin.catalogue.maintenance.Color.list()}" optionKey="id" value="${productInstance?.color?.id}"  />
+                                    <g:select name="color.id" from="${com.teravin.catalogue.maintenance.Color.list()}" optionKey="id" value="${productInstance?.color?.id}" noSelection="['null': '']" />
                                 </td>
                             </tr>
-                            <tr><td colspan=2>
-                        <table>
+                        
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="width"><g:message code="product.width.label" default="Width" /></label>
@@ -63,12 +71,36 @@
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'width', 'errors')}">
                                     <g:textField name="width" value="${fieldValue(bean: productInstance, field: 'width')}" />
                                 </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="height"><g:message code="product.height.label" default="Height" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
+                                    <g:textField name="height" value="${fieldValue(bean: productInstance, field: 'height')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="length"><g:message code="product.length.label" default="Length" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'length', 'errors')}">
                                     <g:textField name="length" value="${fieldValue(bean: productInstance, field: 'length')}" />
                                 </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="seatHeight"><g:message code="product.seatHeight.label" default="Seat Height" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'seatHeight', 'errors')}">
+                                    <g:textField name="seatHeight" value="${fieldValue(bean: productInstance, field: 'seatHeight')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="estLoad"><g:message code="product.estLoad.label" default="Est Load" /></label>
                                 </td>
@@ -79,26 +111,12 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="heigth"><g:message code="product.heigth.label" default="Heigth" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'heigth', 'errors')}">
-                                    <g:textField name="heigth" value="${fieldValue(bean: productInstance, field: 'heigth')}" />
-                                </td>
-                                <td valign="top" class="name">
-                                    <label for="seatHeight"><g:message code="product.seatHeight.label" default="Seat Height" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'seatHeight', 'errors')}">
-                                    <g:textField name="seatHeight" value="${fieldValue(bean: productInstance, field: 'seatHeight')}" />
-                                </td>
-                                <td valign="top" class="name">
                                     <label for="cbm"><g:message code="product.cbm.label" default="Cbm" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'cbm', 'errors')}">
                                     <g:textField name="cbm" value="${fieldValue(bean: productInstance, field: 'cbm')}" />
                                 </td>
                             </tr>
-                       </table> 
-                          </td></tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

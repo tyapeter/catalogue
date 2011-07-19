@@ -82,6 +82,15 @@
                                 </td>
                             </tr>
                         
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="materialType"><g:message code="materialCategory.materialType.label" default="Material Type" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialCategoryInstance, field: 'materialType', 'errors')}">
+                                    <g:select name="materialType.id" from="${com.teravin.catalogue.MaterialType.list()}" optionKey="id" value="${materialCategoryInstance?.materialType?.id}"  />
+                                </td>
+                            </tr>
+                        
                         </tbody>
                     </table>
                 </div>
