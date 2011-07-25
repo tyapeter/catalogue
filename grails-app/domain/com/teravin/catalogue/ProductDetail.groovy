@@ -11,7 +11,7 @@ class ProductDetail {
 
     static auditable = true
 
-    Product product
+//    Product product
 	Material material
 	
 	Double unit
@@ -26,7 +26,7 @@ class ProductDetail {
     Date lastUpdated
 
     static constraints = {
-		product()
+//		product()
 		unit(nullable:true)
 		price(nullable:true)
 		idxx()
@@ -39,9 +39,9 @@ class ProductDetail {
     }
 
     String toString() {
-      "$name"
+      "unit :${unit},price :${price},idxx: ${idxx},isPriceOverwrite : ${isPriceOverwrite},deleteFlag: ${deleteFlag}"
     }
-
+	static belongsTo = [product:Product]
 
   /**
     *
