@@ -25,7 +25,7 @@ class Product {
     String updatedBy = ""
     Date lastUpdated
 //	List productDetails
-	static hasMany = [ productDetails:ProductDetail ]
+	
     static constraints = {
 		code(nullable:true)
         model()
@@ -48,17 +48,15 @@ class Product {
       "code:${code},model:${model},width:${width},height:${height},length:${length},seatHeightL:${seatHeight},estLoad:${estLoad},cbm:${cbm}"
     }
 	
-<<<<<<< HEAD
+
 	static hasMany = [productDetails:ProductDetail]
 	
-=======
 	
-//	static belongsTo =ProductDetail
-	
-//	Set<ProductDetail> getProductDetails() {
-//		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
-//	}
->>>>>>> dev-0.1
+
+	Set<ProductDetail> getProductDetails() {
+		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
+	}
+
 	
 	static mapping = {
 		productDetails cascade:"all-delete-orphan"
