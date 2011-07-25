@@ -24,7 +24,8 @@ class Product {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-
+//	List productDetails
+	static hasMany = [ productDetails:ProductDetail ]
     static constraints = {
 		code(nullable:true)
         model()
@@ -44,18 +45,22 @@ class Product {
     }
 
     String toString() {
-      "$name"
+      "code:${code},model:${model},width:${width},height:${height},length:${length},seatHeightL:${seatHeight},estLoad:${estLoad},cbm:${cbm}"
     }
 	
-	static hasMany = [productdetails:ProductDetail]
 	
-	static belongsTo =[model:Model]
+//	static belongsTo =ProductDetail
 	
-	Set<ProductDetail> getProductDetail() {
-		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
+//	Set<ProductDetail> getProductDetails() {
+//		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
+//	}
+	
+	static mapping = {
+		productDetails cascade:"all-delete-orphan"
 	}
-
-
+//	def getExpandableProductDetailList() {
+//		return LazyList.decorate(productDetails,FactoryUtils.instantiateFactory(ProductDetail.class))
+//	}
   /**
     *
     */

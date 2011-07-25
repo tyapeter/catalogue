@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'productDetail.label', default: 'ProductDetail')}" />
+        <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -18,9 +18,9 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${productDetailInstance}">
+            <g:hasErrors bean="${productInstance}">
             <div class="errors">
-                <g:renderErrors bean="${productDetailInstance}" as="list" />
+                <g:renderErrors bean="${productInstance}" as="list" />
             </div>
             </g:hasErrors>
            
@@ -32,11 +32,12 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="productDetail.product.model"><g:message code="productDetail.product.model.label" default="Model" /></label>
+                                    <label for="model.name"><g:message code="product.model.label" default="Model" /></label>
                                 </td>
-                            	<td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'product.model', 'errors')}">
-                                    <g:textField class="modelName" name="modelName" id="modelName" value="" size="30"/>
-                                    <g:hiddenField name="modelID"  value="" />
+                            	<td valign="top" class="value ${hasErrors(bean: productInstance, field: 'model', 'errors')}">
+                            			 <g:textField class="modelName" name="modelName" id="modelName" value="" size="30"/>
+                                         <g:hiddenField name="modelID"  value="" />
+                                   
                                 </td>
                         	</tr>
                         	
@@ -246,9 +247,9 @@
 										</script>
 							<tr class="prop">
 	                                <td valign="top" class="name">
-	                                    <label for="productDetail.product.model.modelCategory"><g:message code="productDetail.product.model.modelCategory" default="ModelCategory" /></label>
+	                                    <label for="product.model.modelCategory"><g:message code="product.model.modelCategory" default="ModelCategory" /></label>
 	                                </td>
-	                              	<td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'product.model', 'errors')}">
+	                              	<td valign="top" class="value ${hasErrors(bean: productInstance, field: 'product.model.modelCategory.name', 'errors')}">
 	                                    <g:textField class="modelCategory" name="modelCategory" id="modelCategory" value="" size="30"/>
 	                                    
 	                                </td>
@@ -257,53 +258,46 @@
 	                                <td valign="top" class="name" colspan=2>
 	                                  <table>
 	                                  	<tr>
-		                                  	<td><label for="width"><g:message code="model.width.label" default="Width" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'width', 'errors')}">
-	                                    			<g:textField id='modelWidth' name='modelWidth' class='modelWidth' value="${fieldValue(bean: modelInstance, field: 'width')}" />
+		                                  	<td><label for="width"><g:message code="productInstance.width.label" default="Width" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'width', 'errors')}">
+	                                    			<g:textField id='width' name='width' class='wdth' value="${fieldValue(bean: productInstance, field: 'width')}" />
 	                                		</td>
 	                                		
-	                                		<td><label for="length"><g:message code="model.length.label" default="Length" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'length', 'errors')}">
-	                                    			<g:textField id='modelLength' name='modelLength' class='modelLength'  value="${fieldValue(bean: modelInstance, field: 'length')}" />
+	                                		<td><label for="length"><g:message code="productInstance.length.label" default="Length" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'length', 'errors')}">
+	                                    			<g:textField id='length' name='length' class='modelLength'  value="${fieldValue(bean: productInstance, field: 'length')}" />
 	                                		</td>
 	                                		
-	                                		<td><label for="EstLoad"><g:message code="model.estLoad.label" default="Est Load" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'estLoad', 'errors')}">
-	                                    			<g:textField id='modelEstLoad' name='modelEstLoad' class='modelEstLoad'  value="${fieldValue(bean: modelInstance, field: 'modelEstLoad')}" />
+	                                		<td><label for="estLoad"><g:message code="productInstance.estLoad.label" default="Est Load" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'estLoad', 'errors')}">
+	                                    			<g:textField id='estLoad' name='estLoad' class='estLoad'  value="${fieldValue(bean: productInstance, field: 'estLoad')}" />
 	                                		</td>
 	                                  	</tr>
 	                                  	<tr>
-		                                  	<td><label for="height"><g:message code="model.height.label" default="height" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'height', 'errors')}">
-	                                    			<g:textField id='modelHeight' name='modelHeight' class='modelHeight' value="${fieldValue(bean: modelInstance, field: 'height')}" />
+		                                  	<td><label for="height"><g:message code="productInstance.height.label" default="height" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
+	                                    			<g:textField id='height' name='height' class='height' value="${fieldValue(bean: productInstance, field: 'height')}" />
 	                                		</td>
 	                                		
-	                                		<td><label for="seatHeight"><g:message code="model.seatHeight.label" default="Seat Height" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'height', 'errors')}">
-	                                    			<g:textField id='modelSeatHeight' name='modelSeatHeight' class='modelSeatHeight'  value="${fieldValue(bean: modelInstance, field: 'height')}" />
+	                                		<td><label for="seatHeight"><g:message code="productInstance.seatHeight.label" default="Seat Height" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
+	                                    			<g:textField id='seatHeight' name='seatHeight' class='seatHeight'  value="${fieldValue(bean: productInstance, field: 'seatHeight')}" />
 	                                		</td>
 	                                		
-	                                		<td><label for="cbm"><g:message code="model.cbm.label" default="CBM" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'cbm', 'errors')}">
-	                                    			<g:textField id='modelCbm' name='modelCbm' class='modelCbm'  value="${fieldValue(bean: modelInstance, field: 'modelCbm')}" />
+	                                		<td><label for="cbm"><g:message code="productInstance.cbm.label" default="CBM" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'cbm', 'errors')}">
+	                                    			<g:textField id='cbm' name='cbm' class='cbm'  value="${fieldValue(bean: productInstance, field: 'cbm')}" />
 	                                		</td>
 	                                  	</tr>
 	                                  </table>
 	                                    
 	                                </td>
                         	</tr>	
-                        	 <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="unit"><g:message code="productDetail.unit.label" default="Unit" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'unit', 'errors')}">
-                                    <g:textField name="unit" value="${fieldValue(bean: productDetailInstance, field: 'unit')}" />
-                                </td>
-                            </tr>
+                        	 
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="price"><g:message code="productDetail.price.label" default="Price" /></label>
+                                    <label for="price"><g:message code="product.price.label" default="Price" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'price', 'errors')}">
                                     <g:textField name="price" value="${fieldValue(bean: productDetailInstance, field: 'price')}" />
@@ -313,10 +307,10 @@
                             
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="idx"><g:message code="productDetail.idx.label" default="Idx" /></label>
+                                    <label for="idx"><g:message code="product.idx.label" default="Idx" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'idx', 'errors')}">
-                                    <g:textField name="idx" value="${fieldValue(bean: productDetailInstance, field: 'idx')}" />
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idx', 'errors')}">
+                                    <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
                                 </td>
                             </tr>
 							
@@ -727,45 +721,7 @@
                                 </td>
                             </tr>
                        
-                           
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="isPriceOverwrite"><g:message code="productDetail.isPriceOverwrite.label" default="Is Price Overwrite" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'isPriceOverwrite', 'errors')}">
-                                    <g:textField name="isPriceOverwrite" value="${productDetailInstance?.isPriceOverwrite}" />
-                                </td>
-                            </tr>
-                        
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="createdBy"><g:message code="productDetail.createdBy.label" default="Created By" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'createdBy', 'errors')}">
-                                    <g:textField name="createdBy" maxlength="50" value="${productDetailInstance?.createdBy}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="updatedBy"><g:message code="productDetail.updatedBy.label" default="Updated By" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'updatedBy', 'errors')}">
-                                    <g:textField name="updatedBy" maxlength="50" value="${productDetailInstance?.updatedBy}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="deleteFlag"><g:message code="productDetail.deleteFlag.label" default="Delete Flag" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'deleteFlag', 'errors')}">
-                                    <g:textField name="deleteFlag" value="${productDetailInstance?.deleteFlag}" />
-                                </td>
-                            </tr>
-                        
+                         
                         </tbody>
                     </table>
                 </div>
@@ -847,12 +803,12 @@
 					data: { id:modelCategoryId },
 					success: function( data ) {
 					  $("#modelCategory").val(data['name']);
-					  $("#modelWidth").val(modelTemp['width']);
-					  $("#modelLength").val(modelTemp['length']);
-					  $("#modelEstLoad").val(modelTemp['estLoad']);
-					  $("#modelHeight").val(modelTemp['height']);
-					  $("#modelSeatHeight").val(modelTemp['seatHeight']);
-					  $("#modelCbm").val(modelTemp['cbm']);
+					  $("#width").val(modelTemp['width']);
+					  $("#length").val(modelTemp['length']);
+					  $("#estLoad").val(modelTemp['estLoad']);
+					  $("#height").val(modelTemp['height']);
+					  $("#seatHeight").val(modelTemp['seatHeight']);
+					  $("#cbm").val(modelTemp['cbm']);
 	                }
 	              
 				});

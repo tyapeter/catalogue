@@ -3,10 +3,9 @@ package com.teravin.catalogue
 import grails.converters.XML
 import grails.converters.JSON
 import com.teravin.catalogue.Product
+import com.teravin.catalogue.ProductDetail
 import com.teravin.catalogue.Model
 import com.teravin.catalogue.Material
-import com.teravin.catalogue.Accesories
-import com.teravin.catalogue.Miscellaneous
 
 class ProductDetailController {
 
@@ -44,10 +43,10 @@ class ProductDetailController {
     }
 
     def create = {
-        def productDetailInstance = new ProductDetail()
-        productDetailInstance.properties = params
+        def productInstance = new Product()
+        productInstance.properties = params
 		
-        return [productDetailInstance: productDetailInstance]
+        return [productInstance: productInstance]
     }
 
     def save = {
@@ -55,22 +54,11 @@ class ProductDetailController {
 		def index=0
         def productDetailInstances = new ArrayList()
 		def productDetailInstance
-		def product = new Product()
+		def product = new Product(params)
+		product.createdBy= springSecurityService.principal.username
 		def error = false
 		try{
-				product.width=Double.parseDouble(params.modelWidth)
-				product.length=Double.parseDouble(params.modelLength)
-				product.height=Double.parseDouble(params.modelHeight)
-				product.estLoad=Double.parseDouble(params.modelEstLoad)
-				product.seatHeight=Double.parseDouble(params.modelSeatHeight)
-				product.cbm=Double.parseDouble(params.modelCbm)
-				product.createdBy= springSecurityService.principal.username
-				product.idx=Double.parseDouble(params.idx);
-				
 				product.model	 = Model.get(params.modelID)
-				
-				product.save(flush: true)
-				
 				
 				def sizes
 				if(params.materialName!=null)
@@ -82,21 +70,23 @@ class ProductDetailController {
 						sizes = params.materialName.size()
 						
 					for(def i = 0; i<sizes; i++){
-						productDetailInstance = new ProductDetail(params)
+						productDetailInstance = new ProductDetail()
+						productDetailInstance.properties = params
 						
-						productDetailInstance.material = Material.get(params.materialID[i])
 						if(sizes==1){
+							productDetailInstance.material= Material.get(params.materialID)
 							productDetailInstance.price = Double.parseDouble(params.materialPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+						
 						}else{
+							productDetailInstance.material= Material.get(params.materialID[i])
 							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
 						}
-						
-							
+												
 						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = product
-						productDetailInstances[index]=productDetailInstance
+						
+						product.addToProductDetails(productDetailInstance)
 						index++;
 					}
 				}
@@ -110,17 +100,18 @@ class ProductDetailController {
 						
 						productDetailInstance = new ProductDetail(params)
 						
-						productDetailInstance.material = Material.get(params.accesoriesID[i])
+						
 						if(sizes==1){
+							productDetailInstance.material = Material.get(params.accesoriesID)
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
 						}else{
+							productDetailInstance.material = Material.get(params.accesoriesID[i])
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = product
-						productDetailInstances[index]=productDetailInstance
+						product.addToProductDetails(productDetailInstance)
 						index++;
 					}
 				}
@@ -135,26 +126,25 @@ class ProductDetailController {
 						
 						productDetailInstance = new ProductDetail(params)
 						
-						productDetailInstance.material = Material.get(params.miscellaneousID[i])
 						if(sizes==1){
+							productDetailInstance.material = Material.get(params.miscellaneousID)
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
 						}else{
+							productDetailInstance.material = Material.get(params.miscellaneousID[i])
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = product
-						productDetailInstances[index]=productDetailInstance
+
+						product.addToProductDetails(productDetailInstance)
 						index++;
 					}
 				}
-				for(def i=0; i < index;i++ ){
-					productDetailInstance = productDetailInstances[i]
-					productDetailInstances[i].save(flush: true) 
-					
-				}
-		}catch(RuntimeException e){			
+
+				
+		}catch(RuntimeException e){	
+			println("inasdasda====")
 			println e
 			error = true
 			if (e instanceof MissingResourceException) {
@@ -165,16 +155,16 @@ class ProductDetailController {
 		}
         withFormat {
 			html {
-				if (!error) {
-					flash.message = "${message(code: 'default.created.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), product.id])}"
+				if (!error && product.save(flush:true)) {
+					flash.message = "${message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])}"
 					redirect(action: "show", id: product.id)
 				}
 				else {
-					render(view: "create", model: [productDetailInstance: productDetailInstance])
+					render(view: "create", model: [productInstance: product])
 				}
 			}
 			xml {
-				if (!error) {
+				if (!error && product.save(flush:true)) {
 					result as XML
 				}
 				else {
@@ -182,7 +172,7 @@ class ProductDetailController {
 				}
 			}
 			json {
-				if (!error) {
+				if (!error && product.save(flush:true)) {
 					response.status = 201
 					if(params.callback) {
 						render "${params.callback}(${result as JSON})"
@@ -192,7 +182,7 @@ class ProductDetailController {
 					}
 				}
 				else {
-					sendValidationFailedResponse(params.callback,productDetail,400)
+					sendValidationFailedResponse(params.callback,product,400)
 				}
 			}
 		}
@@ -203,11 +193,13 @@ class ProductDetailController {
 	  def materialList = ProductDetail.createCriteria().list{ 
 							product{
 								eq('id',productInstance.id)
+								eq('deleteFlag','N')
 							}
 		  					material{
 								  materialCategory{
 									  materialType{
 										  eq('name','material')
+						
 									  }
 								  }
 							  }
@@ -215,11 +207,13 @@ class ProductDetailController {
 	  def accesoriesList = ProductDetail.createCriteria().list{
 		  product{
 			  eq('id',productInstance.id)
+			  eq('deleteFlag','N')
 		  }
 			material{
 				materialCategory{
 					materialType{
 						eq('name','accesories')
+	
 					}
 				}
 			}
@@ -227,11 +221,12 @@ class ProductDetailController {
 	  def miscellaneousList = ProductDetail.createCriteria().list{
 		  product{
 			  eq('id',productInstance.id)
+			  eq('deleteFlag','N')
 		  }
 			material{
 				materialCategory{
 					materialType{
-						eq('name','material')
+						eq('name','miscellaneous')
 					}
 				}
 			}
@@ -283,80 +278,223 @@ class ProductDetailController {
 
     def edit = {
         def productInstance = Product.get(params.id)
-        if (!productInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'Product'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            return [productInstance: productInstance]
-        }
+		println("productInstance=="+productInstance.model.modelCategory.name)
+		def materialList = ProductDetail.createCriteria().list{ 
+							product{
+								eq('id',productInstance.id)
+							}
+		  					material{
+								  materialCategory{
+									  materialType{
+										  eq('name','material')
+									  }
+								  }
+							  }
+					}
+	  def accesoriesList = ProductDetail.createCriteria().list{
+		  product{
+			  eq('id',productInstance.id)
+		  }
+			material{
+				materialCategory{
+					materialType{
+						eq('name','accesories')
+					}
+				}
+			}
+	  }
+	  def miscellaneousList = ProductDetail.createCriteria().list{
+		  product{
+			  eq('id',productInstance.id)
+		  }
+			material{
+				materialCategory{
+					materialType{
+						eq('name','miscellaneous')
+					}
+				}
+			}
+	  }
+	    if (!productInstance) {
+	        flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'Product'), params.id])}"
+	        redirect(action: "list")
+	    }
+	    else {
+	        return [productInstance: productInstance,materialList:materialList, accesoriesList:accesoriesList, miscellaneousList:miscellaneousList]
+	    }
     }
 
-    def update = {
-        def productDetailInstance = ProductDetail.get(params.id)
-        productDetailInstance.updatedBy = springSecurityService.principal.username
+     def update = {
+        def productInstance = Product.get(params.id)
+        productInstance.updatedBy = springSecurityService.principal.username
+		
+		println(params)
+		def index=0
+		def productDetailInstances = new ArrayList()
+		def productDetailInstance
+	
+		def error = false
+		try{
+				
+				
+				productInstance.updatedBy = springSecurityService.principal.username
+				productInstance.model	 = Model.get(params.modelID)
+				
+				def sizes
+				if(params.materialName!=null)
+				{
+					
+					if(params.materialName.class == String)
+						sizes=1
+					else
+						sizes = params.materialName.size()
+						
+					for(def i = 0; i<sizes; i++){
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.materialID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.materialPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+						}
+						
+							
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = productInstance
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+				if(params.accesoriesName!=null)
+				{
+					if(params.accesoriesName.class == String)
+						sizes=1
+					else
+						sizes = params.accesoriesName.size()
+					for(def i = 0; i<sizes; i++){
+						
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.accesoriesID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+						}
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = productInstance
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+				if(params.miscellaneousName !=null)
+				{
+					if(params.miscellaneousName.class == String)
+						sizes=1
+					else
+						sizes = params.miscellaneousName.size()
+					
+					for(def i = 0; i< sizes; i++){
+						
+						productDetailInstance = new ProductDetail(params)
+						
+						productDetailInstance.material = Material.get(params.miscellaneousID[i])
+						if(sizes==1){
+							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
+							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
+						}else{
+							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+						}
+						productDetailInstance.createdBy = springSecurityService.principal.username
+						productDetailInstance.product = productInstance
+						productDetailInstances[index]=productDetailInstance
+						index++;
+					}
+				}
+//				for(def i=0; i < index;i++ ){
+//					productDetailInstance = productDetailInstances[i]
+//					productDetailInstances[i].save(flush: true)
+//					
+//				}
+				productInstance.productDetails(productDetailInstances)
+				productInstance.save(flush:true)
+		}catch(RuntimeException e){
+			println e
+			error = true
+			if (e instanceof MissingResourceException) {
+				println "aa"+e.getMessage()
+				flash.message = e.getMessage()
+			}
+			
+		}
         withFormat {
 			html {
-				if(productDetailInstance) {
+				if(productInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
-						if(productDetailInstance.version > version) {
+						if(productInstance.version > version) {
 							
-							productDetailInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'productDetail.label', default: 'ProductDetail')] as Object[], "Another user has updated this ProductDetail while you were editing")
-							render(view:"edit", model:[productDetailInstance:productDetailInstance])
+							productInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'product.label', default: 'Product')] as Object[], "Another user has updated this Product while you were editing")
+							render(view:"edit", model:[productInstance:productInstance])
 							return
 						}
 					}
-					productDetailInstance.properties = params
-					if(!productDetailInstance.hasErrors() && productDetailInstance.save(flush: true)) {
-						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), productDetailInstance.id])}"
-						redirect(action: "show", id:productDetailInstance.id)
+					productInstance.properties = params
+					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
+						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])}"
+						redirect(action: "show", id:productInstance.id)
 					}
 					else {
-						render(view: "edit", model:[productDetailInstance:productDetailInstance])
+						render(view: "edit", model:[productInstance:productInstance])
 					}
 				}
 				else {
-					flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+					flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
 					redirect(action: "list")
 				}
 			}
 			xml {
-				if(productDetailInstance) {
+				if(productInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
-						if(productDetailInstance.version > version) {
-							render "ProductDetail has been updated by another user" as XML
+						if(productInstance.version > version) {
+							render "Product has been updated by another user" as XML
 						}
 					}
-					productDetailInstance.properties = params
-					if(!productDetailInstance.hasErrors() && productDetailInstance.save(flush: true)) {
-						productDetailInstance as XML
+					productInstance.properties = params
+					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
+						productInstance as XML
 					}
 					else {
-						render "ProductDetail not valid" as XML
+						render "Product not valid" as XML
 					}
 				}
 				else {
-					render "ProductDetail not found with id ${params.id}" as XML
+					render "Product not found with id ${params.id}" as XML
 				}
 			}
 			json {
-				if(productDetailInstance) {
+				if(productInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
-						if(productDetailInstance.version > version) {
+						if(productInstance.version > version) {
 							response.status = 409
 						}
 					}
-					productDetailInstance.properties = params
-					if(!productDetailInstance.hasErrors() && productDetailInstance.save(flush: true)) {
+					productInstance.properties = params
+					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
 						response.status = 200
 						if(params.callback) {
-							render "${params.callback}(${productDetailInstance as JSON})"
+							render "${params.callback}(${productInstance as JSON})"
 						}
 						else {
-							render "${productDetailInstance as JSON}"
+							render "${productInstance as JSON}"
 						}
 					}
 					else {
