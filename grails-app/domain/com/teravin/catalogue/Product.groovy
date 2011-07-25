@@ -47,9 +47,8 @@ class Product {
       "$name"
     }
 	
-	static hasMany = [productdetails:ProductDetail]
+	static hasMany = [productDetails:ProductDetail]
 	
-	static belongsTo =[model:Model]
 	
 	Set<ProductDetail> getProductDetail() {
 		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
