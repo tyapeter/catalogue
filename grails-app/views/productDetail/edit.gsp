@@ -328,8 +328,10 @@
 				                        	
 		                    				<tr>
 		                    					<td >
-		                    						<g:hiddenField class="materialID" name="materialID" id="materialID${i}" value="${materialInstance.material.id}" size="30"/>
-		                                    		<g:textField class="materialName" name="materialName" id="materialName${i}" value="${materialInstance.material.name}" size="30"/>
+		                    						<g:hiddenField class="materialID" name="materialID" id="materialID${i}" value="${materialInstance.material.id}"/>
+		                    						<g:hiddenField class="materialDelete" name="materialDelete" id="materialDelete${i}" value="false"/>
+		                    						<g:hiddenField class="productDetailInstance" name="productDetailInstance" id="productDetailInstance${i}" value="${materialInstance.id}"/>
+		                    					   <g:textField class="materialName" name="materialName" id="materialName${i}" value="${materialInstance.material.name}" size="30"/>
 		                                		</td>
 		                                		<td >
 		                    						<g:textField class="materialUnit" name="materialUnit" id="materialUnit${i}" value="${materialInstance.material.unitType.name}" size="30"/>
@@ -354,7 +356,7 @@
 			                                <td valign="top" class="name" >
 			                                    <input type="button" value="${message(code: 'default.button.add.label')}" default="Add Material" onclick="addMaterial()"/>
 			                                	 <script type="text/javascript">
-													var materialCount = ${materialList?.size()} + 0;
+													var materialCount = ${materialList?.size()} + 1;
 													var materialId;
 													var idOfMaterialTextBox;
 													$(document).ready(function(){
@@ -415,6 +417,8 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='materialID'  value='' id='materialID" + materialCount + "'/></td>\n";
+														templateHtml += "<input type='hidden' class='materialDelete' name='materialDelete' id='materialDelete"+materialCount + "' value='false' />\n";
+														templateHtml += "<input type='hidden'  class='productDetailInstance' name='productDetailInstance' id='productDetailInstance"+materialCount + "' value='null' />\n";
 														templateHtml += "<td ><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName' value='' id='materialName" + materialCount + "'/></td>\n";
 														templateHtml += "<td ><input type='text' name='materialUnit'  value='' id='materialUnitType" + materialCount + "'/></td>\n"
 														templateHtml += "<td ><input type='text' name='materialIndex'  value='' id='materialIndex" + materialCount + "'/></td>\n"
@@ -433,7 +437,8 @@
 													}
 													
 													function removeMaterial(idx) {
-														$("#materialInstance"+idx+"").remove()
+														$("#materialInstance"+idx+"").hide()
+														$("#materialDelete"+idx+"").val("true")
 													}
 									
 										</script>
@@ -469,7 +474,9 @@
                                     	
 				                        	
 		                    				<tr>
-		                    					<td >
+		                    					<td ><g:hiddenField class="accesoriesID" name="accesoriesID" id="accesoriesID${i}" value="${accesoriesInstance.material.id}"/>
+		                    						<g:hiddenField class="accesoriesDelete" name="accesoriesDelete" id="accesoriesDelete${i}" value="false"/>
+		                    						<g:hiddenField class="productDetailAccesoriesInstance" name="productDetailAccesoriesInstance" id="productDetailAccesoriesInstance${i}" value="${accesoriesInstance.id}"/>
 		                                    		<g:textField class="accesoriesName" name="accesoriesName" id="accesoriesName${i}" value="${accesoriesInstance.material.name}" size="30"/>
 		                                		</td>
 		                                		<td >
@@ -496,7 +503,7 @@
 			                                <td valign="top" class="name" colspan="2">
 			                                    <input type="button" value="${message(code: 'default.button.add.label')}" default="Add Accesories" onclick="addAcc()"/>
 			                                	 <script type="text/javascript">
-													var accesoriesCount = ${accesoriesList?.size()} + 0;
+													var accesoriesCount = ${accesoriesList?.size()} + 1;
 													var accId;
 													var idOfAccTextBox;
 													$(document).ready(function(){
@@ -539,9 +546,9 @@
 																		}
 																	});
 																	
-															         $("#accesoriesIndex"+idOfAccTextBox).val(ui.item.index);
-																	 $("#accesoriesPrice"+idOfAccTextBox).val(ui.item.price);
-																	 $("#accesoriesID"+idOfAccTextBox).val(ui.item.id);
+															         $('#accesoriesIndex'+idOfAccTextBox).val(ui.item.index);
+																	 $('#accesoriesPrice'+idOfAccTextBox).val(ui.item.price);
+																	 $('#accesoriesID'+idOfAccTextBox).val(ui.item.id);
 															  }
 																							
 															});
@@ -554,6 +561,9 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='accesoriesID'  value='' id='accesoriesID" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<input type='hidden' class='accesoriesDelete' name='accesoriesDelete' id='accesoriesDelete"+accesoriesCount + "' value='false' />\n";
+														templateHtml += "<input type='hidden'  class='productDetailAccesoriesInstance' name='productDetailAccesoriesInstance' id='productDetailAccesoriesInstance"+accesoriesCount + "' value='null' />\n";
+														
 														templateHtml += "<td ><input type='text' onFocus='setIdOfAccTextBox("+accesoriesCount+")' class='accesoriesName' name='accesoriesName' value='' id='accesoriesName" + accesoriesCount + "'/></td>\n";
 														templateHtml += "<td ><input type='text' name='accesoriesUnitType' value='' id='accesoriesUnitType" + accesoriesCount + "'/></td>\n"
 														templateHtml += "<td ><input type='text' name='accesoriesIndex' value='' id='accesoriesIndex" + accesoriesCount + "'/></td>\n"
@@ -572,7 +582,8 @@
 													}
 													
 													function removeAccesories(idx) {
-														$("#accesoriesInstance"+idx+"").remove()
+														$("#accesoriesInstance"+idx+"").hide();
+														$("#accesoriesDelete"+idx+"").val("true");
 													}
 									
 											</script>
@@ -608,7 +619,9 @@
                                     	
 				                        	
 		                    				<tr>
-		                    					<td >
+		                    					<td ><g:hiddenField class="miscellaneousID" name="miscellaneousID" id="miscellaneousID${i}" value="${miscellaneousInstance.material.id}"/>
+		                    						<g:hiddenField class="miscellaneousDelete" name="miscellaneousDelete" id="miscellaneousDelete${i}" value="false"/>
+		                    						<g:hiddenField class="productDetailMiscellaneousInstance" name="productDetailMiscellaneousInstance" id="productDetailMiscellaneousInstance${i}" value="${miscellaneousInstance.id}"/>
 		                                    		<g:textField class="miscellaneousName" name="miscellaneousName" id="miscellaneousName${i}" value="${miscellaneousInstance.material.name}" size="30"/>
 		                                		</td>
 		                                		<td >
@@ -635,7 +648,7 @@
 			                                <td valign="top" class="name" colspan="2">
 			                                    <input type="button" value="${message(code: 'default.button.add.label')}" default="Add Miscellaneous" onclick="addMisc()"/>
 			                                	 <script type="text/javascript">
-													var miscellaneousCount = ${miscellaneousList?.size()} + 0;
+													var miscellaneousCount = ${miscellaneousList?.size()} + 1;
 													var miscId;
 													var idOfMiscTextBox;
 													$(document).ready(function(){
@@ -696,6 +709,9 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='miscellaneousID'  value='' id='miscellaneousID" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<input type='hidden' class='miscellaneousDelete' name='miscellaneousDelete' id='miscellaneousDelete"+miscellaneousCount + "' value='false' />\n";
+														templateHtml += "<input type='hidden'  class='productDetailMiscellaneousInstance' name='productDetailMiscellaneousInstance' id='productDetailMiscellaneousInstance"+miscellaneousCount + "' value='null' />\n";
+														
 														templateHtml += "<td><input type='text' onFocus='setIdOfMiscTextBox("+miscellaneousCount+")' class='miscellaneousName' name='miscellaneousName' value='' id='miscellaneousName" + miscellaneousCount + "'/></td>\n";
 														templateHtml += "<td><input type='text' name='miscellaneousUnitType' value='' id='miscellaneousUnitType" + miscellaneousCount + "'/></td>\n"
 														templateHtml += "<td><input type='text' name='miscellaneousIndex' value='' id='miscellaneousIndex" + miscellaneousCount + "'/></td>\n"
@@ -713,7 +729,8 @@
 
 													}
 													function removeMisc(idx) {
-														$("#miscellaneousInstance"+idx+"").remove()
+														$("#miscellaneousInstance"+idx+"").hide()
+														$("#miscellaneousDelete"+idx+"").val("true");
 													}
 								
 										</script>

@@ -24,8 +24,10 @@ class Product {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-//	List productDetails
-	
+	List productDetails
+
+	static hasMany = [productDetails:ProductDetail]
+
     static constraints = {
 		code(nullable:true)
         model()
@@ -49,11 +51,11 @@ class Product {
     }
 	
 
-	static hasMany = [productDetails:ProductDetail]
+
 	
 	
 
-	Set<ProductDetail> getProductDetails() {
+	Set<ProductDetail> getProductDetail() {
 		ProductDetail.findByProduct(this).collect { it.productdetail } as Set
 	}
 
@@ -61,6 +63,7 @@ class Product {
 	static mapping = {
 		productDetails cascade:"all-delete-orphan"
 	}
+	
 //	def getExpandableProductDetailList() {
 //		return LazyList.decorate(productDetails,FactoryUtils.instantiateFactory(ProductDetail.class))
 //	}

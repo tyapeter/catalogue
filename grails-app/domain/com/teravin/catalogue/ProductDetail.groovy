@@ -24,7 +24,11 @@ class ProductDetail {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
+	boolean _deleted
+    
+    static transients = [ '_deleted' ]
 
+	
     static constraints = {
 //		product()
 		unit(nullable:true)

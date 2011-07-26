@@ -22,6 +22,7 @@ class ProductDetailController {
 		params.sort = "id"
 		params.order = "asc"
 		
+		
         withFormat {
 			html {
 				[productInstanceList: Product.list(params), productInstanceTotal: Product.count()]
@@ -144,7 +145,6 @@ class ProductDetailController {
 
 				
 		}catch(RuntimeException e){	
-			println("inasdasda====")
 			println e
 			error = true
 			if (e instanceof MissingResourceException) {
@@ -193,7 +193,7 @@ class ProductDetailController {
 	  def materialList = ProductDetail.createCriteria().list{ 
 							product{
 								eq('id',productInstance.id)
-								eq('deleteFlag','N')
+								
 							}
 		  					material{
 								  materialCategory{
@@ -207,7 +207,7 @@ class ProductDetailController {
 	  def accesoriesList = ProductDetail.createCriteria().list{
 		  product{
 			  eq('id',productInstance.id)
-			  eq('deleteFlag','N')
+			
 		  }
 			material{
 				materialCategory{
@@ -221,7 +221,7 @@ class ProductDetailController {
 	  def miscellaneousList = ProductDetail.createCriteria().list{
 		  product{
 			  eq('id',productInstance.id)
-			  eq('deleteFlag','N')
+			
 		  }
 			material{
 				materialCategory{
@@ -325,49 +325,27 @@ class ProductDetailController {
     }
 
      def update = {
+		 
         def productInstance = Product.get(params.id)
         productInstance.updatedBy = springSecurityService.principal.username
 		
 		println(params)
-		def index=0
-		def productDetailInstances = new ArrayList()
+	
+	
 		def productDetailInstance
 	
 		def error = false
+		def sizes=0
 		try{
 				
 				
 				productInstance.updatedBy = springSecurityService.principal.username
 				productInstance.model	 = Model.get(params.modelID)
 				
-				def sizes
-				if(params.materialName!=null)
-				{
-					
-					if(params.materialName.class == String)
-						sizes=1
-					else
-						sizes = params.materialName.size()
-						
-					for(def i = 0; i<sizes; i++){
-						productDetailInstance = new ProductDetail(params)
-						
-						productDetailInstance.material = Material.get(params.materialID[i])
-						if(sizes==1){
-							productDetailInstance.price = Double.parseDouble(params.materialPrice)
-							productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
-						}else{
-							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
-							productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
-						}
-						
-							
-						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = productInstance
-						productDetailInstances[index]=productDetailInstance
-						index++;
-					}
-				}
+//				
+				
+				
+	/*
 				if(params.accesoriesName!=null)
 				{
 					if(params.accesoriesName.class == String)
@@ -378,18 +356,19 @@ class ProductDetailController {
 						
 						productDetailInstance = new ProductDetail(params)
 						
-						productDetailInstance.material = Material.get(params.accesoriesID[i])
+						
 						if(sizes==1){
+							productDetailInstance.material = Material.get(params.accesoriesID)
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
 						}else{
+							productDetailInstance.material = Material.get(params.accesoriesID[i])
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = productInstance
-						productDetailInstances[index]=productDetailInstance
-						index++;
+						productInstance.addToProductDetails(productDetailInstance)
+						
 					}
 				}
 				if(params.miscellaneousName !=null)
@@ -403,27 +382,21 @@ class ProductDetailController {
 						
 						productDetailInstance = new ProductDetail(params)
 						
-						productDetailInstance.material = Material.get(params.miscellaneousID[i])
 						if(sizes==1){
+							productDetailInstance.material = Material.get(params.miscellaneousID)
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
 						}else{
+							productDetailInstance.material = Material.get(params.miscellaneousID[i])
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-						productDetailInstance.product = productInstance
-						productDetailInstances[index]=productDetailInstance
-						index++;
+
+						productInstance.addToProductDetails(productDetailInstance)
+						
 					}
-				}
-//				for(def i=0; i < index;i++ ){
-//					productDetailInstance = productDetailInstances[i]
-//					productDetailInstances[i].save(flush: true)
-//					
-//				}
-				productInstance.productDetails(productDetailInstances)
-				productInstance.save(flush:true)
+				}*/
 		}catch(RuntimeException e){
 			println e
 			error = true
@@ -433,7 +406,7 @@ class ProductDetailController {
 			}
 			
 		}
-        withFormat {
+       withFormat {
 			html {
 				if(productInstance) {
 					if(params.version) {
@@ -446,6 +419,219 @@ class ProductDetailController {
 						}
 					}
 					productInstance.properties = params
+					if(params.materialName!=null)
+					{
+					
+						if(params.materialName.class == String)
+							sizes=1
+						else
+							sizes = params.materialName.size()
+						
+							println("========"+sizes)	
+						for(def i = 0; i<sizes; i++){
+							
+							if(sizes==1){
+								if(params.productDetailInstance!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailInstance)
+									productDetailInstance.material= Material.get(params.materialID)
+									productDetailInstance.price = Double.parseDouble(params.materialPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									if(params.materialDelete=="false")
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.materialID)
+									productDetailInstance.price = Double.parseDouble(params.materialPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+									productDetailInstance.createdBy = springSecurityService.principal.username
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									productInstance.addToProductDetails(productDetailInstance)
+									
+								}
+							}else{
+								
+								if(params.productDetailInstance[i]!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailInstance[i])
+									productDetailInstance.material= Material.get(params.materialID[i])
+									productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+								
+									if(params.materialDelete[i]=="false")
+										
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+										
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.materialID[i])
+									productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									productDetailInstance.createdBy = springSecurityService.principal.username
+								
+									productDetailInstance.isPriceOverwrite="N"
+									productInstance.addToProductDetails(productDetailInstance)
+								
+								}
+							}
+													
+													
+							
+						}
+					}
+					if(params.accesoriesName!=null)
+					{
+					
+						if(params.accesoriesName.class == String)
+							sizes=1
+						else
+							sizes = params.accesoriesName.size()
+						
+							println("========"+sizes)
+						for(def i = 0; i<sizes; i++){
+							
+							if(sizes==1){
+								if(params.productDetailAccesoriesInstance!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailAccesoriesInstance)
+									productDetailInstance.material= Material.get(params.accesoriesID)
+									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									if(params.accesoriesDelete=="false")
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.accesoriesID)
+									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+									productDetailInstance.createdBy = springSecurityService.principal.username
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									productInstance.addToProductDetails(productDetailInstance)
+									
+								}
+							}else{
+								
+								if(params.productDetailAccesoriesInstance[i]!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailAccesoriesInstance[i])
+									productDetailInstance.material= Material.get(params.accesoriesID[i])
+									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+								
+									if(params.accesoriesDelete[i]=="false")
+										
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+										
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.accesoriesID[i])
+									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									productDetailInstance.createdBy = springSecurityService.principal.username
+							
+									productDetailInstance.isPriceOverwrite="N"
+									productInstance.addToProductDetails(productDetailInstance)
+								
+								}
+							}
+													
+													
+							
+						}
+					}
+					if(params.miscellaneousName!=null)
+					{
+					
+						if(params.miscellaneousName.class == String)
+							sizes=1
+						else
+							sizes = params.miscellaneousName.size()
+						
+							println("========"+sizes)
+						for(def i = 0; i<sizes; i++){
+							
+							if(sizes==1){
+								if(params.productDetailMiscellaneousInstance!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailMiscellaneousInstance)
+									productDetailInstance.material= Material.get(params.miscellaneousID)
+									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex)
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									if(params.miscellaneousDelete=="false")
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.miscellaneousID)
+									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
+									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex)
+									productDetailInstance.createdBy = springSecurityService.principal.username
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									
+									productInstance.addToProductDetails(productDetailInstance)
+									
+								}
+							}else{
+								
+								if(params.productDetailMiscellaneousInstance[i]!="null")
+								{
+									productDetailInstance = ProductDetail.get(params.productDetailMiscellaneousInstance[i])
+									productDetailInstance.material= Material.get(params.miscellaneousID[i])
+									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+								
+									if(params.miscellaneousDelete[i]=="false")
+										
+										productDetailInstance.save(flush:true)
+									else{
+										productDetailInstance.delete(flush: true)
+										
+									}
+								}else{
+									productDetailInstance=new ProductDetail()
+									productDetailInstance.material= Material.get(params.miscellaneousID[i])
+									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+									productDetailInstance.updatedBy = springSecurityService.principal.username
+									productDetailInstance.createdBy = springSecurityService.principal.username
+							
+									productDetailInstance.isPriceOverwrite="N"
+									productInstance.addToProductDetails(productDetailInstance)
+								
+								}
+							}
+													
+													
+							
+						}
+					}
 					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])}"
 						redirect(action: "show", id:productInstance.id)
@@ -509,59 +695,59 @@ class ProductDetailController {
     }
 
     def delete = {
-        def productDetailInstance = ProductDetail.get(params.id)
-		productDetailInstance.updatedBy = springSecurityService.principal.username
+        def productInstance = Product.get(params.id)
+		productInstance.updatedBy = springSecurityService.principal.username
         withFormat {
 			html {
-				if(productDetailInstance) {
+				if(productInstance) {
 					try {
-						productDetailInstance.deleteFlag = "Y";
-						productDetailInstance.save(flush:true);
-                        flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+						productInstance.deleteFlag = "Y";
+						productInstance.save(flush:true);
+                        flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
                         redirect(action: "list")
                     }
                     catch (org.springframework.dao.DataIntegrityViolationException e) {
-                        flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+                        flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
                         redirect(action: "show", id: params.id)
                     }
                 }
                 else {
-                    flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+                    flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
                     redirect(action: "list")
                 }
 			}
 			xml {
-				if(params.id && productDetailInstance) {
+				if(params.id && productInstance) {
 					try {
-						productDetailInstance.deleteFlag = "Y";
-						productDetailInstance.save(flush:true);
-						render "ProductDetail ${params.id} deleted" as XML
+						productInstance.deleteFlag = "Y";
+						productInstance.save(flush:true);
+						render "Product ${params.id} deleted" as XML
 					}
 					catch (org.springframework.dao.DataIntegrityViolationException e) {
-						render "ProductDetail ${params.id} could not be deleted" as XML
+						render "Product ${params.id} could not be deleted" as XML
 					}
 				}
 				else {
-				  render "ProductDetail not found with id ${params.id}" as XML
+				  render "Product not found with id ${params.id}" as XML
 				}
 			}
 			json {
-				if(params.id && productDetailInstance) {
+				if(params.id && productInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
-						if(productDetailInstance.version > version) {
+						if(productInstance.version > version) {
 							response.status = 409
 						}
 					}
 					try {
-						productDetailInstance.deleteFlag = "Y";
-						productDetailInstance.save(flush:true)
+						productInstance.deleteFlag = "Y";
+						productInstance.save(flush:true)
 						response.status = 204
 						if(params.callback) {
 							render "${params.callback}(${productDetailInstance as JSON})"
 						}
 						else {
-							render "${productDetailInstance as JSON}"
+							render "${productInstance as JSON}"
 						}
 					}
 					catch (org.springframework.dao.DataIntegrityViolationException e) {
@@ -576,55 +762,55 @@ class ProductDetailController {
     }
 	
 	def hardDelete = {
-		def productDetailInstance = ProductDetail.get(params.id)
+		def productInstance = Product.get(params.id)
 		withFormat {
 			html {
-				if(productDetailInstance) {
+				if(productInstance) {
 					try {
-						productDetailInstance.delete(flush: true)
-						flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+						productInstance.delete(flush: true)
+						flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
 						redirect(action: "list")
 					}
 					catch (org.springframework.dao.DataIntegrityViolationException e) {
-						flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+						flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
 						redirect(action: "show", id: params.id)
 					}
 				}
 				else {
-					flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
+					flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'product.label', default: 'Product'), params.id])}"
 					redirect(action: "list")
 				}
 			}
 			xml {
-				if(params.id && productDetailInstance) {
+				if(params.id && productInstance) {
 					try {
-						productDetailInstance.delete(flush:true)
-						render "ProductDetail ${params.id} deleted" as XML
+						productInstance.delete(flush:true)
+						render "Product ${params.id} deleted" as XML
 					}
 					catch (org.springframework.dao.DataIntegrityViolationException e) {
-						render "ProductDetail ${params.id} could not be deleted" as XML
+						render "Product ${params.id} could not be deleted" as XML
 					}
 				}
 				else {
-				  render "ProductDetail not found with id ${params.id}" as XML
+				  render "Product not found with id ${params.id}" as XML
 				}
 			}
 			json {
-				if(params.id && productDetailInstance) {
+				if(params.id && productInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
-						if(productDetailInstance.version > version) {
+						if(productInstance.version > version) {
 							response.status = 409
 						}
 					}
 					try {
-						productDetailInstance.delete(flush:true)
+						productInstance.delete(flush:true)
 						response.status = 204
 						if(params.callback) {
-							render "${params.callback}(${productDetailInstance as JSON})"
+							render "${params.callback}(${productInstance as JSON})"
 						}
 						else {
-							render "${productDetailInstance as JSON}"
+							render "${productInstance as JSON}"
 						}
 					}
 					catch (org.springframework.dao.DataIntegrityViolationException e) {
