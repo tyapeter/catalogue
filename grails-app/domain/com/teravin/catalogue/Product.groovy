@@ -14,11 +14,22 @@ class Product {
 	ProductType productType
 	Color color
     Double width
-	Double height
 	Double length
-	Double seatHeight
+    Double height
+    Double seatWidth
+    Double seatLength
+    Double seatHeight
+    Double packingWidth
+    Double packingLength
+    Double packingHeight
 	Double estLoad
+    Double totalWeight
+    Double totalCubic
 	Double cbm
+    BigDecimal indexPricing
+    BigDecimal index
+    BigDecimal price
+    BigDecimal baseCost
 	String deleteFlag = "N"
     int idx = 99
     String createdBy
@@ -36,11 +47,22 @@ class Product {
         productType(nullable:true)
 		color(nullable:true)
 		width()
-		height()
 		length()
+        height()
+        seatWidth()
+        seatLength()
 		seatHeight()
+        packingWidth()
+        packingLength()
+        packingHeight()
 		estLoad()
+        totalWeight()
+        totalWeight()
 		cbm()
+        indexPricing()
+        index()
+        price()
+        baseCost()
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)

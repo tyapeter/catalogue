@@ -13,10 +13,15 @@ class Model {
 //	byte[] imageFile
 	String imagePath
     String description = ""
-	Double width
-	Double height
-	Double length
-	Double seatHeight
+    Double width
+    Double length
+    Double height
+    Double seatWidth
+    Double seatLength
+    Double seatHeight
+    Double packingWidth
+    Double packingLength
+    Double packingHeight
 	Double estLoad
 	Double cbm
 	String deleteFlag = "N"
@@ -30,11 +35,15 @@ class Model {
         code(blank:false,maxSize:100)
         name(blank:false,maxSize:100)
         description(maxSize:500)
-		width()
-		height()
-		length()
-		seatHeight()
-		estLoad()
+        width()
+        length()
+        height()
+        seatWidth()
+        seatLength()
+        seatHeight()
+        packingWidth()
+        packingLength()
+        packingHeight()
 		cbm()
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
