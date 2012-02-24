@@ -335,30 +335,54 @@
 	                                    			<g:textField id='cbm' name='cbm' class='cbm'  value="${fieldValue(bean: productInstance, field: 'cbm')}" />
 	                                		</td>
 	                                  	</tr>
+	                                  	<tr>
+		                                  	
+	                                		
+	                                		
+	                                		<td><label for="totalWeight"><g:message code="productInstance.totalWeight.label" default="Total Weight" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'totalWeight', 'errors')}" colspan="5">
+	                                    			<g:textField id='totalWeight' name='totalWeight' class='totalWeight'  value="${fieldValue(bean: productInstance, field: 'totalWeight')}" />
+	                                		</td>
+	                                		
+	                                  	</tr>
 	                                  </table>
 	                                    
 	                                </td>
                         	</tr>	
-                        	 
-                        
-                            <tr class="prop">
+                        	  <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="price"><g:message code="product.price.label" default="Price" /></label>
+                                    <label for="price"><g:message code="product.index.label" default="Index" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'price', 'errors')}">
-                                    <g:textField name="price" value="0" />
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'index', 'errors')}">
+                                    <g:textField name="index" value="0" />
                                 </td>
                             </tr>
                         
-                            
                             <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="indexPricing"><g:message code="product.indexPricing.label" default="Index Pricing" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'indexPricing', 'errors')}">
+                                    <g:textField name="indexPricing" value="0" />
+                                </td>
+                            </tr>
+                        
+                              <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="indexPricing"><g:message code="product.price.label" default="Price" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
+                                    <g:textField name="price" value="0" />
+                                </td>
+                            </tr>
+                            <!-- tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="idx"><g:message code="product.idx.label" default="Idx" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idx', 'errors')}">
                                     <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
                                 </td>
-                            </tr>
+                            </tr --!>
 							
 							
                         	<tr class="prop">
@@ -375,6 +399,9 @@
 				                                </th>
 				                               <th valign="top" class="name" >
 				                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
+				                                </th>
+				                                 <th valign="top" class="name" >
+				                                    <label for="productDetail"><g:message code="productDetail.material.index.label" default="Index" /></label>
 				                                </th>
 				                               <th valign="top" class="name" >
 				                                    <label for="product"><g:message code="productDetail.material.price.label" default="Price" /></label>
@@ -412,8 +439,8 @@
 													var materialCount = ${materialList?.size()} + 0;
 													var materialId;
 													var idOfMaterialTextBox;
-													var oRed = '#ff0000';
-													var oBlue = '#0000ff';
+													var oRed = '#F4A1A1';
+													var oBlue = '#CDB4F6';
 													$(document).ready(function(){
 														$('.materialName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
@@ -456,7 +483,7 @@
 																	
 															         $("#materialIndex"+idOfMaterialTextBox).val(ui.item.index);
 																	 $("#materialPrice"+idOfMaterialTextBox).val(ui.item.price );
-																	 $("#materialSubTotal"+idOfMaterialTextBox).val(ui.item.price * ui.item.index* 1);
+																	 $("#materialSubTotal"+idOfMaterialTextBox).val(ui.item.price);
 																	 $("#materialID"+idOfMaterialTextBox).val(ui.item.id);
 																	 $("#materialUnit"+idOfMaterialTextBox).val(1);
 																	 calculatePrice();
@@ -475,10 +502,10 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='materialID'  value='' id='materialID" + materialCount + "'/></td>\n";
-														templateHtml += "<td width='60%'><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName'  value='' id='materialName" + materialCount + "'/></td>\n";
+														templateHtml += "<td width='50%'><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName'  value='' id='materialName" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='text' name='materialUnit' onChange='calculateMaterialPriceItem("+ materialCount+")'  value='' id='materialUnit" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='text' name='materialUnitType'  value='' id='materialUnitType" + materialCount + "'/>\n";
-														templateHtml += "<input type='hidden' name='materialIndex'  value='' id='materialIndex" + materialCount + "'/></td>\n";
+														templateHtml += "<td width='10%'> <input name='materialIndex'  value='' id='materialIndex" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='hidden'  name='materialPrice'   value='' id='materialPrice" + materialCount + "'/>"+
 														"<input type='text'  name='materialSubTotal'  value='' id='materialSubTotal" + materialCount + "' onChange='calculateMaterialIndexItem("+materialCount+")'/></td>\n";
 														templateHtml += "<input type='hidden' name='productMaterialIndex'  value='' id='productMaterialIndex" + materialCount + "'/></td>\n";
@@ -503,7 +530,7 @@
 													function calculateMaterialPriceItem(idx) {
 														var newPriceProductItem; 
 														//if($("#productMaterialIndex"+idx).val()!="" && $("#productMaterialIndex"+idx).val()!=undefined )
-															newPriceProductItem = parseFloat($("#materialUnit"+idx+"").val()) * parseFloat( $("#materialPrice"+idx+"").val()) * parseFloat( $("#materialIndex"+idx+"").val());
+															newPriceProductItem = parseFloat($("#materialUnit"+idx+"").val()) * parseFloat( $("#materialPrice"+idx+"").val()) ;
 														//else
 															
 														$("#materialSubTotal"+idx+"").val(newPriceProductItem);
@@ -512,14 +539,14 @@
 													}
 													function calculateMaterialIndexItem(idx) {
 														var productItemIndex =parseFloat($("#materialSubTotal"+idx).val()) / parseFloat($("#materialUnit"+idx).val());
-														var indexTemp = parseFloat($("#materialPrice"+idx).val());
+														var indexTemp = parseFloat($("#materialIndex"+idx).val());
 														if(productItemIndex < indexTemp){
 															
-															$("#materialSubTotal"+idx).css({"background-color": oRed});
+															$("#materialIndex"+idx).css({"background-color": oRed});
 
 														}else{
 														
-															$("#materialSubTotal"+idx).css({"background-color": oBlue});
+															$("#materialIndex"+idx).css({"background-color": oBlue});
 														}
 														$("#productMaterialIndex"+idx).val(productItemIndex);
 														calculatePrice();
