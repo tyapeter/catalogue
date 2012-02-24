@@ -27,7 +27,7 @@ class Product {
     Double totalCubic
 	Double cbm
     BigDecimal indexPricing
-    BigDecimal index
+    BigDecimal idxx
     BigDecimal price
     BigDecimal baseCost
 	String deleteFlag = "N"
@@ -60,7 +60,7 @@ class Product {
         totalWeight()
 		cbm()
         indexPricing()
-        index()
+        idxx()
         price()
         baseCost()
         idx(maxSize:3)

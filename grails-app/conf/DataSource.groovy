@@ -16,7 +16,9 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost/yourDB"
+            url = "jdbc:mysql://localhost/catalogue"
+            user = "catalogue"
+            password = "password"
         }
     }
     test {
