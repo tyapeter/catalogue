@@ -4,13 +4,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
@@ -29,7 +29,14 @@
                 	
                     <table>
                         <tbody>
-                        
+                        	  <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="name"><g:message code="product.name.label" default="Name" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'name', 'errors')}">
+                                    <g:textField id="name" name="name" class="name" maxlength="100" value="${fieldValue(bean: productInstance, field: 'name')}" />
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="model.name"><g:message code="product.model.label" default="Model" /></label>
@@ -260,7 +267,7 @@
 	                                  	<tr>
 		                                  	<td><label for="width"><g:message code="productInstance.width.label" default="Width" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'width', 'errors')}">
-	                                    			<g:textField id='width' name='width' class='wdth' value="${fieldValue(bean: productInstance, field: 'width')}" />
+	                                    			<g:textField id='width' name='width' class='width' value="${fieldValue(bean: productInstance, field: 'width')}" />
 	                                		</td>
 	                                		
 	                                		<td><label for="length"><g:message code="productInstance.length.label" default="Length" /></label></td>
@@ -300,7 +307,7 @@
                                     <label for="price"><g:message code="product.price.label" default="Price" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productDetailInstance, field: 'price', 'errors')}">
-                                    <g:textField name="price" value="${fieldValue(bean: productDetailInstance, field: 'price')}" />
+                                    <g:textField name="price" value="0" />
                                 </td>
                             </tr>
                         
@@ -324,26 +331,28 @@
 				                                <th valign="top" class="name" >
 				                                    <label for="product"><g:message code="productDetail.material.label" default="Materials" /></label>
 				                                </th>
+				                                 <th valign="top" class="name" >
+				                                    <label for="product"><g:message code="productDetail.material.unit.label" default="Unit" /></label>
+				                                </th>
 				                               <th valign="top" class="name" >
 				                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
 				                                </th>
-				                                <th valign="top" class="name" >
-				                                    <label for="product"><g:message code="productDetail.material.index.label" default="Index" /></label>
-				                                </th>
-				                                <th valign="top" class="name" >
+				                               <th valign="top" class="name" >
 				                                    <label for="product"><g:message code="productDetail.material.price.label" default="Price" /></label>
 				                                </th>
 				                            </tr>
 			                            </thead >
-                                    	<g:each in="${materialList}" status="i" var="materials">
+                                    	<g:each in="${materialList}" status="i" var="material">
                                     	<tbody id="material${i}">
                                     		<!-- Material -->
 				                        	
 		                    				<tr>
-		                    					<td width="90%">
-		                                    		<g:textField class="materialName" name="materialName" id="materialName${i}" value="${material}" size="30"/>
+		                    					<td width="50%">
+		                                    		<g:textField class="materialName" name="materialName" id="materialName${i}" value="${material}" />
 		                                		</td>
-		                                		<td></td>
+		                                		<td>
+		                                		
+		                                		</td>
 		                                		<td width="10%">
 		                                		<g:if test="${i == 0}">		                                		
 			                                    		&nbsp;		                                    	
@@ -364,6 +373,8 @@
 													var materialCount = ${materialList?.size()} + 0;
 													var materialId;
 													var idOfMaterialTextBox;
+													var oRed = '#ff0000';
+													var oBlue = '#0000ff';
 													$(document).ready(function(){
 														$('.materialName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
@@ -383,8 +394,8 @@
 																					id: item.id,
 																					index:item.idxx,
 																					price:item.price,
-																				    unit:item.unitType.id
-																				}
+																				    unitType:item.unitType.id
+																				   																				}
 																			}));
 																		}
 																	});
@@ -396,7 +407,7 @@
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { id: ui.item.unit },
+																		data: { id: ui.item.unitType },
 																		success: function( data ) {
 																			 
 																			 $("#materialUnitType"+idOfMaterialTextBox).val( data['name'] );
@@ -405,8 +416,11 @@
 																	});
 																	
 															         $("#materialIndex"+idOfMaterialTextBox).val(ui.item.index);
-																	 $("#materialPrice"+idOfMaterialTextBox).val(ui.item.price);
+																	 $("#materialPrice"+idOfMaterialTextBox).val(ui.item.price );
+																	 $("#materialSubTotal"+idOfMaterialTextBox).val(ui.item.price * ui.item.index* 1);
 																	 $("#materialID"+idOfMaterialTextBox).val(ui.item.id);
+																	 $("#materialUnit"+idOfMaterialTextBox).val(1);
+																	 calculatePrice();
 															  }
 																							
 															});
@@ -422,10 +436,13 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='materialID'  value='' id='materialID" + materialCount + "'/></td>\n";
-														templateHtml += "<td width='60%'><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName' size='30' value='' id='materialName" + materialCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='materialUnit' size='15' value='' id='materialUnitType" + materialCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text' name='materialIndex' size='15' value='' id='materialIndex" + materialCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text'  name='materialPrice' size='15' value='' id='materialPrice" + materialCount + "'/></td>\n"
+														templateHtml += "<td width='60%'><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName'  value='' id='materialName" + materialCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='materialUnit' onChange='calculateMaterialPriceItem("+ materialCount+")'  value='' id='materialUnit" + materialCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='materialUnitType'  value='' id='materialUnitType" + materialCount + "'/>\n";
+														templateHtml += "<input type='hidden' name='materialIndex'  value='' id='materialIndex" + materialCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='hidden'  name='materialPrice'   value='' id='materialPrice" + materialCount + "'/>"+
+														"<input type='text'  name='materialSubTotal'  value='' id='materialSubTotal" + materialCount + "' onChange='calculateMaterialIndexItem("+materialCount+")'/></td>\n";
+														templateHtml += "<input type='hidden' name='productMaterialIndex'  value='' id='productMaterialIndex" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeMaterial("+materialCount+")'/></td>\n";
 														
 														templateHtml += "</tr>\n";
@@ -440,7 +457,78 @@
 													}
 													
 													function removeMaterial(idx) {
+												
 														$("#material"+idx+"").remove()
+														calculatePrice();
+													}
+													function calculateMaterialPriceItem(idx) {
+														var newPriceProductItem; 
+														//if($("#productMaterialIndex"+idx).val()!="" && $("#productMaterialIndex"+idx).val()!=undefined )
+															newPriceProductItem = parseFloat($("#materialUnit"+idx+"").val()) * parseFloat( $("#materialPrice"+idx+"").val()) * parseFloat( $("#materialIndex"+idx+"").val());
+														//else
+															
+														$("#materialSubTotal"+idx+"").val(newPriceProductItem);
+														calculatePrice();
+														
+													}
+													function calculateMaterialIndexItem(idx) {
+														var productItemIndex =parseFloat($("#materialSubTotal"+idx).val()) / parseFloat($("#materialUnit"+idx).val());
+														var indexTemp = parseFloat($("#materialPrice"+idx).val());
+														if(productItemIndex < indexTemp){
+															
+															$("#materialSubTotal"+idx).css({"background-color": oRed});
+
+														}else{
+														
+															$("#materialSubTotal"+idx).css({"background-color": oBlue});
+														}
+														$("#productMaterialIndex"+idx).val(productItemIndex);
+														calculatePrice();
+														
+													}
+													function calculatePrice() {
+														var priceTemp = 0;
+														if(materialCount!=null && materialCount!="" && materialCount!=0){
+															
+														
+															for(i=0;i<materialCount;i++){
+																	if($("#materialSubTotal"+i).val()!=null && $("#materialSubTotal"+i).val()!="" && $("#materialSubTotal"+i).val()!=undefined){
+																		
+																		priceTemp = parseFloat($("#materialSubTotal"+i).val())+ parseFloat(priceTemp);			
+																		
+																	}
+																	
+															}
+															
+															
+														}
+														if(accesoriesCount!=null && accesoriesCount!="" && accesoriesCount!=0){
+															
+															for(i=0;i<accesoriesCount;i++){
+																	if($("#accesoriesSubTotal"+i).val()!=null && $("#accesoriesSubTotal"+i).val()!="" && $("#accesoriesSubTotal"+i).val()!=undefined){
+																		
+																		priceTemp = parseFloat($("#accesoriesSubTotal"+i).val())+ parseFloat(priceTemp);			
+																		
+																	}
+																	
+															}
+															
+															
+														}
+														if(miscellaneousCount!=null && miscellaneousCount!="" && miscellaneousCount!=0){
+															
+															for(i=0;i<miscellaneousCount;i++){
+																	if($("#miscellaneousSubTotal"+i).val()!=null && $("#miscellaneousSubTotal"+i).val()!="" && $("#miscellaneousSubTotal"+i).val()!=undefined){
+																		
+																		priceTemp = parseFloat($("#miscellaneousSubTotal"+i).val())+ parseFloat(priceTemp);			
+																		
+																	}
+																	
+															}
+															
+															
+														}
+														$("#price").val(parseFloat(priceTemp));	
 													}
 									
 										</script>
@@ -459,6 +547,9 @@
                                     		<tr>
 				                                <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.accesories.label" default="Accesories" /></label>
+				                                </th>
+				                                <th valign="top" class="name" >
+				                                    <label for="productDetail"><g:message code="productDetail.accesories.unit.label" default="Unit" /></label>
 				                                </th>
 				                               <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.accesories.unitType.label" default="Unit Type" /></label>
@@ -519,7 +610,7 @@
 																					id: item.id,
 																					index:item.idxx,
 																					price:item.price,
-																				    unit:item.unitType.id
+																				    unitType:item.unitType.id
 																				}
 																			}));
 																		}
@@ -532,7 +623,7 @@
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { id: ui.item.unit },
+																		data: { id: ui.item.unitType },
 																		success: function( data ) {
 																			 
 																			 $("#accesoriesUnitType"+idOfAccTextBox).val( data['name'] );
@@ -543,6 +634,9 @@
 															         $("#accesoriesIndex"+idOfAccTextBox).val(ui.item.index);
 																	 $("#accesoriesPrice"+idOfAccTextBox).val(ui.item.price);
 																	 $("#accesoriesID"+idOfAccTextBox).val(ui.item.id);
+																	 $("#accesoriesSubTotal"+idOfAccTextBox).val(ui.item.price * ui.item.index* 1);
+																	 $("#accesoriesUnit"+idOfAccTextBox).val(1);
+																	
 															  }
 																							
 															});
@@ -555,10 +649,12 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='accesoriesID'  value='' id='accesoriesID" + accesoriesCount + "'/></td>\n";
-														templateHtml += "<td width='70%'><input type='text' onFocus='setIdOfAccTextBox("+accesoriesCount+")' class='accesoriesName' name='accesoriesName' size='30' value='' id='accesoriesName" + accesoriesCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='accesoriesUnitType' size='15' value='' id='accesoriesUnitType" + accesoriesCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text' name='accesoriesIndex' size='15' value='' id='accesoriesIndex" + accesoriesCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text'  name='accesoriesPrice' size='15' value='' id='accesoriesPrice" + accesoriesCount + "'/></td>\n"
+														templateHtml += "<td width='60%'><input type='text' onFocus='setIdOfAccTextBox("+accesoriesCount+")' class='accesoriesName' name='accesoriesName' value='' id='accesoriesName" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='accesoriesUnit' onChange='calculateAccPrice("+accesoriesCount+")'  value='' id='accesoriesUnit" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='accesoriesUnitType' value='' id='accesoriesUnitType" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='accesoriesIndex' value='' id='accesoriesIndex" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='hidden'  name='accesoriesPrice'  value='' id='accesoriesPrice" + accesoriesCount + "'/>\n";
+														templateHtml += "<input type='text'  name='accesoriesSubTotal' value='' id='accesoriesSubTotal" + accesoriesCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeAcc("+accesoriesCount+")'/></td>\n";
 														
 														templateHtml += "</tr>\n";

@@ -43,6 +43,76 @@ class ProductDetailController {
 		
     }
 
+	def listFront = {
+		params.max = Math.min(params.max ? params.int('max') : 8, 100)
+		
+		if(params.sort==null)
+		{
+		
+			params.sort="id"
+		
+		}
+		println("========"+params.sort)
+		if(params.offset==null)
+		{
+			
+			params.offset=0
+			
+		}
+		if(params.order==null)
+		{
+			
+			params.order="asc"
+			
+		}	
+		println("========"+params.order)
+		def products = ProductDetail.executeQuery("select pd.product.id as id,pd.product.name as name,pd.product.code as code,pd.product.dateCreated as dateCreated from ProductDetail pd  where pd.product.deleteFlag='N' and pd.material.materialCategory.id=?  and pd.product.model.modelCategory.id=?  order by "+params.sort+" "+params.order,[Long.parseLong(params.materialCategoryId) ,Long.parseLong(params.modelId)],[max:params.max,offset:params.offset])
+		def productsCount = Product.executeQuery("select pd.product.id as id,pd.product.name as name,pd.product.code as code,pd.product.dateCreated as dateCreated from ProductDetail pd  where pd.product.deleteFlag='N' and pd.material.materialCategory.id=?  and pd.product.model.modelCategory.id=?  ",[Long.parseLong(params.materialCategoryId) ,Long.parseLong(params.modelId)]).size() 
+		def productsList = new ArrayList()
+		def product
+		def materialList
+		def materialTemp
+		for (def i=0;i < products.size();i++)
+		{	
+			
+			product = Product.get(products[i][0])
+			
+			materialList = ProductDetail.executeQuery("select pd.material.name from ProductDetail pd where pd.product.deleteFlag='N' and pd.product.id=?",product.id);
+				
+			
+			materialTemp=""
+			for(def x=0;x < materialList.size();x++)
+			{
+				if(x > 0)
+					materialTemp = materialTemp +" ,"
+				materialTemp = materialTemp +""+ materialList[x]
+				
+			}
+			
+			product.materials = materialTemp
+			productsList.add(product)
+		}
+		println("========"+productsList)
+		withFormat {
+			html {
+				[productInstanceList: productsList, productInstanceTotal: productsCount,materialCategoryName:params.materialCategoryName,modelName:params.modelName,modelId:params.modelId,materialCategoryId:params.materialCategoryId,sort:params.sort]
+			}
+			xml {
+				render productsList as XML
+			}
+			json {
+				response.status = 200
+				if(params.callback) {
+					render "${params.callback}(${Product.list( params ) as JSON})"
+				}
+				else {
+					render "${Product.list( params ) as JSON}"
+				}
+			}
+		}
+		
+	}
+	
     def create = {
         def productInstance = new Product()
         productInstance.properties = params
@@ -52,12 +122,14 @@ class ProductDetailController {
 
     def save = {
 		println(params)
-		def index=0
-        def productDetailInstances = new ArrayList()
 		def productDetailInstance
 		def product = new Product(params)
 		product.createdBy= springSecurityService.principal.username
 		def error = false
+		def materialList
+		def accesoriesList
+		def miscellaneousList
+		
 		try{
 				product.model	 = Model.get(params.modelID)
 				
@@ -78,17 +150,27 @@ class ProductDetailController {
 							productDetailInstance.material= Material.get(params.materialID)
 							productDetailInstance.price = Double.parseDouble(params.materialPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+							if(params.productMaterialIndex!="" && params.productMaterialIndex!=null)
+								productDetailInstance.idxx = Double.parseDouble(params.productMaterialIndex)
+							else
+								productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+								
+							productDetailInstance.unit= Double.parseDouble(params.materialUnit)
 						
 						}else{
 							productDetailInstance.material= Material.get(params.materialID[i])
 							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
-							productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+							if(params.productMaterialIndex[i]!="" && params.productMaterialIndex[i]!=null)
+								productDetailInstance.idxx = Double.parseDouble(params.productMaterialIndex[i])
+							else
+								productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+							productDetailInstance.unit= Double.parseDouble(params.materialUnit[i])
 						}
 												
 						productDetailInstance.createdBy = springSecurityService.principal.username
 						
 						product.addToProductDetails(productDetailInstance)
-						index++;
+						
 					}
 				}
 				if(params.accesoriesName!=null)
@@ -106,14 +188,17 @@ class ProductDetailController {
 							productDetailInstance.material = Material.get(params.accesoriesID)
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+							productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit)
 						}else{
 							productDetailInstance.material = Material.get(params.accesoriesID[i])
 							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
 							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+							productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
 						product.addToProductDetails(productDetailInstance)
-						index++;
+						
 					}
 				}
 				if(params.miscellaneousName !=null)
@@ -131,15 +216,17 @@ class ProductDetailController {
 							productDetailInstance.material = Material.get(params.miscellaneousID)
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
+							productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit)
 						}else{
 							productDetailInstance.material = Material.get(params.miscellaneousID[i])
 							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
 							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+							productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
 
 						product.addToProductDetails(productDetailInstance)
-						index++;
+						
 					}
 				}
 
@@ -151,6 +238,15 @@ class ProductDetailController {
 				println "aa"+e.getMessage()
 				flash.message = e.getMessage()
 			}
+//			materialList = new ArrayList()
+//			if(params.materialName.class == String){
+//				materialList.add(params.materialName)
+//			}
+//			else{
+//				for(def i = 0; i<params.materialName.size(); i++){
+//					materialList.add(params.materialName[i])
+//				}
+//			}
 			
 		}
         withFormat {
@@ -344,59 +440,7 @@ class ProductDetailController {
 				
 //				
 				
-				
-	/*
-				if(params.accesoriesName!=null)
-				{
-					if(params.accesoriesName.class == String)
-						sizes=1
-					else
-						sizes = params.accesoriesName.size()
-					for(def i = 0; i<sizes; i++){
-						
-						productDetailInstance = new ProductDetail(params)
-						
-						
-						if(sizes==1){
-							productDetailInstance.material = Material.get(params.accesoriesID)
-							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
-							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
-						}else{
-							productDetailInstance.material = Material.get(params.accesoriesID[i])
-							productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
-							productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
-						}
-						productDetailInstance.createdBy = springSecurityService.principal.username
-						productInstance.addToProductDetails(productDetailInstance)
-						
-					}
-				}
-				if(params.miscellaneousName !=null)
-				{
-					if(params.miscellaneousName.class == String)
-						sizes=1
-					else
-						sizes = params.miscellaneousName.size()
-					
-					for(def i = 0; i< sizes; i++){
-						
-						productDetailInstance = new ProductDetail(params)
-						
-						if(sizes==1){
-							productDetailInstance.material = Material.get(params.miscellaneousID)
-							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
-							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousPrice)
-						}else{
-							productDetailInstance.material = Material.get(params.miscellaneousID[i])
-							productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
-							productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
-						}
-						productDetailInstance.createdBy = springSecurityService.principal.username
-
-						productInstance.addToProductDetails(productDetailInstance)
-						
-					}
-				}*/
+	
 		}catch(RuntimeException e){
 			println e
 			error = true

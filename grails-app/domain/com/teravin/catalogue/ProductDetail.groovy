@@ -11,7 +11,7 @@ class ProductDetail {
 
     static auditable = true
 
-//    Product product
+	Product product
 	Material material
 	
 	Double unit

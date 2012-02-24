@@ -7,8 +7,9 @@ import com.teravin.catalogue.maintenance.Color
 class Product {
 
     static auditable = true
-	
+	String name
 	String code
+	String materials
 	Model model
 	ProductType productType
 	Color color
@@ -30,6 +31,7 @@ class Product {
 
     static constraints = {
 		code(nullable:true)
+		name()
         model()
         productType(nullable:true)
 		color(nullable:true)

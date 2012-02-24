@@ -1,5 +1,5 @@
 html * {
-    margin: 0;
+    margin: 0 auto;
     /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
 }
 
@@ -12,18 +12,21 @@ html * {
 }
 
 body {
-    background: #fff;
+    background: #fff; 
     color: #333;
     font: 11px verdana, arial, helvetica, sans-serif;
+
 }
 #grailsLogo {
 	padding:20px;
+	margin-left:100px;
 }
 
 a:link, a:visited, a:hover {
     color: #666;
     font-weight: bold;
     text-decoration: none;
+
 }
 
 h1 {
@@ -270,4 +273,43 @@ th.desc a {
 .buttons input.save {
     background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
     padding-left: 28px;
+}
+.information {
+    border: 1px solid #b2d1ff;
+    color: #006dba;
+    margin: 10px 0 5px 0;
+    padding: 5px 5px 5px 20px;
+    width: 950px;
+
+}
+.product {
+    font: 11px verdana, arial, helvetica, sans-serif;
+    line-height: 12px;
+    padding: 5px 6px;
+    text-align: center;
+    vertical-align: top;
+}
+.productLeft {
+    text-align: left;
+    vertical-align: top;
+}
+
+.tableProduct {
+    border: 1px solid #ccc;
+    text-align: left;
+
+    width:100%;
+}
+
+.signIn {
+ position:absolute;
+ top:5;
+ right:280;
+ width:200px;
+}
+#signInLogin {
+ position:absolute;
+ top:20;
+ right:320;
+ width:280px;
 }

@@ -3,13 +3,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
@@ -35,7 +35,14 @@
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "code")}</td>
                             
                         </tr>
-                    
+                    	
+                    	 <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.name.label" default="Name" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "name")}</td>
+                            
+                        </tr>
+                        
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.model.label" default="Model" /></td>
                             
@@ -91,6 +98,9 @@
             						 <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.label" default="Materials" /></label>
 		                                </th>
+		                                <th valign="top" class="name" >
+		                                    <label for="product"><g:message code="productDetail.material.unit.label" default="Unit" /></label>
+		                                </th>
 		                               <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
 		                                </th>
@@ -106,6 +116,7 @@
             							<tr >
             								
             								<td>${materialInstance.material.name}</td>
+            								<td>${materialInstance.unit}</td>
             								<td>${materialInstance.material.unitType.name}</td>
             								<td>${materialInstance.idxx}</td>
             								<td>${materialInstance.price}</td>

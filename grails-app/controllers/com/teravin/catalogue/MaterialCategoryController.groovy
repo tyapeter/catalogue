@@ -2,6 +2,8 @@ package com.teravin.catalogue
 
 import grails.converters.XML
 import grails.converters.JSON
+import com.teravin.catalogue.Product
+import com.teravin.catalogue.ProductDetail
 
 class MaterialCategoryController {
 
@@ -397,5 +399,34 @@ class MaterialCategoryController {
 				}
 			}
 		}
+	}
+	def getMaterialMenu = {
+			
+			def materialCategory = MaterialCategory.createCriteria()
+			
+			def results = []
+			
+			def materialCategories = MaterialCategory.executeQuery("select distinct pd.material.materialCategory from ProductDetail  pd where pd.product.deleteFlag='N' order by pd.material.materialCategory.name")
+			
+			def materialCategoriesSizes  = materialCategories.size()
+			
+			def productDetails=[]
+			
+			for (def i=0;i < materialCategoriesSizes;i++)
+			{
+				
+			   productDetails[i]  = ProductDetail.executeQuery("select distinct pd.product.model.modelCategory from ProductDetail  pd  where pd.material.materialCategory=? order by pd.product.model.modelCategory.name ",[materialCategories[i]])
+			   
+			}
+			
+			
+			results.add (materialCategories)
+			results.add(productDetails)
+			results.add (materialCategoriesSizes)
+			
+			
+			render results as JSON
+			
+		
 	}
 }
