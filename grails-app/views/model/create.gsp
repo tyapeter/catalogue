@@ -81,13 +81,56 @@
                                     <g:textField name="length" value="${fieldValue(bean: modelInstance, field: 'length')}" />
                                 </td>
                             </tr>
+                        	<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="width"><g:message code="model.width.label" default="Seat Width" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatWidth', 'errors')}">
+                                    <g:textField name="seatWidth" value="${fieldValue(bean: modelInstance, field: 'seatWidth')}" />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="seatHeight"><g:message code="model.seatHeight.label" default="Seat Height" /></label>
+                                    <label for="height"><g:message code="model.height.label" default="Seat Height" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatHeight', 'errors')}">
                                     <g:textField name="seatHeight" value="${fieldValue(bean: modelInstance, field: 'seatHeight')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="seatLength"><g:message code="model.length.label" default="Seat Length" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatLength', 'errors')}">
+                                    <g:textField name="seatLength" value="${fieldValue(bean: modelInstance, field: 'seatLength')}" />
+                                </td>
+                            </tr>
+                           <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="packingWidth"><g:message code="model.width.label" default="Packing Width" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingWidth', 'errors')}">
+                                    <g:textField name="packingWidth" value="${fieldValue(bean: modelInstance, field: 'packingWidth')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="packingHeight"><g:message code="model.height.label" default="Packing Height" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingHeight', 'errors')}">
+                                    <g:textField name="packingHeight" value="${fieldValue(bean: modelInstance, field: 'packingHeight')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="packingLength"><g:message code="model.length.label" default="packingLength" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingLength', 'errors')}">
+                                    <g:textField name="packingLength" value="${fieldValue(bean: modelInstance, field: 'packingLength')}" />
                                 </td>
                             </tr>
                         

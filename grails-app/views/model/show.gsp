@@ -72,9 +72,44 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="model.seatHeight.label" default="Seat Height" /></td>
+                            <td valign="top" class="name"><g:message code="model.seatWidth.label" default="Seat Width" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "seatWidth")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.seatHeight.label" default="seat Height" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "seatHeight")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.seatLength.label" default="seat Length" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "seatLength")}</td>
+                            
+                        </tr>
+                    	
+                    	<tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.packingWidth.label" default="Packing Width" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "packingWidth")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.packingHeight.label" default="packing Height" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "packingHeight")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="model.packingLength.label" default="packing Length" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "packingLength")}</td>
                             
                         </tr>
                     

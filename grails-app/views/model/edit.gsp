@@ -84,15 +84,35 @@
                                     <g:textField name="length" value="${fieldValue(bean: modelInstance, field: 'length')}" />
                                 </td>
                             </tr>
+                        	
+                        	 <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="width"><g:message code="model.width.label" default="Seat Width" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatWidth', 'errors')}">
+                                    <g:textField name="seatWidth" value="${fieldValue(bean: modelInstance, field: 'seatWidth')}" />
+                                </td>
+                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="seatHeight"><g:message code="model.seatHeight.label" default="Seat Height" /></label>
+                                  <label for="height"><g:message code="model.height.label" default="seat Height" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatHeight', 'errors')}">
                                     <g:textField name="seatHeight" value="${fieldValue(bean: modelInstance, field: 'seatHeight')}" />
                                 </td>
                             </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="length"><g:message code="model.length.label" default="Seat Length" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'seatLength', 'errors')}">
+                                    <g:textField name="seatLength" value="${fieldValue(bean: modelInstance, field: 'seatLength')}" />
+                                </td>
+                            </tr>
+                            
+                          
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

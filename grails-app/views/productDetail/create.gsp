@@ -270,27 +270,66 @@
 	                                    			<g:textField id='width' name='width' class='width' value="${fieldValue(bean: productInstance, field: 'width')}" />
 	                                		</td>
 	                                		
+	                                		<td><label for="height"><g:message code="productInstance.height.label" default="height" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
+	                                    			<g:textField id='height' name='height' class='modelHeight' value="${fieldValue(bean: productInstance, field: 'height')}" />
+	                                		</td>
+	                                		
 	                                		<td><label for="length"><g:message code="productInstance.length.label" default="Length" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'length', 'errors')}">
 	                                    			<g:textField id='length' name='length' class='modelLength'  value="${fieldValue(bean: productInstance, field: 'length')}" />
 	                                		</td>
 	                                		
+	                                		
+	                                  	</tr>
+	                                  	<tr>
+		                                  	<td><label for="seatWidth"><g:message code="productInstance.seatWidth.label" default="Seat Width" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'seatWidth', 'errors')}">
+	                                    			<g:textField id='seatWidth' name='seatWidth' class='width' value="${fieldValue(bean: productInstance, field: 'seatWidth')}" />
+	                                		</td>
+	                                		
+	                                		<td><label for="seatHeight"><g:message code="productInstance.seatHeight.label" default="seat Height" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'seatHeight', 'errors')}">
+	                                    			<g:textField id='seatHeight' name='seatHeight' class='seatHeight' value="${fieldValue(bean: productInstance, field: 'seatHeight')}" />
+	                                		</td>
+	                                		
+	                                		<td><label for="seatLength"><g:message code="productInstance.seatLength.label" default="Seat Length" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'seatLength', 'errors')}">
+	                                    			<g:textField id='seatLength' name='seatLength' class='seatLength'  value="${fieldValue(bean: productInstance, field: 'seatLength')}" />
+	                                		</td>
+	                                		
+	                                		
+	                                  	</tr>
+	                                  	<tr>
+		                                  	<td><label for="packingWidth"><g:message code="productInstance.packingWidth.label" default="Packing Width" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'packingWidth', 'errors')}">
+	                                    			<g:textField id='packingWidth' name='seatWidth' class='packingWidth' value="${fieldValue(bean: productInstance, field: 'packingWidth')}" />
+	                                		</td>
+	                                		
+	                                		<td><label for="packingHeight"><g:message code="productInstance.packingHeight.label" default="Packing Height" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'packingHeight', 'errors')}">
+	                                    			<g:textField id='packingHeight' name='packingHeight' class='seatHeight' value="${fieldValue(bean: productInstance, field: 'packingHeight')}" />
+	                                		</td>
+	                                		
+	                                		<td><label for="packingLength"><g:message code="productInstance.packingLength.label" default="Packing Length" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'packingLength', 'errors')}">
+	                                    			<g:textField id='packingLength' name='packingLength' class='packingLength'  value="${fieldValue(bean: productInstance, field: 'packingLength')}" />
+	                                		</td>
+	                                		
+	                                		
+	                                  	</tr>
+	                                  	<tr>
+		                                  	
+	                                		
+	                                		
 	                                		<td><label for="estLoad"><g:message code="productInstance.estLoad.label" default="Est Load" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'estLoad', 'errors')}">
 	                                    			<g:textField id='estLoad' name='estLoad' class='estLoad'  value="${fieldValue(bean: productInstance, field: 'estLoad')}" />
 	                                		</td>
-	                                  	</tr>
-	                                  	<tr>
-		                                  	<td><label for="height"><g:message code="productInstance.height.label" default="height" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
-	                                    			<g:textField id='height' name='height' class='height' value="${fieldValue(bean: productInstance, field: 'height')}" />
+	                                		<td><label for="seatHeight"><g:message code="productInstance.totalCubic.label" default="Total Cubic" /></label></td>
+		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'totalCubic', 'errors')}">
+	                                    			<g:textField id='totalCubic' name='totalCubic' class='totalCubic'  value="${fieldValue(bean: productInstance, field: 'totalCubic')}" />
 	                                		</td>
-	                                		
-	                                		<td><label for="seatHeight"><g:message code="productInstance.seatHeight.label" default="Seat Height" /></label></td>
-		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
-	                                    			<g:textField id='seatHeight' name='seatHeight' class='seatHeight'  value="${fieldValue(bean: productInstance, field: 'seatHeight')}" />
-	                                		</td>
-	                                		
 	                                		<td><label for="cbm"><g:message code="productInstance.cbm.label" default="CBM" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'cbm', 'errors')}">
 	                                    			<g:textField id='cbm' name='cbm' class='cbm'  value="${fieldValue(bean: productInstance, field: 'cbm')}" />
@@ -595,11 +634,11 @@
 														$('.accesoriesName').live('keyup.autocomplete', function(){
 															$(this).autocomplete({
 																source: function( request, response ) {
-																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeNameAndMaterialCategoryIs'])}";
+																	var url = "${createLink(url: [controller: 'material', action: 'getMaterialLikeNameAndMaterialCategoryIsAccAndMat'])}";
 																	$.ajax({
 																		url: url,
 																		dataType: "json",
-																		data: { name: request.term , materialTypeName: 'accesories'},
+																		data: { name: request.term , materialTypeName: 'accesories',materialTypeName2: 'material'},
 																		success: function( data ) {
 																			
 																			response( $.map( data, function( item ) {
@@ -904,6 +943,11 @@
 					  $("#estLoad").val(modelTemp['estLoad']);
 					  $("#height").val(modelTemp['height']);
 					  $("#seatHeight").val(modelTemp['seatHeight']);
+					  $("#seatLength").val(modelTemp['seatLength']);
+					  $("#seatWidth").val(modelTemp['seatWidth']);
+					  $("#packingHeight").val(modelTemp['packingHeight']);
+					  $("#packingLength").val(modelTemp['packingLength']);
+					  $("#packingWidth").val(modelTemp['packingWidth']);
 					  $("#cbm").val(modelTemp['cbm']);
 	                }
 	              
