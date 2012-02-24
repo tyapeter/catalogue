@@ -349,12 +349,12 @@
 	                                    
 	                                </td>
                         	</tr>	
-                        	  <tr class="prop">
+                        	 <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="price"><g:message code="product.index.label" default="Index" /></label>
+                                    <label for="idx"><g:message code="product.idx.label" default="Idx" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'index', 'errors')}">
-                                    <g:textField name="index" value="0" />
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idx', 'errors')}">
+                                    <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
                                 </td>
                             </tr>
                         
@@ -483,9 +483,9 @@
 																	
 															         $("#materialIndex"+idOfMaterialTextBox).val(ui.item.index);
 																	 $("#materialPrice"+idOfMaterialTextBox).val(ui.item.price );
-																	 $("#materialSubTotal"+idOfMaterialTextBox).val(ui.item.price);
 																	 $("#materialID"+idOfMaterialTextBox).val(ui.item.id);
 																	 $("#materialUnit"+idOfMaterialTextBox).val(1);
+																	 $("#materialSubTotal"+idOfMaterialTextBox).val(ui.item.price * $("#materialUnit"+idOfMaterialTextBox).val());
 																	 calculatePrice();
 															  }
 																							
@@ -700,9 +700,10 @@
 															         $("#accesoriesIndex"+idOfAccTextBox).val(ui.item.index);
 																	 $("#accesoriesPrice"+idOfAccTextBox).val(ui.item.price);
 																	 $("#accesoriesID"+idOfAccTextBox).val(ui.item.id);
-																	 $("#accesoriesSubTotal"+idOfAccTextBox).val(ui.item.price * ui.item.index* 1);
 																	 $("#accesoriesUnit"+idOfAccTextBox).val(1);
-																	
+																	 $("#accesoriesSubTotal"+idOfAccTextBox).val(ui.item.price * $("#accesoriesUnit"+idOfAccTextBox).val());
+																	 
+																	calculatePrice();
 															  }
 																							
 															});
@@ -720,7 +721,7 @@
 														templateHtml += "<td width='10%'><input type='text' name='accesoriesUnitType' value='' id='accesoriesUnitType" + accesoriesCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='text' name='accesoriesIndex' value='' id='accesoriesIndex" + accesoriesCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='hidden'  name='accesoriesPrice'  value='' id='accesoriesPrice" + accesoriesCount + "'/>\n";
-														templateHtml += "<input type='text'  name='accesoriesSubTotal' value='' id='accesoriesSubTotal" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<input type='text'  name='accesoriesSubTotal' value='' onChange='calculateAccIndexItem("+ accesoriesCount +")' id='accesoriesSubTotal" + accesoriesCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeAcc("+accesoriesCount+")'/></td>\n";
 														
 														templateHtml += "</tr>\n";
@@ -735,9 +736,34 @@
 													}
 													
 													function removeAcc(idx) {
-														$("#accesories"+idx+"").remove()
+														$("#accesories"+idx+"").remove();
+														calculatePrice();
 													}
-									
+													function calculateAccPrice(idx) {
+														var newPriceProductItem; 
+														//if($("#productAccesoriesIndex"+idx).val()!="" && $("#productAccesoriesIndex"+idx).val()!=undefined )
+															newPriceProductItem = parseFloat($("#accesoriesUnit"+idx+"").val()) * parseFloat( $("#accesoriesPrice"+idx+"").val()) ;
+														//else
+															
+														$("#accesoriesSubTotal"+idx+"").val(newPriceProductItem);
+														calculatePrice();
+														
+													}
+													function calculateAccIndexItem(idx) {
+														var productItemIndex =parseFloat($("#accesoriesSubTotal"+idx).val()) / parseFloat($("#accesoriesUnit"+idx).val());
+														var indexTemp = parseFloat($("#accesoriesIndex"+idx).val());
+														if(productItemIndex < indexTemp){
+															
+															$("#accesoriesIndex"+idx).css({"background-color": oRed});
+
+														}else{
+														
+															$("#accesoriesIndex"+idx).css({"background-color": oBlue});
+														}
+														$("#productAccesoriesIndex"+idx).val(productItemIndex);
+														calculatePrice();
+														
+													}
 											</script>
 			                                </td>
 			                            </tr>
@@ -755,6 +781,9 @@
                                     		<tr>
 				                                <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.miscellaneous.label" default="Miscellaneous" /></label>
+				                                </th>
+				                                 <th valign="top" class="unit" >
+				                                    <label for="productDetail"><g:message code="productDetail.miscellaneous.unitType.label" default="Unit" /></label>
 				                                </th>
 				                               <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.miscellaneous.unitType.label" default="Unit Type" /></label>
