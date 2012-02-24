@@ -1,8 +1,10 @@
 dataSource {
-    pooled = true
-    driverClassName = "org.hsqldb.jdbcDriver"
-    username = "sa"
-    password = ""
+	pooled = true
+	dbCreate = "update"
+	url = "jdbc:mysql://localhost/yourDB"
+	driverClassName = "com.mysql.jdbc.Driver"
+	username = "root"
+	password = ""	
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -14,13 +16,13 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:hsqldb:mem:devDB"
+            url = "jdbc:mysql://localhost/yourDB"
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:hsqldb:mem:testDb"
+            url = "jdbc:mysql://localhost/yourDB"
         }
     }
     production {
