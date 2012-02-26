@@ -132,7 +132,7 @@ class ProductDetailController {
 		
 		try{
 				product.model	 = Model.get(params.modelID)
-				
+				product.idxx = params.idx
 				def sizes
 				if(params.materialName!=null)
 				{

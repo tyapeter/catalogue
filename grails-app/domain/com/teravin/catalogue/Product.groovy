@@ -9,7 +9,7 @@ class Product {
     static auditable = true
 	String name
 	String code
-	String materials
+	//String materials
 	Model model
 	ProductType productType
 	Color color

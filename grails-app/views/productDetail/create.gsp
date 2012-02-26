@@ -267,17 +267,17 @@
 	                                  	<tr>
 		                                  	<td><label for="width"><g:message code="productInstance.width.label" default="Width" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'width', 'errors')}">
-	                                    			<g:textField id='width' name='width' class='width' value="${fieldValue(bean: productInstance, field: 'width')}" />
+	                                    			<g:textField id='width' name='width' class='width' onChange='calculateTotalCubic()' value="${fieldValue(bean: productInstance, field: 'width')}" />
 	                                		</td>
 	                                		
 	                                		<td><label for="height"><g:message code="productInstance.height.label" default="height" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'height', 'errors')}">
-	                                    			<g:textField id='height' name='height' class='modelHeight' value="${fieldValue(bean: productInstance, field: 'height')}" />
+	                                    			<g:textField id='height' name='height' class='modelHeight' onChange='calculateTotalCubic()' value="${fieldValue(bean: productInstance, field: 'height')}" />
 	                                		</td>
 	                                		
 	                                		<td><label for="length"><g:message code="productInstance.length.label" default="Length" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'length', 'errors')}">
-	                                    			<g:textField id='length' name='length' class='modelLength'  value="${fieldValue(bean: productInstance, field: 'length')}" />
+	                                    			<g:textField id='length' name='length' class='modelLength' onChange='calculateTotalCubic()' value="${fieldValue(bean: productInstance, field: 'length')}" />
 	                                		</td>
 	                                		
 	                                		
@@ -303,7 +303,7 @@
 	                                  	<tr>
 		                                  	<td><label for="packingWidth"><g:message code="productInstance.packingWidth.label" default="Packing Width" /></label></td>
 		                                  	 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'packingWidth', 'errors')}">
-	                                    			<g:textField id='packingWidth' name='seatWidth' class='packingWidth' value="${fieldValue(bean: productInstance, field: 'packingWidth')}" />
+	                                    			<g:textField id='packingWidth' name='packingWidth' class='packingWidth' value="${fieldValue(bean: productInstance, field: 'packingWidth')}" />
 	                                		</td>
 	                                		
 	                                		<td><label for="packingHeight"><g:message code="productInstance.packingHeight.label" default="Packing Height" /></label></td>
@@ -351,10 +351,10 @@
                         	</tr>	
                         	 <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="idx"><g:message code="product.idx.label" default="Idx" /></label>
+                                    <label for="idxx"><g:message code="product.idxx.label" default="Index" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idx', 'errors')}">
-                                    <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idxx', 'errors')}">
+                                    <g:textField name="idxx" id="idxx" value="${fieldValue(bean: productInstance, field: 'idxx')}" />
                                 </td>
                             </tr>
                         
@@ -369,15 +369,23 @@
                         
                               <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="indexPricing"><g:message code="product.price.label" default="Price" /></label>
+                                    <label for="price"><g:message code="product.price.label" default="Price" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
                                     <g:textField name="price" value="0" />
                                 </td>
                             </tr>
+                            <tr class="prop">
+                                <td valign="top" class="baseCost">
+                                    <label for="baseCost"><g:message code="product.baseCost.label" default="Base Cost" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
+                                    <g:textField name="baseCost" value="0" />
+                                </td>
+                            </tr>
                             <!-- tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="idx"><g:message code="product.idx.label" default="Idx" /></label>
+                                    <label for="idx"><g:message code="product.idx.label" default="Index" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idx', 'errors')}">
                                     <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
@@ -594,7 +602,8 @@
 															
 															
 														}
-														$("#price").val(parseFloat(priceTemp));	
+														$("#baseCost").val(parseFloat(priceTemp));	
+														calculateIndex()
 													}
 									
 										</script>
@@ -866,8 +875,12 @@
 																	});
 																	
 															         $("#miscellaneousIndex"+idOfMiscTextBox).val(ui.item.index);
+															         $("#miscellaneousUnit"+idOfMiscTextBox).val(1);
+																	 $("#miscellaneousSubTotal"+idOfMiscTextBox).val(ui.item.price);
 																	 $("#miscellaneousPrice"+idOfMiscTextBox).val(ui.item.price);
 																	 $("#miscellaneousID"+idOfMiscTextBox).val(ui.item.id);
+																	 $("#miscellaneousSubTotal"+idOfMiscTextBox).val(ui.item.price * $("#miscellaneousUnit"+idOfMiscTextBox).val());
+																	 calculatePrice();
 															  }
 																							
 															});
@@ -883,10 +896,12 @@
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='miscellaneousID'  value='' id='miscellaneousID" + miscellaneousCount + "'/></td>\n";
-														templateHtml += "<td width='70%'><input type='text' onFocus='setIdOfMiscTextBox("+miscellaneousCount+")' class='miscellaneousName' name='miscellaneousName' size='30' value='' id='miscellaneousName" + miscellaneousCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnitType' size='15' value='' id='miscellaneousUnitType" + miscellaneousCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text' name='miscellaneousIndex' size='15' value='' id='miscellaneousIndex" + miscellaneousCount + "'/></td>\n"
-														templateHtml += "<td width='10%'><input type='text'  name='miscellaneousPrice' size='15' value='' id='miscellaneousPrice" + miscellaneousCount + "'/></td>\n"
+														templateHtml += "<td width='50%'><input type='text' onFocus='setIdOfMiscTextBox("+miscellaneousCount+")' class='miscellaneousName' name='miscellaneousName' value='' id='miscellaneousName" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnit' size='15' onChange='calculateMiscPrice("+miscellaneousCount+")' value='' id='miscellaneousUnit" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnitType' size='15' value='' id='miscellaneousUnitType" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousIndex' size='15' value='' id='miscellaneousIndex" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='hidden'  name='miscellaneousPrice' value='' id='miscellaneousPrice" + miscellaneousCount + "'/>";
+														templateHtml += "<input type='text'  name='miscellaneousSubTotal' value='' onChange='calculateMiscIndexItem("+ miscellaneousCount +")' id='miscellaneousSubTotal" + miscellaneousCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeMisc("+miscellaneousCount+")'/></td>\n";
 														
 														templateHtml += "</tr>\n";
@@ -901,6 +916,30 @@
 													}
 													function removeMisc(idx) {
 														$("#miscellaneous"+idx+"").remove()
+													}
+													function calculateMiscPrice(idx) {
+														var newMiscPriceProductItem = parseFloat($("#miscellaneousUnit"+idx+"").val()) * parseFloat( $("#miscellaneousPrice"+idx+"").val()) ;
+													
+														
+														$("#miscellaneousSubTotal"+idx+"").val(newMiscPriceProductItem);
+														
+														calculatePrice();
+														
+													}
+													function calculateMiscIndexItem(idx) {
+														var productItemIndex =parseFloat($("#miscellaneousSubTotal"+idx).val()) / parseFloat($("#miscellaneousUnit"+idx).val());
+														var indexTemp = parseFloat($("#miscellaneousIndex"+idx).val());
+														if(productItemIndex < indexTemp){
+															
+															$("#miscellaneousIndex"+idx).css({"background-color": oRed});
+
+														}else{
+														
+															$("#miscellaneousIndex"+idx).css({"background-color": oBlue});
+														}
+														$("#productMiscellaneousIndex"+idx).val(productItemIndex);
+														calculatePrice();
+														
 													}
 								
 										</script>
@@ -1005,9 +1044,24 @@
 					  $("#packingLength").val(modelTemp['packingLength']);
 					  $("#packingWidth").val(modelTemp['packingWidth']);
 					  $("#cbm").val(modelTemp['cbm']);
+					  
+					 calculateTotalCubic();
+					 
 	                }
 	              
 				});
+			}
+			function calculateTotalCubic() {
+				var totalCubicTemp = parseFloat($("#width").val() ) * parseFloat($("#height").val()) * parseFloat($("#length").val()) / 1000000;
+				$("#totalCubic").val(parseFloat(totalCubicTemp));	
+				calculateIndex();
+			}
+			function calculateIndex() {
+				var indexModal = parseFloat($("#baseCost").val()) / parseFloat($("#totalCubic").val());
+				$("#idxx").val(indexModal);
+			}
+			function calculateIndexPrice() {
+				
 			}
 		</script>
     </body>
