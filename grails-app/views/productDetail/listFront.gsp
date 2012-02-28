@@ -94,7 +94,7 @@
                         	<table class='tableProduct'>
                         			<tr>
                         				<td align='center' class='product' >
-                        					<a href="#"  onClick=setClassImageId(${i})><img  width =150 height=150 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>
+                        					<a href="#"  onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>
                         				</td>
                         			</tr>
                         			<tr>
@@ -117,11 +117,12 @@
                     	
                         </g:if>
                         <g:else>
+                        	
                         	<td  width=200 align=center >
-                        	<table align=center >
+                        	<table align=center class='tableProduct' >
                         			<tr>
                         				<td  class='product'>
-                        					<a href="#" onClick=setClassImageId(${i}) ><img  width =150 height=150 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>	
+                        					<a href="#" onClick=setClassImageId(${i}) ><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>	
                         				</td>
                         			</tr>
                         			<tr>
@@ -142,7 +143,7 @@
                         	</table>
                         	</td>
                         </g:else>
-                        <g:if test="${i % 4 == 0 && i!=0}">
+                        <g:if test="${i % 3 == 0 && i!=0 && i!=6}">
                         	</tr>
                         </g:if>
                     </g:each>

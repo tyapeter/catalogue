@@ -62,6 +62,7 @@
 	<div class='signIn '>
 		<a href="#"><span>Sign Up</span></a> &nbsp;&nbsp;<a href="#" id="signIn" ><span>Sign In</span></a>
 	</div>
+	
 	<div id="menu">
 		<ul class="menu">
 			<li><a href="/catalogue/" class="parent"><span>Home</span></a>
@@ -69,11 +70,19 @@
 			</li>
 			<li  ><a href="#" id="materialsMenu" class="parent" name="materialsMenu"><span>Materials</span></a>
 			</li>
-			<li><a href="#"><span>About Us</span></a></li>
-			<li class="last"><a href="#"><span>Search</span></a></li>
+			<li ><a href="#"><span>About Us</span></a></li>
+			<li class="last">
+			 
+			</li>
 		</ul>
+		
 	</div>
-
+		<div id="searchwrapper">
+				<form action="">
+					<input type="text" class="searchbox" name="s" value="" />
+					<input type="image" src="${resource(dir:'images',file:'searchBox/searchBoxBlankImage.jpg')}" class="searchbox_submit" value="" />
+				</form>
+			</div>
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>
         <g:layoutBody />
 	<div id="copyright">Copyright &copy; 2011 <a href="http://apycom.com/">Apycom jQuery Menus</a></div>
