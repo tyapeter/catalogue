@@ -39,9 +39,15 @@ class ModelController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
+		
+		def modelList = Model.createCriteria().list(params){
+			eq("deleteFlag","N")
+			maxResults(params.max)
+			
+		}
         withFormat {
 			html {
-				[modelInstanceList: Model.list(params), modelInstanceTotal: Model.count()]
+				[modelInstanceList: modelList, modelInstanceTotal: modelList.getTotalCount()]
 			}
 			xml {
 				render Model.list( params ) as XML

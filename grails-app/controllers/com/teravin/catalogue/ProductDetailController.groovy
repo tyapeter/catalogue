@@ -21,11 +21,15 @@ class ProductDetailController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "id"
 		params.order = "asc"
-		params.deleteFlag= "N"
 		
+		def productList = Product.createCriteria().list(params){
+			eq("deleteFlag","N")
+			maxResults(params.max)
+			
+		}
         withFormat {
 			html {
-				[productInstanceList: Product.list(params), productInstanceTotal: Product.count()]
+				[productInstanceList: productList, productInstanceTotal: productList.getTotalCount()]
 			}
 			xml {
 				render Product.list( params ) as XML

@@ -65,9 +65,14 @@ class MaterialController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
+		def materialList = Material.createCriteria().list(params){
+			eq("deleteFlag","N")
+			maxResults(params.max)
+			
+		}
         withFormat {
 			html {
-				[materialInstanceList: Material.list(params), materialInstanceTotal: Material.count()]
+				[materialInstanceList: Material.list(params), materialInstanceTotal: materialList.getTotalCount()]
 			}
 			xml {
 				render Material.list( params ) as XML
