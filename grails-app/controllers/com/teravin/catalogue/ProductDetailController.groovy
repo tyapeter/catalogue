@@ -21,7 +21,7 @@ class ProductDetailController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "id"
 		params.order = "asc"
-		
+		params.deleteFlag= "N"
 		
         withFormat {
 			html {
@@ -125,6 +125,8 @@ class ProductDetailController {
 		def productDetailInstance
 		def product = new Product(params)
 		product.createdBy= springSecurityService.principal.username
+		if(params.name=="")
+			product.name=null
 		def error = false
 		def materialList
 		def accesoriesList
@@ -132,7 +134,7 @@ class ProductDetailController {
 		
 		try{
 				product.model	 = Model.get(params.modelID)
-				product.idxx = params.idx
+				product.idxx = new BigDecimal(params.idxx)
 				def sizes
 				if(params.materialName!=null)
 				{
@@ -238,7 +240,7 @@ class ProductDetailController {
 				println "aa"+e.getMessage()
 				flash.message = e.getMessage()
 			}
-//			materialList = new ArrayList()
+			materialList = new ArrayList()
 //			if(params.materialName.class == String){
 //				materialList.add(params.materialName)
 //			}
@@ -255,8 +257,9 @@ class ProductDetailController {
 					flash.message = "${message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])}"
 					redirect(action: "show", id: product.id)
 				}
-				else {
-					render(view: "create", model: [productInstance: product])
+				else { 
+					
+					render(view: "create", model: [productInstance: product, materialList :materialList ])
 				}
 			}
 			xml {

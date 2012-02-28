@@ -24,18 +24,21 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'product.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="code" title="${message(code: 'product.code.label', default: 'Code')}" />
+                         
                         
                             <th><g:message code="product.name.label" default="Name" /></th>
                             
                             <th><g:message code="product.model.label" default="Model" /></th>
-                        
-                            <th><g:message code="product.productType.label" default="Product Type" /></th>
-                        
-                            <th><g:message code="product.color.label" default="Color" /></th>
-                        
-                            <g:sortableColumn property="width" title="${message(code: 'product.width.label', default: 'Width')}" />
-                        
+                           
+                            <th><g:message code= "product.width.label" default= "Width" /></th>
+                        	<th><g:message code= "product.Height.label" default= "Height" /></th>
+                        	<th><g:message code= "product.Length.label" default= "Length" /></th>
+                        	<th><g:message code= "product.width.label" default= "Seat Width" /></th>
+                        	<th><g:message code= "product.Height.label" default= "Seat Height" /></th>
+                        	<th><g:message code= "product.Length.label" default= "Seat Length" /></th>
+                        	<th><g:message code= "product.width.label" default= "Packing Width" /></th>
+                        	<th><g:message code= "product.Height.label" default= "Packing Height" /></th>
+                        	<th><g:message code= "product.Length.label" default= "Packing Length" /></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,17 +47,21 @@
                         
                             <td><g:link action="show" id="${productInstance.id}">${fieldValue(bean: productInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: productInstance, field: "code")}</td>
+                         
                             
                             <td>${fieldValue(bean: productInstance, field: "name")}</td>
                         
                             <td>${fieldValue(bean: productInstance, field: "model")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "productType")}</td>
-                        
-                            <td>${fieldValue(bean: productInstance, field: "color")}</td>
-                        
+                            
                             <td>${fieldValue(bean: productInstance, field: "width")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "height")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "length")}</td>
+                             <td>${fieldValue(bean: productInstance, field: "seatWidth")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "seatHeight")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "seatLength")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "packingWidth")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "packingHeight")}</td>
+                            <td>${fieldValue(bean: productInstance, field: "packingLength")}</td>
                         
                         </tr>
                     </g:each>

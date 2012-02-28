@@ -8,7 +8,7 @@ class Product {
 
     static auditable = true
 	String name
-	String code
+	//String code
 	//String materials
 	Model model
 	ProductType productType
@@ -41,7 +41,7 @@ class Product {
 	static hasMany = [productDetails:ProductDetail]
 
     static constraints = {
-		code(nullable:true)
+		//code(nullable:true)
 		name()
         model()
         productType(nullable:true)
@@ -71,7 +71,7 @@ class Product {
     }
 
     String toString() {
-      "code:${code},model:${model},width:${width},height:${height},length:${length},seatHeightL:${seatHeight},estLoad:${estLoad},cbm:${cbm}"
+      
     }
 	
 

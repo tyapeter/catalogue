@@ -29,13 +29,7 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.code.label" default="Code" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "code")}</td>
-                            
-                        </tr>
-                    	
+                      
                     	 <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.name.label" default="Name" /></td>
                             
@@ -66,31 +60,94 @@
                     <tr><td colspan=2><table>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.width.label" default="Width" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "width")}</td>
+                            
+                            <td valign="top" class="name"><g:message code="product.height.label" default="Height" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "height")}</td>
+                            
                             <td valign="top" class="name"><g:message code="product.length.label" default="Length" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "length")}</td>
-                            <td valign="top" class="name"><g:message code="product.estLoad.label" default="Est Load" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "estLoad")}</td>
+                            
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.height.label" default="Height" /></td>
+                            <td valign="top" class="name"><g:message code="product.seatWidth.label" default="Seat Width" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "seatWidth")}</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "height")}</td>
                             <td valign="top" class="name"><g:message code="product.seatHeight.label" default="Seat Height" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "seatHeight")}</td>
-                            <td valign="top" class="name"><g:message code="product.cbm.label" default="Cbm" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "cbm")}</td>
+                            <td valign="top" class="name"><g:message code="product.seatLength.label" default="Seat Length" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "seatLength")}</td>
                             
+                           
                             
                         </tr>
+                         	
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.packingWidth.label" default="Packing Width" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "packingWidth")}</td>
+                            
+                            <td valign="top" class="name"><g:message code="product.packingHeight.label" default="Packing Height" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "packingHeight")}</td>
+                            
+                            <td valign="top" class="name"><g:message code="product.packingLength.label" default="Packing Length" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "packingLength")}</td>
+                            
+                          
+                            
+                        </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.estLoad.label" default="Est Load" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "estLoad")}</td>
+                            <td valign="top" class="name"><g:message code="product.totalCubic.label" default="Total Cubic" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "totalCubic")}</td>
+                            <td valign="top" class="name"><g:message code="product.cbm.label" default="Cbm" /></td>
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "cbm")}</td>
+                      
+                        </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.Total Weight.label" default="Total Weight" /></td>
+                            <td valign="top" class="value" colspan=5>${fieldValue(bean: productInstance, field: "totalWeight")}</td>
+                            
+                      
+                        </tr>
                     </table></td></tr>
-                   
+                    		<tr class="prop">
+                                <td valign="top" class="name">
+                                    <g:message code="product.index.label" default="Index" />
+                                </td>
+                                <td valign="top" class="value">
+                                    ${fieldValue(bean: productInstance, field: 'idxx')}
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <g:message code="product.indexPricing.label" default="Index Pricing" />
+                                </td>
+                                <td valign="top" class="value }">
+                                   ${fieldValue(bean: productInstance, field: 'indexPricing')}
+                                </td>
+                            </tr>
+                        
+                              <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="price"><g:message code="product.price.label" default="Price" /></label>
+                                </td>
+                                <td valign="top" class="value">
+                                   ${fieldValue(bean: productInstance, field: 'price')}
+                                </td>
+                            </tr>
+                            <tr class="prop">
+                                <td valign="top" class="baseCost">
+                                  <g:message code="product.baseCost.label" default="Base Cost" />
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'price', 'errors')}">
+                                   ${fieldValue(bean: productInstance, field: 'baseCost')}
+                                </td>
+                            </tr>
                     <tr><td colspan=2>
                        	<div>
             				<table class="materialTbl">

@@ -42,8 +42,8 @@
                                     <label for="model.name"><g:message code="product.model.label" default="Model" /></label>
                                 </td>
                             	<td valign="top" class="value ${hasErrors(bean: productInstance, field: 'model', 'errors')}">
-                            			 <g:textField class="modelName" name="modelName" id="modelName" value="" size="30"/>
-                                         <g:hiddenField name="modelID"  value="" />
+                            			 <g:textField class="modelName" name="modelName" id="modelName" value="${fieldValue(bean: productInstance, field: 'model.name')}" size="30"/>
+                                         <g:hiddenField name="modelID"  value="${fieldValue(bean: productInstance, field: 'model.id')}" />
                                    
                                 </td>
                         	</tr>
@@ -257,7 +257,7 @@
 	                                    <label for="product.model.modelCategory"><g:message code="product.model.modelCategory" default="ModelCategory" /></label>
 	                                </td>
 	                              	<td valign="top" class="value ${hasErrors(bean: productInstance, field: 'product.model.modelCategory.name', 'errors')}">
-	                                    <g:textField class="modelCategory" name="modelCategory" id="modelCategory" value="" size="30"/>
+	                                    <g:textField class="modelCategory" name="modelCategory" id="modelCategory" value="${fieldValue(bean: productInstance, field: 'model.modelCategory.name')}" size="30"/>
 	                                    
 	                                </td>
                         	</tr>				
@@ -351,7 +351,7 @@
                         	</tr>	
                         	 <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="idxx"><g:message code="product.idxx.label" default="Index" /></label>
+                                    <label for="idxx"><g:message code="product.index.label" default="Index" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'idxx', 'errors')}">
                                     <g:textField name="idxx" id="idxx" value="${fieldValue(bean: productInstance, field: 'idxx')}" />
@@ -416,7 +416,7 @@
 				                                </th>
 				                            </tr>
 			                            </thead >
-                                    	<g:each in="${materialList}" status="i" var="material">
+                                    	<g:each in="${materialList}" status="i" var="material" class="value ${hasErrors(bean: materialList, field: 'materialList', 'errors')} >
                                     	<tbody id="material${i}">
                                     		<!-- Material -->
 				                        	
@@ -603,7 +603,10 @@
 															
 														}
 														$("#baseCost").val(parseFloat(priceTemp));	
-														calculateIndex()
+														
+														$("#price").val( parseFloat($("#baseCost").val()) * 1.65 );
+														calculateIndex();
+														calculateIndexPricing();
 													}
 									
 										</script>
@@ -1057,11 +1060,12 @@
 				calculateIndex();
 			}
 			function calculateIndex() {
-				var indexModal = parseFloat($("#baseCost").val()) / parseFloat($("#totalCubic").val());
+				var indexModal = parseFloat($("#baseCost").val()) / parseFloat($("#totalWeight").val());
 				$("#idxx").val(indexModal);
 			}
-			function calculateIndexPrice() {
-				
+			function calculateIndexPricing() {
+				var indexPricing = parseFloat($("#baseCost").val()) * 1.65 / parseFloat($("#totalWeight").val());
+				$("#indexPricing").val(indexPricing);
 			}
 		</script>
     </body>
