@@ -78,10 +78,10 @@
 		
 	</div>
 		<div id="searchwrapper">
-				<form action="">
-					<input type="text" class="searchbox" name="s" value="" />
+				<g:form url="[action:'listSearch',controller:'product']" >
+					<g:textField type="text" name="test" id="test" class="searchbox" />
 					<input type="image" src="${resource(dir:'images',file:'searchBox/searchBoxBlankImage.jpg')}" class="searchbox_submit" value="" />
-				</form>
+				</g:form>
 			</div>
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>
         <g:layoutBody />
@@ -92,7 +92,7 @@
 			<div class='login_message'>${flash.message}</div>
 			</g:if>
 			<div class='fheader'>Sign In</div>
-			<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+			<form url="[action:'auth',controller:'login']"  id='loginForm' class='cssform' autocomplete='off'>
 				<p>
 					<label for='username'>Login ID</label>
 					<input type='text' class='text_' name='j_username' id='username' />

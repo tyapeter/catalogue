@@ -1,7 +1,7 @@
 dataSource {
 	pooled = true
 	dbCreate = "update"
-	url = "jdbc:mysql://localhost/yourDB"
+	url = "jdbc:mysql://localhost/catalogue"
 	driverClassName = "com.mysql.jdbc.Driver"
 	username = "root"
 	password = ""	
@@ -17,14 +17,14 @@ environments {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/catalogue"
-            user = "catalogue"
-            password = "password"
+           // user = "root"
+          //  password = ""
         }
     }
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/yourDB"
+            url = "jdbc:mysql://localhost/catalogue"
         }
     }
     production {

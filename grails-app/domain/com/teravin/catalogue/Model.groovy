@@ -6,7 +6,7 @@ import com.teravin.catalogue.Product
 class Model {
 
     static auditable = true
-	
+	static searchable = true
 	String code
     String name
 	ModelCategory modelCategory

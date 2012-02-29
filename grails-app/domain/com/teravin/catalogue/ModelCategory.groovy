@@ -3,7 +3,7 @@ package com.teravin.catalogue
 class ModelCategory {
 
     static auditable = true
-
+	static searchable = true
     String name
     String description = ""
 	String deleteFlag = "N"

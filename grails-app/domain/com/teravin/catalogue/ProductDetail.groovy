@@ -27,7 +27,7 @@ class ProductDetail {
 	boolean _deleted
     
     static transients = [ '_deleted' ]
-
+	static searchable = true
 	
     static constraints = {
 //		product()

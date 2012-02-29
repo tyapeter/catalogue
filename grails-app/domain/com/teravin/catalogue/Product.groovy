@@ -72,8 +72,13 @@ class Product {
     }
 
     String toString() {
-      
+     "productdetails:${productDetails.material},code :${code},name :${name},idxx: ${idxx},width : ${width},length: ${length},height: ${height},seatWidth : ${seatWidth},seatLength: ${seatLength},seatHeight: ${seatHeight}"
     }
+	static searchable = {
+		except = ["version", "createdBy", "dateCreated", "updatedBy", "lastUpdated"]
+		model component:true
+		
+	}
 	
 
 

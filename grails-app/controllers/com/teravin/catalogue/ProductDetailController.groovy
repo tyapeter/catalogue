@@ -46,6 +46,7 @@ class ProductDetailController {
 		}
 		
     }
+	
 
 	def listFront = {
 		params.max = Math.min(params.max ? params.int('max') : 8, 100)

@@ -35,7 +35,34 @@ class ProductController {
 			}
 		}
     }
+	def listSearch = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		params.properties = ["Product.model.name","Product.model.code"]
 
+		if (!params.sort && !params.order) {
+			params.sort = "name"
+			params.order = "asc"
+		}
+
+		def query = "+deleteFlag:N "
+		if (params.test) {
+			query += "*${params.test}*"
+		}
+		
+		def results = new ArrayList()
+		def result = Product.search(query, params).results
+		results.add(result)
+			
+		def count = Product.countHits(query, properties: ["Product.model.name","Product.model.code"])
+		results.add(count)
+		for (i in 0..<result.size()) {
+			println	"${result[i].toString()} " 
+				
+		}
+		System.out.println("results====="+results[1].toString())
+
+		return results
+	}
     def create = {
         def productInstance = new Product()
         productInstance.properties = params
