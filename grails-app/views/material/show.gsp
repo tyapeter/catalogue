@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
@@ -37,6 +37,13 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="material.code.label" default="Code" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "code")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.description.label" default="Description" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "description")}</td>
@@ -47,6 +54,13 @@
                             <td valign="top" class="name"><g:message code="material.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "idx")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="material.idxx.label" default="Idxx" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "idxx")}</td>
                             
                         </tr>
                     
@@ -82,13 +96,6 @@
                             <td valign="top" class="name"><g:message code="material.deleteFlag.label" default="Delete Flag" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "deleteFlag")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="material.idxx.label" default="Idxx" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "idxx")}</td>
                             
                         </tr>
                     

@@ -11,7 +11,8 @@ class Product {
 	String code
 	String materials
 	Model model
-	ProductType productType
+	MaterialMain materialMain
+//	ProductType productType
 	Color color
     Double width
 	Double length
@@ -45,7 +46,7 @@ class Product {
 		materials(nullable:true)
 		name()
         model()
-        productType(nullable:true)
+//        productType(nullable:true)
 		color(nullable:true)
 		width()
 		length()
@@ -72,14 +73,14 @@ class Product {
     }
 
     String toString() {
-     "productdetails:${productDetails.material},code :${code},name :${name},idxx: ${idxx},width : ${width},length: ${length},height: ${height},seatWidth : ${seatWidth},seatLength: ${seatLength},seatHeight: ${seatHeight}"
+     "code :${code},name :${name},idxx: ${idxx},width : ${width},length: ${length},height: ${height},seatWidth : ${seatWidth},seatLength: ${seatLength},seatHeight: ${seatHeight}"
     }
-	static searchable = {
-		except = ["version", "createdBy", "dateCreated", "updatedBy", "lastUpdated"]
-		model component:true
-		
-	}
-	
+//	static searchable = {
+//		except = ["version", "createdBy", "dateCreated", "updatedBy", "lastUpdated"]
+//		model component:true
+//		only =["productDetails"]
+//	}
+//	
 
 
 	

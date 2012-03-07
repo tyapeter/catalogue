@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
@@ -26,13 +26,13 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'material.name.label', default: 'Name')}" />
                         
+                            <g:sortableColumn property="code" title="${message(code: 'material.code.label', default: 'Code')}" />
+                        
                             <g:sortableColumn property="description" title="${message(code: 'material.description.label', default: 'Description')}" />
                         
                             <g:sortableColumn property="idx" title="${message(code: 'material.idx.label', default: 'Idx')}" />
                         
-                            <g:sortableColumn property="createdBy" title="${message(code: 'material.createdBy.label', default: 'Created By')}" />
-                        
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'material.dateCreated.label', default: 'Date Created')}" />
+                            <g:sortableColumn property="idxx" title="${message(code: 'material.idxx.label', default: 'Idxx')}" />
                         
                         </tr>
                     </thead>
@@ -44,13 +44,13 @@
                         
                             <td>${fieldValue(bean: materialInstance, field: "name")}</td>
                         
+                            <td>${fieldValue(bean: materialInstance, field: "code")}</td>
+                        
                             <td>${fieldValue(bean: materialInstance, field: "description")}</td>
                         
                             <td>${fieldValue(bean: materialInstance, field: "idx")}</td>
                         
-                            <td>${fieldValue(bean: materialInstance, field: "createdBy")}</td>
-                        
-                            <td><g:formatDate date="${materialInstance.dateCreated}" /></td>
+                            <td>${fieldValue(bean: materialInstance, field: "idxx")}</td>
                         
                         </tr>
                     </g:each>

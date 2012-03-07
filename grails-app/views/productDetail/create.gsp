@@ -29,6 +29,14 @@
                 	
                     <table>
                         <tbody>
+                        	<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="code"><g:message code="product.code.label" default="Code" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'code', 'errors')}">
+                                    <g:textField id="code" name="code" class="code" maxlength="100" value="${fieldValue(bean: productInstance, field: 'code')}" />
+                                </td>
+                            </tr>
                         	  <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="name"><g:message code="product.name.label" default="Name" /></label>
@@ -349,6 +357,15 @@
 	                                    
 	                                </td>
                         	</tr>	
+                        	
+                        	 <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="color"><g:message code="product.color.label" default="Color" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'color', 'errors')}">
+                                    <g:select name="color.id" from="${com.teravin.catalogue.maintenance.Color.list()}" optionKey="id" value="${productInstance?.color?.id}"  />
+                                </td>
+                            </tr>
                         	 <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="idxx"><g:message code="product.index.label" default="Index" /></label>
@@ -360,7 +377,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="indexPricing"><g:message code="product.indexPricing.label" default="Index Pricing" /></label>
+                                    <label for="indexPricing"><g:message code="product.indexPricing.label" default="Index Costing" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'indexPricing', 'errors')}">
                                     <g:textField name="indexPricing" value="0" />
@@ -391,7 +408,14 @@
                                     <g:textField name="idx" value="${fieldValue(bean: productInstance, field: 'idx')}" />
                                 </td>
                             </tr --!>
-							
+							<tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="color"><g:message code="product.materialMain.label" default="Material Main" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'materialMain', 'errors')}">
+                                    <g:select name="color.id" from="${com.teravin.catalogue.MaterialMain.list()}" optionKey="id" value="${productInstance?.materialMain?.id}"  />
+                                </td>
+                            </tr>
 							
                         	<tr class="prop">
                                 <td valign="top" class="name" colspan="2">
@@ -1061,11 +1085,11 @@
 			}
 			function calculateIndex() {
 				var indexModal = parseFloat($("#baseCost").val()) / parseFloat($("#totalWeight").val());
-				$("#idxx").val(indexModal);
+				$("#indexPricing").val(indexModal);
 			}
 			function calculateIndexPricing() {
 				var indexPricing = parseFloat($("#baseCost").val()) * 1.65 / parseFloat($("#totalWeight").val());
-				$("#indexPricing").val(indexPricing);
+				$("#idxx").val(indexPricing);
 			}
 		</script>
     </body>

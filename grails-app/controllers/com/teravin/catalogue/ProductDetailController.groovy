@@ -247,7 +247,7 @@ class ProductDetailController {
 				println "aa"+e.getMessage()
 				flash.message = e.getMessage()
 			}
-			materialList = new ArrayList()
+//			materialList = new ArrayList()
 //			if(params.materialName.class == String){
 //				materialList.add(params.materialName)
 //			}

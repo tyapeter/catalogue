@@ -1,7 +1,7 @@
 package com.teravin.catalogue
 
-import grails.converters.JSON
 import grails.converters.XML
+import grails.converters.JSON
 
 class MaterialController {
 
@@ -12,67 +12,14 @@ class MaterialController {
     def index = {
         redirect(action: "list", params: params)
     }
-	def getMaterialLikeNameAndMaterialCategoryIs = {
-		if( params.name ) {
-			def m = Material.createCriteria()
-			
-			def materials = m.list{ 
-				like('name','%'+params.name+'%')
-				materialCategory{
-					materialType{
-						eq('name',params.materialTypeName)
-					}
-				}
-			}
 
-			
-			render materials as JSON
-		}
-	}
-	
-	def getMaterialLikeNameAndMaterialCategoryIsAccAndMat = {
-		if( params.name ) {
-			def m = Material.createCriteria()
-			def materials = Material.executeQuery("from Material m where m.name like '%"+params.name+"%' and   m.deleteFlag='N' and m.materialCategory.materialType.name='material' or m.materialCategory.materialType.name='accesories'")
-		
-			
-			/*	def materials = m.list{
-				like('name','%'+params.name+'%')
-				materialCategory{
-					materialType{
-						eq('name',params.materialTypeName) 
-						or 
-						eq('name',params.materialTypeName2)
-						
-					}
-				}
-			}*/
-
-			
-			render materials as JSON
-		}
-	}
-	def getMaterialById = {
-		if( params.id ) {
-			
-			
-			def material = Material.get( params.id )
-				 
-			render material as JSON
-		}
-	}
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
-		def materialList = Material.createCriteria().list(params){
-			eq("deleteFlag","N")
-			maxResults(params.max)
-			
-		}
         withFormat {
 			html {
-				[materialInstanceList: Material.list(params), materialInstanceTotal: materialList.getTotalCount()]
+				[materialInstanceList: Material.list(params), materialInstanceTotal: Material.count()]
 			}
 			xml {
 				render Material.list( params ) as XML
@@ -100,7 +47,7 @@ class MaterialController {
         materialInstance.createdBy = springSecurityService.principal.username
         withFormat {
 			html {
-                if (materialInstance.save(flush: true,failOnError:true)) {
+                if (materialInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.created.message', args: [message(code: 'material.label', default: 'Material'), materialInstance.id])}"
                     redirect(action: "show", id: materialInstance.id)
                 }
@@ -109,7 +56,7 @@ class MaterialController {
                 }
 			}
 			xml {
-				if(materialInstance.save(flush: true,failOnError:true)) {
+				if(materialInstance.save(flush: true)) {
 					materialInstance as XML
 				}
 				else {
@@ -117,7 +64,7 @@ class MaterialController {
 				}
 			}
 			json {
-				if(materialInstance.save(flush: true,failOnError:true)) {
+				if(materialInstance.save(flush: true)) {
 					response.status = 201
 					if(params.callback) {
 						render "${params.callback}(${materialInstance as JSON})"
@@ -408,7 +355,7 @@ class MaterialController {
 		def totalRecord=Material.count()
 
 		
-		listData.each{list <<[it.id,it.name,it.createdBy,it.dateCreated,it.deleteFlag,it.idxx]}
+		listData.each{list <<[it.id,it.name,it.code,it.idxx,it.createdBy,it.dateCreated]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -418,10 +365,10 @@ class MaterialController {
 	{
 		if ( index == '0' ) return "id";
 					else if ( index == '1' ) return "name";
-					else if ( index == '2' ) return "createdBy";
-					else if ( index == '3' ) return "dateCreated";
-					else if ( index == '4' ) return "deleteFlag";
-					else if ( index == '5' ) return "idxx";
+					else if ( index == '2' ) return "code";
+					else if ( index == '3' ) return "idxx";
+					else if ( index == '4' ) return "createdBy";
+					else if ( index == '5' ) return "dateCreated";
 					
 	}
 	

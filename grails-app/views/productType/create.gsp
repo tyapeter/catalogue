@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'productType.label', default: 'ProductType')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
@@ -34,6 +34,15 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productTypeInstance, field: 'name', 'errors')}">
                                     <g:textField name="name" maxlength="100" value="${productTypeInstance?.name}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="code"><g:message code="productType.code.label" default="Code" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productTypeInstance, field: 'code', 'errors')}">
+                                    <g:textField name="code" maxlength="100" value="${productTypeInstance?.code}" />
                                 </td>
                             </tr>
                         

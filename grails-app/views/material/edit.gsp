@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
@@ -42,6 +42,15 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
+                                  <label for="code"><g:message code="material.code.label" default="Code" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'code', 'errors')}">
+                                    <g:textField name="code" maxlength="100" value="${materialInstance?.code}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
                                   <label for="description"><g:message code="material.description.label" default="Description" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'description', 'errors')}">
@@ -55,6 +64,15 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'idx', 'errors')}">
                                     <g:textField name="idx" value="${fieldValue(bean: materialInstance, field: 'idx')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="idxx"><g:message code="material.idxx.label" default="Idxx" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'idxx', 'errors')}">
+                                    <g:textField name="idxx" value="${fieldValue(bean: materialInstance, field: 'idxx')}" />
                                 </td>
                             </tr>
                         
@@ -82,15 +100,6 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'deleteFlag', 'errors')}">
                                     <g:textField name="deleteFlag" value="${materialInstance?.deleteFlag}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="idxx"><g:message code="material.idxx.label" default="Idxx" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: materialInstance, field: 'idxx', 'errors')}">
-                                    <g:textField name="idxx" value="${fieldValue(bean: materialInstance, field: 'idxx')}" />
                                 </td>
                             </tr>
                         

@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'productType.label', default: 'ProductType')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
@@ -33,6 +33,13 @@
                             <td valign="top" class="name"><g:message code="productType.name.label" default="Name" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: productTypeInstance, field: "name")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="productType.code.label" default="Code" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productTypeInstance, field: "code")}</td>
                             
                         </tr>
                     

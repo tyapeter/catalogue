@@ -5,13 +5,14 @@ import com.teravin.catalogue.maintenance.UnitType
 class Material {
 
     static auditable = true
-
+	
 	MaterialCategory materialCategory
+	String code
 	String type
 	String isAccesories
     String name
 	Double price
-	Double idxx
+	Double idxx = 1
 	UnitType unitType
     String description = ""
 	String deleteFlag = "N"
@@ -23,8 +24,10 @@ class Material {
 
     static constraints = {
         name(blank:false,maxSize:100)
+		code(blank:true,maxSize:100)
         description(maxSize:500)
         idx(maxSize:3)
+		idxx(maxSize:10)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)
         updatedBy(maxSize:50)
@@ -35,7 +38,7 @@ class Material {
       "$name"
     }
 
-
+	
   /**
     *
     */

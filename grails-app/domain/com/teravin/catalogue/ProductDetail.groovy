@@ -4,6 +4,7 @@ import com.teravin.catalogue.Product
 import com.teravin.catalogue.Material
 import com.teravin.catalogue.Accesories
 import com.teravin.catalogue.Miscellaneous
+
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.FactoryUtils;
 
@@ -25,9 +26,15 @@ class ProductDetail {
     String updatedBy = ""
     Date lastUpdated
 	boolean _deleted
-    
+
     static transients = [ '_deleted' ]
-	static searchable = true
+	
+//	
+//	static searchable = true
+////		only ["unit","price","idxx"]
+////		product component=true
+////		root false 
+//	}
 	
     static constraints = {
 //		product()
@@ -40,6 +47,7 @@ class ProductDetail {
         dateCreated(blank:false)
         updatedBy(maxSize:50)
         lastUpdated()
+	
     }
 
     String toString() {

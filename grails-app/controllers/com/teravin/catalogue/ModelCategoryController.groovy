@@ -13,25 +13,13 @@ class ModelCategoryController {
         redirect(action: "list", params: params)
     }
 
-	def getModelCategory = {
-		
-		def modelCategoryInstance = ModelCategory.get( params.id )
-			
-		render modelCategoryInstance as JSON
-	}
-	
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
-		def modelCategoryList = ModelCategory.createCriteria().list(params){
-			eq("deleteFlag","N")
-			maxResults(params.max)
-			
-		}
         withFormat {
 			html {
-				[modelCategoryInstanceList: modelCategoryList, modelCategoryInstanceTotal: modelCategoryList.getTotalCount()]
+				[modelCategoryInstanceList: ModelCategory.list(params), modelCategoryInstanceTotal: ModelCategory.count()]
 			}
 			xml {
 				render ModelCategory.list( params ) as XML
@@ -367,7 +355,7 @@ class ModelCategoryController {
 		def totalRecord=ModelCategory.count()
 
 		
-		listData.each{list <<[it.id,it.name,it.createdBy,it.dateCreated,it.deleteFlag]}
+		listData.each{list <<[it.id,it.name,it.code,it.createdBy,it.dateCreated,it.deleteFlag]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -377,9 +365,10 @@ class ModelCategoryController {
 	{
 		if ( index == '0' ) return "id";
 					else if ( index == '1' ) return "name";
-					else if ( index == '2' ) return "createdBy";
-					else if ( index == '3' ) return "dateCreated";
-					else if ( index == '4' ) return "deleteFlag";
+					else if ( index == '2' ) return "code";
+					else if ( index == '3' ) return "createdBy";
+					else if ( index == '4' ) return "dateCreated";
+					else if ( index == '5' ) return "deleteFlag";
 					
 	}
 	

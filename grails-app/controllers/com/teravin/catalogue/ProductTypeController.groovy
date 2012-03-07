@@ -355,7 +355,7 @@ class ProductTypeController {
 		def totalRecord=ProductType.count()
 
 		
-		listData.each{list <<[it.id,it.name,it.createdBy,it.dateCreated,it.deleteFlag]}
+		listData.each{list <<[it.id,it.name,it.code,it.createdBy,it.dateCreated,it.deleteFlag]}
 
 		def data = ["iTotalRecords": totalRecord,"iTotalDisplayRecords": totalRecord,"aaData":list]
 		render data as JSON
@@ -365,9 +365,10 @@ class ProductTypeController {
 	{
 		if ( index == '0' ) return "id";
 					else if ( index == '1' ) return "name";
-					else if ( index == '2' ) return "createdBy";
-					else if ( index == '3' ) return "dateCreated";
-					else if ( index == '4' ) return "deleteFlag";
+					else if ( index == '2' ) return "code";
+					else if ( index == '3' ) return "createdBy";
+					else if ( index == '4' ) return "dateCreated";
+					else if ( index == '5' ) return "deleteFlag";
 					
 	}
 	

@@ -5,6 +5,7 @@ class ModelCategory {
     static auditable = true
 	static searchable = true
     String name
+	String code
     String description = ""
 	String deleteFlag = "N"
     int idx = 99
@@ -15,6 +16,7 @@ class ModelCategory {
 
     static constraints = {
         name(blank:false,maxSize:100)
+		code(blank:true,maxSize:100)
         description(maxSize:500)
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)

@@ -39,6 +39,7 @@
 					<div><ul>
 							<li><g:link action="list" controller="material"><span>MATERIAL         </span></g:link></li>
 							<li><g:link action="list" controller="materialCategory"><span>MATERIAL CATEGORY</span></g:link></li>
+							<li><g:link action="list" controller="materialMain"><span>MATERIAL MAIN</span></g:link></li>
 							<li><g:link action="list" controller="materialType"><span>MATERIAL TYPE    </span></g:link></li>
 					</ul></div>
 				</li>
@@ -48,7 +49,9 @@
 							<li><g:link action="list" controller="modelCategory"><span>MODEL CATEGORY</span></g:link></li>
 					</ul></div>
 				</li>
-				<li class="last"><g:link action="list" controller="productDetail"><span>PRODUCT</span></g:link></li>
+				<li  ><a href="#" id="materialsMenu" class="last" name="productDetail"><span>PRODUCT</span></a>
+			</li>
+				
 			</ul>
 	</div>
 

@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'productType.label', default: 'ProductType')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
@@ -26,13 +26,13 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'productType.name.label', default: 'Name')}" />
                         
+                            <g:sortableColumn property="code" title="${message(code: 'productType.code.label', default: 'Code')}" />
+                        
                             <g:sortableColumn property="description" title="${message(code: 'productType.description.label', default: 'Description')}" />
                         
                             <g:sortableColumn property="idx" title="${message(code: 'productType.idx.label', default: 'Idx')}" />
                         
                             <g:sortableColumn property="createdBy" title="${message(code: 'productType.createdBy.label', default: 'Created By')}" />
-                        
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'productType.dateCreated.label', default: 'Date Created')}" />
                         
                         </tr>
                     </thead>
@@ -44,13 +44,13 @@
                         
                             <td>${fieldValue(bean: productTypeInstance, field: "name")}</td>
                         
+                            <td>${fieldValue(bean: productTypeInstance, field: "code")}</td>
+                        
                             <td>${fieldValue(bean: productTypeInstance, field: "description")}</td>
                         
                             <td>${fieldValue(bean: productTypeInstance, field: "idx")}</td>
                         
                             <td>${fieldValue(bean: productTypeInstance, field: "createdBy")}</td>
-                        
-                            <td><g:formatDate date="${productTypeInstance.dateCreated}" /></td>
                         
                         </tr>
                     </g:each>

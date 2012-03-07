@@ -1,29 +1,13 @@
 package com.teravin.catalogue
 
-import com.teravin.catalogue.ModelCategory
-import com.teravin.catalogue.Product
+import java.util.Date;
 
-class Model {
+class MaterialMain {
+	static auditable = true
 
-    static auditable = true
-//	static searchable = true
-	String code
     String name
-	ModelCategory modelCategory
-//	byte[] imageFile
-	String imagePath
+	String code
     String description = ""
-    Double width
-    Double length
-    Double height
-    Double seatWidth
-    Double seatLength
-    Double seatHeight
-    Double packingWidth
-    Double packingLength
-    Double packingHeight
-	Double estLoad
-	Double cbm
 	String deleteFlag = "N"
     int idx = 99
     String createdBy
@@ -32,35 +16,21 @@ class Model {
     Date lastUpdated
 
     static constraints = {
-        code(blank:false,maxSize:100)
         name(blank:false,maxSize:100)
+		code(blank:true,maxSize:100)
         description(maxSize:500)
-        width()
-        length()
-        height()
-        seatWidth()
-        seatLength()
-        seatHeight()
-        packingWidth()
-        packingLength()
-        packingHeight()
-		cbm()
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)
         updatedBy(maxSize:50)
         lastUpdated()
-		imagePath(nullable:true)
     }
 
     String toString() {
       "$name"
     }
 
-	static hasMany = [products:Product]
-	static mapping = {
-		products cascade:"all-delete-orphan"
-	}
+
   /**
     *
     */
@@ -77,15 +47,15 @@ class Model {
      * Audit Logging
      */
     def onSave = {
-		println "new Model inserted"
+		println "new MaterialType inserted"
 		// may optionally refer to newState map
 	}
 	def onDelete = {
-		println "Model was deleted"
+		println "MaterialType was deleted"
                 // may optionally refer to oldState map
 	}
 	def onChange = { oldMap,newMap ->
-		println "Model was changed ..."
+		println "MaterialType was changed ..."
 		oldMap.each({ key, oldVal ->
 			if(oldVal != newMap[key]) {
 				println " * $key changed from $oldVal to " + newMap[key]

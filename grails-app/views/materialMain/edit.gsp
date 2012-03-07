@@ -1,11 +1,11 @@
 
 
-<%@ page import="com.teravin.catalogue.ModelCategory" %>
+<%@ page import="com.teravin.catalogue.MaterialMain" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'modelCategory.label', default: 'ModelCategory')}" />
+        <g:set var="entityName" value="${message(code: 'materialMain.label', default: 'MaterialMain')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -19,78 +19,78 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${modelCategoryInstance}">
+            <g:hasErrors bean="${materialMainInstance}">
             <div class="errors">
-                <g:renderErrors bean="${modelCategoryInstance}" as="list" />
+                <g:renderErrors bean="${materialMainInstance}" as="list" />
             </div>
             </g:hasErrors>
             <g:form method="post" >
-                <g:hiddenField name="id" value="${modelCategoryInstance?.id}" />
-                <g:hiddenField name="version" value="${modelCategoryInstance?.version}" />
+                <g:hiddenField name="id" value="${materialMainInstance?.id}" />
+                <g:hiddenField name="version" value="${materialMainInstance?.version}" />
                 <div class="dialog">
                     <table>
                         <tbody>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="name"><g:message code="modelCategory.name.label" default="Name" /></label>
+                                  <label for="name"><g:message code="materialMain.name.label" default="Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" maxlength="100" value="${modelCategoryInstance?.name}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="code"><g:message code="modelCategory.code.label" default="Code" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'code', 'errors')}">
-                                    <g:textField name="code" maxlength="100" value="${modelCategoryInstance?.code}" />
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" maxlength="100" value="${materialMainInstance?.name}" />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="description"><g:message code="modelCategory.description.label" default="Description" /></label>
+                                  <label for="code"><g:message code="materialMain.code.label" default="Code" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'description', 'errors')}">
-                                    <g:textArea name="description" cols="40" rows="5" value="${modelCategoryInstance?.description}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="idx"><g:message code="modelCategory.idx.label" default="Idx" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'idx', 'errors')}">
-                                    <g:textField name="idx" value="${fieldValue(bean: modelCategoryInstance, field: 'idx')}" />
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'code', 'errors')}">
+                                    <g:textField name="code" maxlength="100" value="${materialMainInstance?.code}" />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="createdBy"><g:message code="modelCategory.createdBy.label" default="Created By" /></label>
+                                  <label for="description"><g:message code="materialMain.description.label" default="Description" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'createdBy', 'errors')}">
-                                    <g:textField name="createdBy" maxlength="50" value="${modelCategoryInstance?.createdBy}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="updatedBy"><g:message code="modelCategory.updatedBy.label" default="Updated By" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'updatedBy', 'errors')}">
-                                    <g:textField name="updatedBy" maxlength="50" value="${modelCategoryInstance?.updatedBy}" />
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'description', 'errors')}">
+                                    <g:textArea name="description" cols="40" rows="5" value="${materialMainInstance?.description}" />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="deleteFlag"><g:message code="modelCategory.deleteFlag.label" default="Delete Flag" /></label>
+                                  <label for="idx"><g:message code="materialMain.idx.label" default="Idx" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: modelCategoryInstance, field: 'deleteFlag', 'errors')}">
-                                    <g:textField name="deleteFlag" value="${modelCategoryInstance?.deleteFlag}" />
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'idx', 'errors')}">
+                                    <g:textField name="idx" value="${fieldValue(bean: materialMainInstance, field: 'idx')}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="createdBy"><g:message code="materialMain.createdBy.label" default="Created By" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'createdBy', 'errors')}">
+                                    <g:textField name="createdBy" maxlength="50" value="${materialMainInstance?.createdBy}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="updatedBy"><g:message code="materialMain.updatedBy.label" default="Updated By" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'updatedBy', 'errors')}">
+                                    <g:textField name="updatedBy" maxlength="50" value="${materialMainInstance?.updatedBy}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="deleteFlag"><g:message code="materialMain.deleteFlag.label" default="Delete Flag" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'deleteFlag', 'errors')}">
+                                    <g:textField name="deleteFlag" value="${materialMainInstance?.deleteFlag}" />
                                 </td>
                             </tr>
                         

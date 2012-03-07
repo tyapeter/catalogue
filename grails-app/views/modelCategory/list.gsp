@@ -3,13 +3,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main2" />
+        <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'modelCategory.label', default: 'ModelCategory')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
@@ -26,13 +26,13 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'modelCategory.name.label', default: 'Name')}" />
                         
+                            <g:sortableColumn property="code" title="${message(code: 'modelCategory.code.label', default: 'Code')}" />
+                        
                             <g:sortableColumn property="description" title="${message(code: 'modelCategory.description.label', default: 'Description')}" />
                         
                             <g:sortableColumn property="idx" title="${message(code: 'modelCategory.idx.label', default: 'Idx')}" />
                         
                             <g:sortableColumn property="createdBy" title="${message(code: 'modelCategory.createdBy.label', default: 'Created By')}" />
-                        
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'modelCategory.dateCreated.label', default: 'Date Created')}" />
                         
                         </tr>
                     </thead>
@@ -44,13 +44,13 @@
                         
                             <td>${fieldValue(bean: modelCategoryInstance, field: "name")}</td>
                         
+                            <td>${fieldValue(bean: modelCategoryInstance, field: "code")}</td>
+                        
                             <td>${fieldValue(bean: modelCategoryInstance, field: "description")}</td>
                         
                             <td>${fieldValue(bean: modelCategoryInstance, field: "idx")}</td>
                         
                             <td>${fieldValue(bean: modelCategoryInstance, field: "createdBy")}</td>
-                        
-                            <td><g:formatDate date="${modelCategoryInstance.dateCreated}" /></td>
                         
                         </tr>
                     </g:each>

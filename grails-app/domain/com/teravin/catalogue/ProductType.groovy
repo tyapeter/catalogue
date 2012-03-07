@@ -5,6 +5,7 @@ class ProductType {
     static auditable = true
 
     String name
+	String code
     String description = ""
 	String deleteFlag = "N"
     int idx = 99
@@ -15,7 +16,8 @@ class ProductType {
 
     static constraints = {
         name(blank:false,maxSize:100)
-        description(maxSize:500)
+        code(blank:true,maxSize:100)
+		description(maxSize:500)
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)
