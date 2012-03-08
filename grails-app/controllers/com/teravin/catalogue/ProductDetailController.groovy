@@ -6,6 +6,7 @@ import com.teravin.catalogue.Product
 import com.teravin.catalogue.ProductDetail
 import com.teravin.catalogue.Model
 import com.teravin.catalogue.Material
+import com.teravin.catalogue.maintenance.Color
 
 class ProductDetailController {
 
@@ -16,7 +17,7 @@ class ProductDetailController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "id"
@@ -139,9 +140,17 @@ class ProductDetailController {
 		def accesoriesList
 		def miscellaneousList
 		
+		
 		try{
 				product.model	 = Model.get(params.modelID)
 				product.idxx = new BigDecimal(params.idxx)
+				def materialMain = MaterialMain.get(params.materialMain.id)
+				def modelCode = params.modelName.split(" - ")
+				def modelCategoryCode = params.modelCategoryCode
+				def materialCode
+				def colorCode = Color.get(params.color.id)
+				System.out.println("modelCode==="+ modelCategoryCode)
+				//product.code = materialMain.code + "" + modelCategoryCode +""+ modelCode + "" + 
 				def sizes
 				if(params.materialName!=null)
 				{
@@ -165,7 +174,9 @@ class ProductDetailController {
 								productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
 								
 							productDetailInstance.unit= Double.parseDouble(params.materialUnit)
-						
+							
+							
+							
 						}else{
 							productDetailInstance.material= Material.get(params.materialID[i])
 							productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
@@ -174,8 +185,16 @@ class ProductDetailController {
 							else
 								productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
 							productDetailInstance.unit= Double.parseDouble(params.materialUnit[i])
+							
+							
+							
 						}
-												
+						if (i==0)
+						{
+							materialCode = productDetailInstance.material.code
+						
+							product.code = materialMain.code + "" + modelCategoryCode +""+ modelCode[0] + "" + materialCode + "" + colorCode.code
+						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
 						
 						product.addToProductDetails(productDetailInstance)

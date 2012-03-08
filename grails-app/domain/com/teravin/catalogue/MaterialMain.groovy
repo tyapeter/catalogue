@@ -17,7 +17,7 @@ class MaterialMain {
 
     static constraints = {
         name(blank:false,maxSize:100)
-		code(blank:true,maxSize:100)
+		code(blank:false,maxSize:100)
         description(maxSize:500)
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)

@@ -29,14 +29,14 @@
                 	
                     <table>
                         <tbody>
-                        	<tr class="prop">
+                        	<!-- tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="code"><g:message code="product.code.label" default="Code" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'code', 'errors')}">
                                     <g:textField id="code" name="code" class="code" maxlength="100" value="${fieldValue(bean: productInstance, field: 'code')}" />
                                 </td>
-                            </tr>
+                            </tr --!>
                         	  <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="name"><g:message code="product.name.label" default="Name" /></label>
@@ -266,6 +266,7 @@
 	                                </td>
 	                              	<td valign="top" class="value ${hasErrors(bean: productInstance, field: 'product.model.modelCategory.name', 'errors')}">
 	                                    <g:textField class="modelCategory" name="modelCategory" id="modelCategory" value="${fieldValue(bean: productInstance, field: 'model.modelCategory.name')}" size="30"/>
+	                                    <g:hiddenField class="modelCategoryCode" name="modelCategoryCode" id="modelCategoryCode" value="${fieldValue(bean: productInstance, field: 'model.modelCategory.code')}" size="30"/>
 	                                    
 	                                </td>
                         	</tr>				
@@ -363,7 +364,7 @@
                                     <label for="color"><g:message code="product.color.label" default="Color" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'color', 'errors')}">
-                                    <g:select name="color.id" from="${com.teravin.catalogue.maintenance.Color.list()}" optionKey="id" value="${productInstance?.color?.id}"  />
+                                    <g:select name="color.id" from="${com.teravin.catalogue.maintenance.Color.findAllByDeleteFlag('N')}" optionKey="id" value="${productInstance?.color?.id}"  />
                                 </td>
                             </tr>
                         	 <tr class="prop">
@@ -374,7 +375,14 @@
                                     <g:textField name="idxx" id="idxx" value="${fieldValue(bean: productInstance, field: 'idxx')}" />
                                 </td>
                             </tr>
-                        
+                        	 <tr class="prop">
+                                <td valign="top" class="name">
+                                   <g:message code="product.indexInKurs.label" default="Index USD" /></label>
+                                </td>
+                                <td valign="top" class="name">
+                                    <g:textField name="indexUSD" id="indexUSD" value="0" />
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="indexPricing"><g:message code="product.indexPricing.label" default="Index Costing" /></label>
@@ -383,7 +391,14 @@
                                     <g:textField name="indexPricing" value="0" />
                                 </td>
                             </tr>
-                        
+                       		 <tr class="prop">
+                                <td valign="top" class="name">
+                                   <g:message code="product.indexPricingInKurs.label" default="Index Costing USD" /></label>
+                                </td>
+                                <td valign="top" class="name">
+                                    <g:textField name="indexPricingUSD" id="indexPricingUSD" value="0" />
+                                </td>
+                            </tr>
                               <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="price"><g:message code="product.price.label" default="Price" /></label>
@@ -413,8 +428,9 @@
                                     <label for="color"><g:message code="product.materialMain.label" default="Material Main" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'materialMain', 'errors')}">
-                                    <g:select name="color.id" from="${com.teravin.catalogue.MaterialMain.list()}" optionKey="id" value="${productInstance?.materialMain?.id}"  />
+                                    <g:select name="materialMain.id" from="${com.teravin.catalogue.MaterialMain.findAllByDeleteFlag('N')}" optionKey="id" value="${productInstance?.materialMain?.id}"  />
                                 </td>
+                                
                             </tr>
 							
                         	<tr class="prop">
@@ -1005,6 +1021,7 @@
 				</div>
 		</div>
 		<script type="text/javascript">
+			var kurs=0 ;
        		$('#modelNameSearch')
                .change(function() {
                	var url = "${createLink(url: [controller: 'model', action: 'getModelLikeName'])}";
@@ -1060,6 +1077,7 @@
 					data: { id:modelCategoryId },
 					success: function( data ) {
 					  $("#modelCategory").val(data['name']);
+					  $("#modelCategoryCode").val(data['code']);
 					  $("#width").val(modelTemp['width']);
 					  $("#length").val(modelTemp['length']);
 					  $("#estLoad").val(modelTemp['estLoad']);
@@ -1079,18 +1097,43 @@
 				});
 			}
 			function calculateTotalCubic() {
-				var totalCubicTemp = parseFloat($("#width").val() ) * parseFloat($("#height").val()) * parseFloat($("#length").val()) / 1000000;
+				var totalCubicTemp = parseFloat($("#width").val() ) * parseFloat($("#height").val()) * parseFloat($("#length").val()) / 1000000000;
 				$("#totalCubic").val(parseFloat(totalCubicTemp));	
 				calculateIndex();
 			}
 			function calculateIndex() {
 				var indexModal = parseFloat($("#baseCost").val()) / parseFloat($("#totalWeight").val());
-				$("#indexPricing").val(indexModal);
+				
+				var url = "${createLink(url: [controller: 'kurs', action: 'getKursUSD'])}";
+				$.ajax({
+					url: url,
+					type:"POST",
+				    dataType: "json",
+					data: { id:1},
+					success: function( data ) {
+					  //$("#indexUSD").val(data[0]['kursValue']);
+					  kurs=data[0]['kursValue'];
+				    }
+	              
+				});
+				
+				
+				$("#idxx").val(indexModal);
+				var indexModalKurs = parseFloat(indexModal) / parseFloat(kurs);
+			
+				$("#indexUSD").val(indexModalKurs);
+				alert(""+indexModalKurs);		
 			}
+			
 			function calculateIndexPricing() {
 				var indexPricing = parseFloat($("#baseCost").val()) * 1.65 / parseFloat($("#totalWeight").val());
-				$("#idxx").val(indexPricing);
+				$("#indexPricing").val(indexPricing);
+				var indexPricingKurs = parseFloat(indexPricing) / parseFloat(kurs);
+			
+				$("#indexPricingUSD").val(indexPricingKurs);
+				alert(""+indexPricingKurs);
 			}
+			
 		</script>
     </body>
 </html>

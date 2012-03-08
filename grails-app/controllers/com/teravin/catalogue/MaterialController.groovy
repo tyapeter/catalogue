@@ -12,14 +12,46 @@ class MaterialController {
     def index = {
         redirect(action: "list", params: params)
     }
+	def getMaterialLikeNameAndMaterialCategoryIs = {
+		if( params.name ) {
+			def m = Material.createCriteria()
+			
+			def materials = m.list{
+				like('name','%'+params.name+'%')
+				eq('deleteFlag','N')
+				materialCategory{
+					materialType{
+						eq('name',params.materialTypeName)
+					}
+				}
+			}
+
+			
+			render materials as JSON
+		}
+	}
+	def getMaterialById = {
+		if( params.id ) {
+			
+			
+			def material = Material.get( params.id )
+				 
+			render material as JSON
+		}
+	}
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
+		def materialList = Material.createCriteria().list(params){
+			eq("deleteFlag","N")
+			maxResults(params.max)
+			
+		}
         withFormat {
 			html {
-				[materialInstanceList: Material.list(params), materialInstanceTotal: Material.count()]
+				[materialInstanceList: materialList, materialInstanceTotal: materialList.getTotalCount()]
 			}
 			xml {
 				render Material.list( params ) as XML

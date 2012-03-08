@@ -17,9 +17,14 @@ class ColorController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
 		params.order = "asc"
+		def colorList = Color.createCriteria().list(params){
+			eq("deleteFlag","N")
+			maxResults(params.max)
+			
+		}
         withFormat {
 			html {
-				[colorInstanceList: Color.list(params), colorInstanceTotal: Color.count()]
+				[colorInstanceList: colorList, colorInstanceTotal: colorList.getTotalCount()]
 			}
 			xml {
 				render Color.list( params ) as XML

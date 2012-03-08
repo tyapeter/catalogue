@@ -33,6 +33,7 @@
 						<li><g:link action="list" controller="user"><span>USER  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;  </span></g:link></li>
 						<li><g:link action="list" controller="color"><span>COLOR  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;  &nbsp;  </span></g:link></li>
 						<li><g:link action="list" controller="unitType"><span>UNIT TYPE</span></g:link></li>
+						<li><g:link action="list" controller="kurs"><span>KURS</span></g:link></li>
 					</ul></div >
 				</li>
 				<li><a href="#" CLASS="parent"><span>MATERIAL</span></a>
@@ -49,8 +50,7 @@
 							<li><g:link action="list" controller="modelCategory"><span>MODEL CATEGORY</span></g:link></li>
 					</ul></div>
 				</li>
-				<li  ><a href="#" id="materialsMenu" class="last" name="productDetail"><span>PRODUCT</span></a>
-			</li>
+				<li  ><g:link action="list" controller="productDetail"><span>PRODUCT         </span></g:link>	</li>
 				
 			</ul>
 	</div>

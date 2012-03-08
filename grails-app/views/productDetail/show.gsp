@@ -48,20 +48,18 @@
                             <td valign="top" class="value"><g:link controller="model" action="show" id="${productInstance?.model?.id}">${productInstance?.model?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
-                    
-                        <!-- tr class="prop">
-                            <td valign="top" class="name"><g:message code="product.productType.label" default="Product Type" /></td>
+                    	<tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.modelCategory.label" default="Model Category" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="productType" action="show" id="${productInstance?.productType?.id}">${productInstance?.productType?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="modelCategory" action="show" id="${productInstance?.model?.modelCategory.id}">${productInstance?.model?.modelCategory?.encodeAsHTML()}</g:link></td>
                             
-                        </tr 
-                    
+                        </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.color.label" default="Color" /></td>
                             
                             <td valign="top" class="value"><g:link controller="color" action="show" id="${productInstance?.color?.id}">${productInstance?.color?.encodeAsHTML()}</g:link></td>
                             
-                        </tr  -->
+                        </tr >
                     <tr><td colspan=2><table>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.width.label" default="Width" /></td>
@@ -121,7 +119,7 @@
                     </table></td></tr>
                     		<tr class="prop">
                                 <td valign="top" class="name">
-                                    <g:message code="product.index.label" default="Index" />
+                                    <g:message code="product.index.label" default="Index " />
                                 </td>
                                 <td valign="top" class="value">
                                     ${fieldValue(bean: productInstance, field: 'idxx')}
@@ -130,7 +128,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <g:message code="product.indexPricing.label" default="Index Pricing" />
+                                    <g:message code="product.indexPricing.label" default="Index Costing" />
                                 </td>
                                 <td valign="top" class="value }">
                                    ${fieldValue(bean: productInstance, field: 'indexPricing')}
