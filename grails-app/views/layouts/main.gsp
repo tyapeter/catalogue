@@ -117,7 +117,7 @@
 			$('#signInLogin').hide();
        		$('#materialsMenu')
                .hover(function() {
-               	var url = "${createLink(url: [controller: 'materialCategory', action: 'getMaterialMenu'])}";
+               	var url = "${createLink(url: [controller: 'materialMain', action: 'getMaterialMenu'])}";
               	modelArrayTemp = new Array();
 				$.ajax({
 					url: url,

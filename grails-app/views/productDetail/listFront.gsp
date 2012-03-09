@@ -70,7 +70,16 @@
 								<div class="es-carousel">
 									<ul>
 									 <g:each in="${productInstanceList}" status="i" var="productInstance">
-										<li><a href="#"  ><img  " src="/catalogue/images/${productInstance.model.id}.jpg" data-large="/catalogue/images/${productInstance.model.id}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materials}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" /></a></li>
+								
+										<li><a href="#"  >		
+										<g:if test="${productInstance.imagePathFront!=null}" >
+	                    		 			<img  " src="/catalogue/images/${productInstance.code}.jpg" data-large="/catalogue/images/${productInstance.code}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
+	                        			</g:if>
+	                        			<g:else>
+	                        				<img  " src="/catalogue/images/${productInstance.model.id}.jpg" data-large="/catalogue/images/${productInstance.model.id}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
+	                        			</g:else>
+	                        			</a>
+	                        			</li>
 																			
 									</g:each>
 									</ul>
@@ -94,7 +103,13 @@
                         	<table class='tableProduct'>
                         			<tr>
                         				<td align='center' class='product' >
-                        					<a href="#"  onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>
+                        				<g:if test="${productInstance.imagePathFront!=null}" >
+	                    		 			<a href="#" onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.code}.jpg" /></a>
+	                        			</g:if>
+	                        			<g:else>
+	                        				<a href="#"  onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>
+	                        			</g:else>
+                        					
                         				</td>
                         			</tr>
                         			<tr>
@@ -122,7 +137,12 @@
                         	<table align=center class='tableProduct' >
                         			<tr>
                         				<td  class='product'>
-                        					<a href="#" onClick=setClassImageId(${i}) ><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>	
+                        					<g:if test="${productInstance.imagePathFront!=null}" >
+	                    		 				<a href="#" onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.code}.jpg" /></a>
+	                        				</g:if>
+	                        				<g:else>
+	                        					<a href="#"  onClick=setClassImageId(${i})><img  width =180 height=180 src="/catalogue/images/${productInstance.model.id}.jpg" /></a>
+	                        				</g:else>	
                         				</td>
                         			</tr>
                         			<tr>

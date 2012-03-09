@@ -12,7 +12,35 @@ class MaterialMainController {
     def index = {
         redirect(action: "list", params: params)
     }
-
+	def getMaterialMenu = {
+		
+		def materialCategory = MaterialCategory.createCriteria()
+		
+		def results = []
+		
+		def materialCategories = MaterialCategory.executeQuery("select distinct pd.product.materialMain from ProductDetail  pd where pd.product.deleteFlag='N' order by pd.product.materialMain.name")
+		
+		def materialCategoriesSizes  = materialCategories.size()
+		
+		def productDetails=[]
+		
+		for (def i=0;i < materialCategoriesSizes;i++)
+		{
+			
+		   productDetails[i]  = ProductDetail.executeQuery("select distinct pd.product.model.modelCategory from ProductDetail  pd  where pd.product.materialMain=? order by pd.product.model.modelCategory.name ",[materialCategories[i]])
+		   
+		}
+		
+		
+		results.add (materialCategories)
+		results.add(productDetails)
+		results.add (materialCategoriesSizes)
+		
+		
+		render results as JSON
+		
+	
+}
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "idx"
