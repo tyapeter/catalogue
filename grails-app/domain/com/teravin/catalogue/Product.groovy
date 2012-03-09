@@ -38,6 +38,10 @@ class Product {
     String updatedBy = ""
     Date lastUpdated
 	List productDetails
+	String imagePathFront
+	String imagePathSide
+	String description = ""
+	
 
 	static hasMany = [productDetails:ProductDetail]
 
@@ -70,6 +74,10 @@ class Product {
         dateCreated(blank:false)
         updatedBy(maxSize:50)
         lastUpdated()
+		description(maxSize:500)
+		imagePathFront(nullable:true)
+		imagePathSide(nullable:true)
+		
     }
 
     String toString() {

@@ -18,6 +18,7 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+            
             <div class="dialog">
                 <table>
                     <tbody>
@@ -54,6 +55,12 @@
                             <td valign="top" class="value"><g:link controller="modelCategory" action="show" id="${productInstance?.model?.modelCategory.id}">${productInstance?.model?.modelCategory?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
+                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.materialMain.label" default="Material Main" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="color" action="show" id="${productInstance?.materialMain?.id}">${productInstance?.materialMain?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr >
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.color.label" default="Color" /></td>
                             
@@ -117,6 +124,25 @@
                       
                         </tr>
                     </table></td></tr>
+                    		<g:if test="${productInstance.imagePathFront!=null}" >
+	                    		 <tr class="prop">
+	                            	<td valign="top" class="name"><g:message code="product.imageFront.label" default="Image Front" /></td>
+	                            	<td><img src="${createLinkTo(dir:'images', file: productInstance.code+'.jpg' )}" /> </td>
+	                        	</tr>
+                        	</g:if>
+                        	<g:else >
+                        	<tr class="prop">
+                            	<td valign="top" class="name"><g:message code="product.imageFront.label" default="Image Front" /></td>
+                            	<td><img src="${createLinkTo(dir:'images', file: productInstance.model.id+'.jpg' )}" /> </td>
+                        	</tr>
+                        	</g:else>
+                        	<g:if test="${productInstance.imagePathSide!=null}" >
+                        	<tr class="prop">
+                            	<td valign="top" class="name"><g:message code="product.imageSide.label" default="Image Side" /></td>
+                            	<td><img src="${createLinkTo(dir:'images', file: productInstance.code+'-side.jpg' )}" /> </td>
+                        	</tr>
+                        	</g:if>
+                        	
                     		<tr class="prop">
                                 <td valign="top" class="name">
                                     <g:message code="product.index.label" default="Index " />
@@ -125,7 +151,21 @@
                                     ${fieldValue(bean: productInstance, field: 'idxx')}
                                 </td>
                             </tr>
-                        
+                        	<tr class="prop">
+                                <td valign="top" class="name">
+                                    <g:message code="product.index.label" default="Index USD " />
+                                </td>
+                                
+                                <td valign="top" class="value">
+                                    <script type="text/javascript">
+                                    	var index;
+	                                    index    =  ${productInstance.idxx}
+	                                  	var indexVal = parseFloat(index.toString().replace(/,/g, ''));
+	                                  	var indexUsd = parseFloat(indexVal) / parseFloat(${kursValue});
+	                                    document.write(indexUsd);
+	                                </script>
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <g:message code="product.indexPricing.label" default="Index Costing" />
@@ -134,7 +174,21 @@
                                    ${fieldValue(bean: productInstance, field: 'indexPricing')}
                                 </td>
                             </tr>
-                        
+                        	<tr class="prop">
+                                <td valign="top" class="name">
+                                    <g:message code="product.index.label" default="Index Costing USD " />
+                                </td>
+                                
+                                <td valign="top" class="value">
+                                    <script type="text/javascript">
+                                    	var index;
+	                                    index    =  ${productInstance.indexPricing}
+	                                  	var indexVal = parseFloat(index.toString().replace(/,/g, ''));
+	                                  	var indexUsd = parseFloat(indexVal) / parseFloat(${kursValue});
+	                                    document.write(indexUsd);
+	                                </script>
+                                </td>
+                            </tr>
                               <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="price"><g:message code="product.price.label" default="Price" /></label>
@@ -295,6 +349,7 @@
                     </tbody>
                 </table>
             </div>
+           
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${productInstance?.id}" />

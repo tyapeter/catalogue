@@ -24,7 +24,7 @@
             </div>
             </g:hasErrors>
            
-            <g:form action="save" >
+            <g:form action="save" enctype="multipart/form-data">
                 <div class="dialog">
                 	
                     <table>
@@ -358,7 +358,22 @@
 	                                    
 	                                </td>
                         	</tr>	
-                        	
+                        	 <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="imageFront"><g:message code="product.imageFront.label" default="Image Front" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'imageFront', 'errors')}">
+                                    <input type="file" id="imageFront" name="imageFront" />
+                                </td>
+                            </tr>
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="imageSide"><g:message code="product.imageSide.label" default="Image Side" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'imageSide', 'errors')}">
+                                    <input type="file" id="imageSide" name="imageSide" />
+                                </td>
+                            </tr>
                         	 <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="color"><g:message code="product.color.label" default="Color" /></label>
@@ -1122,7 +1137,7 @@
 				var indexModalKurs = parseFloat(indexModal) / parseFloat(kurs);
 			
 				$("#indexUSD").val(indexModalKurs);
-				alert(""+indexModalKurs);		
+				//alert(""+indexModalKurs);		
 			}
 			
 			function calculateIndexPricing() {
@@ -1131,7 +1146,7 @@
 				var indexPricingKurs = parseFloat(indexPricing) / parseFloat(kurs);
 			
 				$("#indexPricingUSD").val(indexPricingKurs);
-				alert(""+indexPricingKurs);
+				//alert(""+indexPricingKurs);
 			}
 			
 		</script>

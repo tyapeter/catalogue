@@ -2,11 +2,13 @@ package com.teravin.catalogue
 
 import grails.converters.XML
 import grails.converters.JSON
-import com.teravin.catalogue.Product
+//import com.teravin.catalogue.Product
 import com.teravin.catalogue.ProductDetail
 import com.teravin.catalogue.Model
 import com.teravin.catalogue.Material
 import com.teravin.catalogue.maintenance.Color
+import com.teravin.catalogue.maintenance.Kurs;
+import org.grails.plugins.imagetools.*
 
 class ProductDetailController {
 
@@ -139,6 +141,18 @@ class ProductDetailController {
 		def materialList
 		def accesoriesList
 		def miscellaneousList
+		def downloadedfileFront =""
+//		if(params.imageFront==null || params.imageFront=="")
+//			downloadedfileFront = ""
+//		else
+			downloadedfileFront = request.getFile('imageFront')
+		
+		
+		def downloadedfileSide = ""
+//		if(params.imageSide==null || params.imageSide=="")
+//			downloadedfileSide = ""
+//		else
+			downloadedfileSide = request.getFile('imageSide')
 		
 		
 		try{
@@ -149,8 +163,7 @@ class ProductDetailController {
 				def modelCategoryCode = params.modelCategoryCode
 				def materialCode
 				def colorCode = Color.get(params.color.id)
-				System.out.println("modelCode==="+ modelCategoryCode)
-				//product.code = materialMain.code + "" + modelCategoryCode +""+ modelCode + "" + 
+	
 				def sizes
 				if(params.materialName!=null)
 				{
@@ -257,6 +270,8 @@ class ProductDetailController {
 						
 					}
 				}
+				
+				
 
 				
 		}catch(RuntimeException e){	
@@ -279,7 +294,43 @@ class ProductDetailController {
 		}
         withFormat {
 			html {
-				if (!error && product.save(flush:true)) {
+				
+				
+				
+				def imageTool = new ImageTool()
+				
+				System.out.println("front====="+params.imageFront)
+				System.out.println("side===== "+downloadedfileSide)
+				if (!error && product.save(flush:true  )) {
+					if(!downloadedfileFront.empty){
+						String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${product.code}.jpg"
+						new File(imagepath).deleteDir()
+						downloadedfileFront.transferTo(new File(imagepath))
+						println ""+imagepath
+						imageTool.load(imagepath)
+						imageTool.thumbnail(360)
+						
+						imageTool.writeResult(imagepath, "JPEG")
+						imageTool.square()
+						product.imagePathFront=imagepath
+						
+					}else{
+					 	product.imagePathFront=null
+					}
+					if(!downloadedfileSide.empty){
+						String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${product.code}-side.jpg"
+						downloadedfileSide.transferTo(new File(imagepath))
+						new File(imagepath).deleteDir()
+						println ""+imagepath
+						imageTool.load(imagepath)
+						imageTool.thumbnail(360)
+						
+						imageTool.writeResult(imagepath, "JPEG")
+						imageTool.square()
+						product.imagePathSide=imagepath
+					}else{
+						product.imagePathSide=null
+					}
 					flash.message = "${message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])}"
 					redirect(action: "show", id: product.id)
 				}
@@ -356,7 +407,8 @@ class ProductDetailController {
 				}
 			}
 	  }
-	 
+	 def kursValue = com.teravin.catalogue.maintenance.Kurs.get(2)
+	
       withFormat {
         html {
            
@@ -364,7 +416,7 @@ class ProductDetailController {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'productDetail.label', default: 'ProductDetail'), params.id])}"
                 redirect(action: "list")
             }
-            else { return [ productInstance : productInstance,materialList:materialList,accesoriesList:accesoriesList,miscellaneousList:miscellaneousList ] }
+            else { return [ productInstance : productInstance,materialList:materialList,accesoriesList:accesoriesList,miscellaneousList:miscellaneousList,kursValue:kursValue.kursValue ] }
           }
           xml {
               if(params.id && ProductDetail.get(params.id)) {
