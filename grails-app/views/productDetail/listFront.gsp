@@ -73,7 +73,7 @@
 								
 										<li><a href="#"  >		
 										<g:if test="${productInstance.imagePathFront!=null}" >
-	                    		 			<img  " src="/catalogue/images/${productInstance.code}.jpg" data-large="/catalogue/images/${productInstance.code}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
+	                    		 			 <img  " src="/catalogue/images/${productInstance.code}.jpg" data-large="/catalogue/images/${productInstance.code}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
 	                        			</g:if>
 	                        			<g:else>
 	                        				<img  " src="/catalogue/images/${productInstance.model.id}.jpg" data-large="/catalogue/images/${productInstance.model.id}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
