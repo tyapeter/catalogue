@@ -671,7 +671,7 @@
                                     				
 		                    				<tr>
 		                    					<td ><g:hiddenField class="accesoriesID" name="accesoriesID" id="accesoriesID${i}" value="${accesoriesInstance.material.id}"/>
-		                    						<g:hiddenField class="accesoriesDelete" name="accesoriesDelete" id="accesoriesDelete${i}" value="false"/>
+		                    						<g:hiddenField class="accesoriesDelete" name="accesoriesDelete" id="accesoriesDelete${i}" value="false" />
 		                    						<g:hiddenField class="productDetailAccesoriesInstance" name="productDetailAccesoriesInstance" id="productDetailAccesoriesInstance${i}" value="${accesoriesInstance.id}"/>
 		                                    		<g:textField onFocus='setIdOfAccTextBox(${i})' class="accesoriesName" name="accesoriesName" id="accesoriesName${i}" value="${accesoriesInstance.material.name}" />
 		                                		</td>
@@ -691,7 +691,7 @@
 		                                		</td>
 		                                		<td >
 		                                		
-		                                    		<input type="button" class="ui-icon ui-icon-trash" value="Remove" onclick="removeAccesories(${i })"/>
+		                                    		<input type="button" class="ui-icon ui-icon-trash" value="Remove" onclick="removeAcc(${i })"/>
 		                                    	
 		                                    	</td>
 		                                		
@@ -768,7 +768,7 @@
 														var htmlId = "accesories" + accesoriesCount;
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
-														templateHtml += "<input type='hidden' name='accesoriesID'  value='' id='accesoriesID" + accesoriesCount + "'/></td>\n";
+														templateHtml += "<input type='hidden' name='accesoriesID'  value='' id='accesoriesID" + accesoriesCount + "'/>\n";
 														templateHtml += "<input type='hidden' class='accesoriesDelete' name='accesoriesDelete' id='accesoriesDelete" + accesoriesCount + "' value='false'/>\n";
 														templateHtml += "<td width='50%'><input type='text' onFocus='setIdOfAccTextBox("+accesoriesCount+")' class='accesoriesName' name='accesoriesName' value='' id='accesoriesName" + accesoriesCount + "'/></td>\n";
 														
@@ -794,7 +794,7 @@
 													function removeAcc(idx) {
 														$("#accesories"+idx+"").hide()
 														$("#accesoriesDelete"+idx+"").val("true")
-														$("#accesories"+idx+"").remove();
+														//$("#accesories"+idx+"").remove();
 														calculatePrice();
 													}
 													function calculateAccPrice(idx) {
@@ -979,7 +979,10 @@
 
 													}
 													function removeMisc(idx) {
-														$("#miscellaneous"+idx+"").remove()
+														$("#miscellaneous"+idx+"").hide()
+														$("#miscellaneousDelete"+idx+"").val("true")
+														
+														calculatePrice();
 													}
 													function calculateMiscPrice(idx) {
 														var newMiscPriceProductItem = parseFloat($("#miscellaneousUnit"+idx+"").val()) * parseFloat( $("#miscellaneousPrice"+idx+"").val()) ;

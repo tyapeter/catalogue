@@ -238,7 +238,7 @@
             								<td>${materialInstance.unit}</td>
             								<td>${materialInstance.material.unitType.name}</td>
             								<td>${materialInstance.idxx}</td>
-            								<td>${materialInstance.price}</td>
+            								<td> <script type="text/javascript">document.write(parseFloat(${materialInstance.unit})*parseFloat(${materialInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
@@ -273,7 +273,7 @@
             								<td>${accesoriesInstance.unit}</td>
             								<td>${accesoriesInstance.material.unitType.name}</td>
             								<td>${accesoriesInstance.idxx}</td>
-            								<td>${accesoriesInstance.price}</td>
+            								<td> <script type="text/javascript">document.write(parseFloat(${accesoriesInstance.unit})*parseFloat(${accesoriesInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
@@ -308,7 +308,7 @@
             								<td>${miscellaneousInstance.unit}</td>
             								<td>${miscellaneousInstance.material.unitType.name}</td>
             								<td>${miscellaneousInstance.idxx}</td>
-            								<td>${miscellaneousInstance.price}</td>
+            								<td><script type="text/javascript">document.write(parseFloat(${miscellaneousInstance.unit})*parseFloat(${miscellaneousInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
