@@ -564,7 +564,7 @@
 														var htmlId = "material" + materialCount;
 														var templateHtml = "<tbody id='" + htmlId + "'>\n";
 														templateHtml += "<tr>";
-														templateHtml += "<input type='hidden' name='materialID'  value='' id='materialID" + materialCount + "'/></td>\n";
+														templateHtml += "<input type='hidden' name='materialID'  value='' id='materialID" + materialCount + "'/>\n";
 														templateHtml += "<td width='50%'><input type='text' onFocus='setIdOfMaterialTextBox("+materialCount+")' class='materialName' name='materialName'  value='' id='materialName" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='text' name='materialUnit' onChange='calculateMaterialPriceItem("+ materialCount+")'  value='' id='materialUnit" + materialCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='text' name='materialUnitType'  value='' id='materialUnitType" + materialCount + "'/>\n";
@@ -849,7 +849,7 @@
 				                                <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.miscellaneous.label" default="Miscellaneous" /></label>
 				                                </th>
-				                                 <th valign="top" class="unit" >
+				                                 <th valign="top" class="name" >
 				                                    <label for="productDetail"><g:message code="productDetail.miscellaneous.unitType.label" default="Unit" /></label>
 				                                </th>
 				                               <th valign="top" class="name" >
@@ -955,9 +955,9 @@
 														templateHtml += "<tr>";
 														templateHtml += "<input type='hidden' name='miscellaneousID'  value='' id='miscellaneousID" + miscellaneousCount + "'/></td>\n";
 														templateHtml += "<td width='50%'><input type='text' onFocus='setIdOfMiscTextBox("+miscellaneousCount+")' class='miscellaneousName' name='miscellaneousName' value='' id='miscellaneousName" + miscellaneousCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnit' size='15' onChange='calculateMiscPrice("+miscellaneousCount+")' value='' id='miscellaneousUnit" + miscellaneousCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnitType' size='15' value='' id='miscellaneousUnitType" + miscellaneousCount + "'/></td>\n";
-														templateHtml += "<td width='10%'><input type='text' name='miscellaneousIndex' size='15' value='' id='miscellaneousIndex" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnit'  onChange='calculateMiscPrice("+miscellaneousCount+")' value='' id='miscellaneousUnit" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousUnitType'  value='' id='miscellaneousUnitType" + miscellaneousCount + "'/></td>\n";
+														templateHtml += "<td width='10%'><input type='text' name='miscellaneousIndex'  value='' id='miscellaneousIndex" + miscellaneousCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input type='hidden'  name='miscellaneousPrice' value='' id='miscellaneousPrice" + miscellaneousCount + "'/>";
 														templateHtml += "<input type='text'  name='miscellaneousSubTotal' value='' onChange='calculateMiscIndexItem("+ miscellaneousCount +")' id='miscellaneousSubTotal" + miscellaneousCount + "'/></td>\n";
 														templateHtml += "<td width='10%'><input class='ui-icon ui-icon-trash' type='button' value='Remove' onclick='removeMisc("+miscellaneousCount+")'/></td>\n";

@@ -86,9 +86,9 @@ class Product {
 //	static searchable = {
 //		except = ["version", "createdBy", "dateCreated", "updatedBy", "lastUpdated"]
 //		model component:true
-//		only =["productDetails"]
+////		only =["productDetails"]
 //	}
-//	
+
 
 
 	

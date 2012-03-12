@@ -141,18 +141,10 @@ class ProductDetailController {
 		def materialList
 		def accesoriesList
 		def miscellaneousList
-		def downloadedfileFront =""
-//		if(params.imageFront==null || params.imageFront=="")
-//			downloadedfileFront = ""
-//		else
-			downloadedfileFront = request.getFile('imageFront')
+		def downloadedfileFront = request.getFile('imageFront')
 		
 		
-		def downloadedfileSide = ""
-//		if(params.imageSide==null || params.imageSide=="")
-//			downloadedfileSide = ""
-//		else
-			downloadedfileSide = request.getFile('imageSide')
+		def downloadedfileSide = request.getFile('imageSide')
 		
 		
 		try{
@@ -281,15 +273,15 @@ class ProductDetailController {
 				println "aa"+e.getMessage()
 				flash.message = e.getMessage()
 			}
-//			materialList = new ArrayList()
-//			if(params.materialName.class == String){
-//				materialList.add(params.materialName)
-//			}
-//			else{
-//				for(def i = 0; i<params.materialName.size(); i++){
-//					materialList.add(params.materialName[i])
-//				}
-//			}
+			materialList = new ArrayList()
+			if(params.materialName.class == String){
+				materialList.add(params.materialName)
+			}
+			else{
+				for(def i = 0; i<params.materialName.size(); i++){
+					materialList.add(params.materialName[i])
+				}
+			}
 			
 		}
         withFormat {
@@ -314,8 +306,6 @@ class ProductDetailController {
 						imageTool.square()
 						product.imagePathFront=imagepath
 						
-					}else{
-					 	product.imagePathFront=null
 					}
 					if(!downloadedfileSide.empty){
 						String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${product.code}-side.jpg"
@@ -328,8 +318,6 @@ class ProductDetailController {
 						imageTool.writeResult(imagepath, "JPEG")
 						imageTool.square()
 						product.imagePathSide=imagepath
-					}else{
-						product.imagePathSide=null
 					}
 					flash.message = "${message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])}"
 					redirect(action: "show", id: product.id)
@@ -379,6 +367,7 @@ class ProductDetailController {
 									  }
 								  }
 							  }
+							  order("id", "asc")
 					}
 	  def accesoriesList = ProductDetail.createCriteria().list{
 		  product{
@@ -467,6 +456,7 @@ class ProductDetailController {
 									  }
 								  }
 							  }
+							  order("id", "asc")
 					}
 	  def accesoriesList = ProductDetail.createCriteria().list{
 		  product{
@@ -506,21 +496,34 @@ class ProductDetailController {
         def productInstance = Product.get(params.id)
         productInstance.updatedBy = springSecurityService.principal.username
 		
-		println(params)
+		println("params===="+params)
 	
 	
 		def productDetailInstance
 	
 		def error = false
 		def sizes=0
+		def materialCode
+		def materialMain = MaterialMain.get(params.materialMain.id)
+		def modelCode = params.modelCode
+		def modelCategoryCode = params.modelCategoryCode
+		def colorCode = Color.get(params.color.id)
+		def flag = false
+		def productCodeTemp = productInstance.code
+		
+		def downloadedfileFront = request.getFile('imageFront')
+		
+		
+		def downloadedfileSide = request.getFile('imageSide')
+		
 		try{
 				
 				
 				productInstance.updatedBy = springSecurityService.principal.username
 				productInstance.model	 = Model.get(params.modelID)
 				
-//				
 				
+			
 	
 		}catch(RuntimeException e){
 			println e
@@ -556,16 +559,24 @@ class ProductDetailController {
 						for(def i = 0; i<sizes; i++){
 							
 							if(sizes==1){
-								if(params.productDetailInstance!="null")
-								{
+								if(params.productDetailInstance!=null)
+								{	System.out.println("----"+params.materialID)
 									productDetailInstance = ProductDetail.get(params.productDetailInstance)
 									productDetailInstance.material= Material.get(params.materialID)
 									productDetailInstance.price = Double.parseDouble(params.materialPrice)
+									productDetailInstance.unit = Double.parseDouble(params.materialUnit)
 									productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
 									productDetailInstance.updatedBy = springSecurityService.principal.username
+									if(!flag)
+									{	
+										materialCode = productDetailInstance.material.code
+										flag=true
+									}
 									
 									if(params.materialDelete=="false")
-										productDetailInstance.save(flush:true)
+									{
+											productDetailInstance.save(flush:true)
+									}
 									else{
 										productDetailInstance.delete(flush: true)
 									}
@@ -574,42 +585,103 @@ class ProductDetailController {
 									productDetailInstance.material= Material.get(params.materialID)
 									productDetailInstance.price = Double.parseDouble(params.materialPrice)
 									productDetailInstance.idxx = Double.parseDouble(params.materialIndex)
+									productDetailInstance.unit = Double.parseDouble(params.materialUnit)
 									productDetailInstance.createdBy = springSecurityService.principal.username
 									productDetailInstance.updatedBy = springSecurityService.principal.username
-									
+									if(!flag)
+									{	
+										materialCode = productDetailInstance.material.code
+										flag=true
+									}
 									productInstance.addToProductDetails(productDetailInstance)
+									
 									
 								}
 							}else{
-								
-								if(params.productDetailInstance[i]!="null")
-								{
-									productDetailInstance = ProductDetail.get(params.productDetailInstance[i])
-									productDetailInstance.material= Material.get(params.materialID[i])
-									productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-								
-									if(params.materialDelete[i]=="false")
+								def productDetailId
+								if( params.productDetailInstance.class.isArray()){
+									
+									if(i > params.productDetailInstance.size()-1)
+										productDetailId =null
+										else
+										productDetailId = params.productDetailInstance[i]
+									System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+									System.out.println("array")
+								}else{
+									productDetailId = params.productDetailInstance
+									if(sizes<3 && i == 1)
+										productDetailId=null
+									System.out.println("notArray")
+								}
+
+									if(productDetailId!=null)
+									{	System.out.println("productId===="+productDetailId)
 										
-										productDetailInstance.save(flush:true)
-									else{
-										productDetailInstance.delete(flush: true)
+											def productDetail = ProductDetail.get(productDetailId)
+											System.out.println("2and i="+i)
+											System.out.println("params.materialID[i]="+params.materialID[i])
+											System.out.println("productDetailInstance="+productDetail)
+										productDetail.material = Material.get(params.materialID[i])
+										productDetail.price = Double.parseDouble(params.materialPrice[i])
+										productDetail.idxx = Double.parseDouble(params.materialIndex[i])
+										productDetail.unit = Double.parseDouble(params.materialUnit[i])
+										productDetail.updatedBy = springSecurityService.principal.username
+										//materialCode = productDetail.material.code
+										if(params.materialDelete[i]=="false"){
+											if(!flag)
+											{	
+												materialCode = productDetail.material.code
+												flag=true
+											}
+											productDetail.save(flush:true)
+										}
+										else{
+											productDetail.delete(flush: true)
+											
+										}
+									}else{
+										productDetailInstance=new ProductDetail()
+										productDetailInstance.material= Material.get(params.materialID[i].toString())
+										productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+										productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+										productDetailInstance.unit = Double.parseDouble(params.materialUnit[i])
+										productDetailInstance.updatedBy = springSecurityService.principal.username
+										productDetailInstance.createdBy = springSecurityService.principal.username
+										
+										productDetailInstance.isPriceOverwrite="N"
+										
+										if(!flag)
+										{
+											materialCode = productDetailInstance.material.code
+											flag=true
+										}
+										productInstance.addToProductDetails(productDetailInstance)
 										
 									}
-								}else{
-									productDetailInstance=new ProductDetail()
-									productDetailInstance.material= Material.get(params.materialID[i])
-									productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-									productDetailInstance.createdBy = springSecurityService.principal.username
-								
-									productDetailInstance.isPriceOverwrite="N"
-									productInstance.addToProductDetails(productDetailInstance)
-								
+									
 								}
-							}
+										if (flag)
+									{
+										String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${productInstance.code}.jpg"
+										
+
+										
+										productInstance.code = materialMain.code + "" + modelCategoryCode +""+ modelCode + "" + materialCode + "" + colorCode.code
+										String imagepathnew = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${productInstance.code}.jpg"
+										
+										new File(imagepath).renameTo(new File(imagepathnew))
+										
+										productInstance.save(flush:true)
+										
+//										if(productInstance.imagePathFront!=null && productInstance.imagePathFront!=""){
+//											def dirName = productInstance.imagePathFront
+//											new File(dirName).eachFile() { file ->
+//											def newName = (file.getName() =~ /.jpg/).replaceFirst("0001.jpg")
+//											File f = new File(dirName + "/" + newName)
+//											file.renameTo(f)
+//											println file.getName() + " -> " + f.getName()
+//										}
+									}
 													
 													
 							
@@ -627,11 +699,12 @@ class ProductDetailController {
 						for(def i = 0; i<sizes; i++){
 							
 							if(sizes==1){
-								if(params.productDetailAccesoriesInstance!="null")
-								{
+								if(params.productDetailAccesoriesInstance!=null)
+								{	System.out.println("----"+params.materialID)
 									productDetailInstance = ProductDetail.get(params.productDetailAccesoriesInstance)
 									productDetailInstance.material= Material.get(params.accesoriesID)
 									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
+									productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit)
 									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
 									productDetailInstance.updatedBy = springSecurityService.principal.username
 									
@@ -645,6 +718,7 @@ class ProductDetailController {
 									productDetailInstance.material= Material.get(params.accesoriesID)
 									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice)
 									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex)
+									productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit)
 									productDetailInstance.createdBy = springSecurityService.principal.username
 									productDetailInstance.updatedBy = springSecurityService.principal.username
 									
@@ -652,40 +726,65 @@ class ProductDetailController {
 									
 								}
 							}else{
-								
-								if(params.productDetailAccesoriesInstance[i]!="null")
-								{
-									productDetailInstance = ProductDetail.get(params.productDetailAccesoriesInstance[i])
-									productDetailInstance.material= Material.get(params.accesoriesID[i])
-									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-								
-									if(params.accesoriesDelete[i]=="false")
-										
-										productDetailInstance.save(flush:true)
-									else{
-										productDetailInstance.delete(flush: true)
-										
-									}
+								def productDetailId
+								if( params.productDetailAccesoriesInstance.class.isArray()){
+									
+									if(i > params.productDetailAccesoriesInstance.size()-1)
+										productDetailId =null
+										else
+										productDetailId = params.productDetailAccesoriesInstance[i]
+									System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+									System.out.println("array")
 								}else{
-									productDetailInstance=new ProductDetail()
-									productDetailInstance.material= Material.get(params.accesoriesID[i])
-									productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-									productDetailInstance.createdBy = springSecurityService.principal.username
-							
-									productDetailInstance.isPriceOverwrite="N"
-									productInstance.addToProductDetails(productDetailInstance)
-								
+									productDetailId = params.productDetailAccesoriesInstance
+									if(sizes<3 && i == 1)
+										productDetailId=null
+									System.out.println("notArray")
 								}
-							}
+
+									if(productDetailId!=null)
+									{	System.out.println("productId===="+productDetailId)
+										
+											def productDetail = ProductDetail.get(productDetailId)
+											System.out.println("2and i="+i)
+											System.out.println("params.accesoriesID[i]="+params.accesoriesID[i])
+											System.out.println("productDetailInstance="+productDetail)
+										productDetail.material = Material.get(params.accesoriesID[i])
+										productDetail.price = Double.parseDouble(params.accesoriesPrice[i])
+										productDetail.idxx = Double.parseDouble(params.accesoriesIndex[i])
+										productDetail.unit = Double.parseDouble(params.accesoriesUnit[i])
+										productDetail.updatedBy = springSecurityService.principal.username
+									
+										if(params.accesoriesDelete[i]=="false"){
+											
+											productDetail.save(flush:true)
+										}
+										else{
+											productDetail.delete(flush: true)
+											
+										}
+									}else{
+										productDetailInstance=new ProductDetail()
+										productDetailInstance.material= Material.get(params.accesoriesID[i].toString())
+										productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+										productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+										productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
+										productDetailInstance.updatedBy = springSecurityService.principal.username
+										productDetailInstance.createdBy = springSecurityService.principal.username
+									
+										productDetailInstance.isPriceOverwrite="N"
+										productInstance.addToProductDetails(productDetailInstance)
+									
+									}
+									
+								}
+							
 													
 													
 							
 						}
 					}
+
 					if(params.miscellaneousName!=null)
 					{
 					
@@ -698,11 +797,12 @@ class ProductDetailController {
 						for(def i = 0; i<sizes; i++){
 							
 							if(sizes==1){
-								if(params.productDetailMiscellaneousInstance!="null")
-								{
+								if(params.productDetailMiscellaneousInstance!=null)
+								{	System.out.println("----"+params.materialID)
 									productDetailInstance = ProductDetail.get(params.productDetailMiscellaneousInstance)
 									productDetailInstance.material= Material.get(params.miscellaneousID)
 									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
+									productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit)
 									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex)
 									productDetailInstance.updatedBy = springSecurityService.principal.username
 									
@@ -716,6 +816,7 @@ class ProductDetailController {
 									productDetailInstance.material= Material.get(params.miscellaneousID)
 									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice)
 									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex)
+									productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit)
 									productDetailInstance.createdBy = springSecurityService.principal.username
 									productDetailInstance.updatedBy = springSecurityService.principal.username
 									
@@ -723,41 +824,91 @@ class ProductDetailController {
 									
 								}
 							}else{
-								
-								if(params.productDetailMiscellaneousInstance[i]!="null")
-								{
-									productDetailInstance = ProductDetail.get(params.productDetailMiscellaneousInstance[i])
-									productDetailInstance.material= Material.get(params.miscellaneousID[i])
-									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-								
-									if(params.miscellaneousDelete[i]=="false")
-										
-										productDetailInstance.save(flush:true)
-									else{
-										productDetailInstance.delete(flush: true)
-										
-									}
+								def productDetailId
+								if( params.productDetailMiscellaneousInstance.class.isArray()){
+									
+									if(i > params.productDetailMiscellaneousInstance.size()-1)
+										productDetailId =null
+										else
+										productDetailId = params.productDetailMiscellaneousInstance[i]
+//									System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+//									System.out.println("array")
 								}else{
-									productDetailInstance=new ProductDetail()
-									productDetailInstance.material= Material.get(params.miscellaneousID[i])
-									productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
-									productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
-									productDetailInstance.updatedBy = springSecurityService.principal.username
-									productDetailInstance.createdBy = springSecurityService.principal.username
-							
-									productDetailInstance.isPriceOverwrite="N"
-									productInstance.addToProductDetails(productDetailInstance)
-								
+									productDetailId = params.productDetailMiscellaneousInstance
+									if(sizes<3 && i == 1)
+										productDetailId=null
+//									System.out.println("notArray")
 								}
-							}
+
+									if(productDetailId!=null)
+									{	System.out.println("productId===="+productDetailId)
+										
+											def productDetail = ProductDetail.get(productDetailId)
+											System.out.println("2and i="+i)
+											System.out.println("params.miscellaneousID[i]="+params.miscellaneousID[i])
+											System.out.println("productDetailInstance="+productDetail)
+										productDetail.material = Material.get(params.miscellaneousID[i])
+										productDetail.price = Double.parseDouble(params.miscellaneousPrice[i])
+										productDetail.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+										productDetail.unit = Double.parseDouble(params.miscellaneousUnit[i])
+										productDetail.updatedBy = springSecurityService.principal.username
+									
+										if(params.miscellaneousDelete[i]=="false"){
+											
+											productDetail.save(flush:true)
+										}
+										else{
+											productDetail.delete(flush: true)
+											
+										}
+									}else{
+										productDetailInstance=new ProductDetail()
+										productDetailInstance.material= Material.get(params.miscellaneousID[i].toString())
+										productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+										productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+										productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
+										productDetailInstance.updatedBy = springSecurityService.principal.username
+										productDetailInstance.createdBy = springSecurityService.principal.username
+									
+										productDetailInstance.isPriceOverwrite="N"
+										productInstance.addToProductDetails(productDetailInstance)
+									
+									}
+									
+								}
+							
 													
 													
 							
 						}
 					}
+					def imageTool = new ImageTool()
 					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
+						if(!downloadedfileFront.empty){
+							String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${productInstance.code}.jpg"
+							new File(imagepath).deleteDir()
+							downloadedfileFront.transferTo(new File(imagepath))
+							println ""+imagepath
+							imageTool.load(imagepath)
+							imageTool.thumbnail(360)
+							
+							imageTool.writeResult(imagepath, "JPEG")
+							imageTool.square()
+							productInstance.imagePathFront=imagepath
+							
+						}
+						if(!downloadedfileSide.empty){
+							String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${productInstance.code}-side.jpg"
+							downloadedfileSide.transferTo(new File(imagepath))
+							new File(imagepath).deleteDir()
+							println ""+imagepath
+							imageTool.load(imagepath)
+							imageTool.thumbnail(360)
+							
+							imageTool.writeResult(imagepath, "JPEG")
+							imageTool.square()
+							productInstance.imagePathSide=imagepath
+						}
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])}"
 						redirect(action: "show", id:productInstance.id)
 					}

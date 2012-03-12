@@ -142,7 +142,12 @@
                             	<td><img src="${createLinkTo(dir:'images', file: productInstance.code+'-side.jpg' )}" /> </td>
                         	</tr>
                         	</g:if>
-                        	
+                        	<g:else >
+                        	<tr class="prop">
+                            	<td valign="top" class="name"><g:message code="product.imageSide.label" default="Image Side" /></td>
+                            	<td><img src="${createLinkTo(dir:'images', file: 'no-file.gif' )}" /> </td>
+                        	</tr>
+                        	</g:else>
                     		<tr class="prop">
                                 <td valign="top" class="name">
                                     <g:message code="product.index.label" default="Index " />
@@ -247,6 +252,9 @@
             						 <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.label" default="Accesories" /></label>
 		                                </th>
+	                                  	<th valign="top" class="name" >
+			                                    <label for="productDetail"><g:message code="productDetail.accesories.unit.label" default="Unit" /></label>
+			                           	</th>
 		                               <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
 		                                </th>
@@ -262,6 +270,7 @@
             							<tr >
             								
             								<td>${accesoriesInstance.material.name}</td>
+            								<td>${accesoriesInstance.unit}</td>
             								<td>${accesoriesInstance.material.unitType.name}</td>
             								<td>${accesoriesInstance.idxx}</td>
             								<td>${accesoriesInstance.price}</td>
@@ -278,6 +287,9 @@
             						 <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.label" default="Miscellaneous" /></label>
 		                                </th>
+		                                 <th valign="top" class="name" >
+		                                    <label for="product"><g:message code="productDetail.unit" default="Unit" /></label>
+		                                </th>
 		                               <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
 		                                </th>
@@ -293,6 +305,7 @@
             							<tr >
             								
             								<td>${miscellaneousInstance.material.name}</td>
+            								<td>${miscellaneousInstance.unit}</td>
             								<td>${miscellaneousInstance.material.unitType.name}</td>
             								<td>${miscellaneousInstance.idxx}</td>
             								<td>${miscellaneousInstance.price}</td>

@@ -35,7 +35,7 @@ class Material {
     }
 
     String toString() {
-      "$name"
+      "$name code:$code"
     }
 
 	

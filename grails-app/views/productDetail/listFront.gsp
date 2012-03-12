@@ -72,7 +72,7 @@
 									 <g:each in="${productInstanceList}" status="i" var="productInstance">
 								
 										<li><a href="#"  >		
-										<g:if test="${productInstance.imagePathFront!=null}" >
+										<g:if test="${productInstance.imagePathFront!=null}" || test="${productInstance.imagePathFront!=''}" >
 	                    		 			 <img  " src="/catalogue/images/${productInstance.code}.jpg" data-large="/catalogue/images/${productInstance.code}.jpg" alt="image${productInstance.id}" data-description1="${fieldValue(bean: productInstance, field: "code")} - ${fieldValue(bean: productInstance, field: "name")}, Material : ${productInstance.materialMain.name}" data-description2=" &nbsp; W: ${productInstance.width}  &nbsp; L: ${productInstance.length}  &nbsp; H: ${productInstance.height}" />
 	                        			</g:if>
 	                        			<g:else>
@@ -119,7 +119,7 @@
                         			</tr>
                         			<tr>
                         				<td  class='product'>
-                        					Material : ${productInstance.materials}
+                        					Material : ${productInstance.materialMain.name}
                         				</td>
                         			</tr>
                         			<tr>
@@ -152,7 +152,7 @@
                         			</tr>
                         			<tr>
                         				<td  class='product'>
-                        					Material : ${productInstance.materials}
+                        					Material : ${productInstance.materialMain.name}
                         				</td>
                         			</tr>
                         			<tr>
