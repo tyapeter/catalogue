@@ -92,7 +92,7 @@
 			<div class='login_message'>${flash.message}</div>
 			</g:if>
 			<div class='fheader'>Sign In</div>
-			<form url="[action:'auth',controller:'login']"  id='loginForm' class='cssform' autocomplete='off'>
+			<g:form action='${postUrl}' id='loginForm' class='cssform' autocomplete='off'>
 				<p>
 					<label for='username'>Login ID</label>
 					<input type='text' class='text_' name='j_username' id='username' />
@@ -109,7 +109,7 @@
 				<p>
 					<input type='submit' value='Login' />
 				</p>
-			</form>
+			</g:form>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -161,8 +161,14 @@
 	                  options += "</ul></div>";
 	                  $("#materialsMenu").append(options); 
 	              
-	 				
-					}
+	 					
+					},
+					  error: function(){
+					  //alert(location.host);
+					  	window.location=  document.write(location.host+"/catalogue/login/auth");
+					 
+					  }
+
 				});
            	});	
          	$('.signIn')
