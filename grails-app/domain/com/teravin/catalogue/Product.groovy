@@ -47,7 +47,7 @@ class Product {
 	String description = ""
 	
 	static searchable = {
-		except = ["version", "createdBy",  "updatedBy"]
+		except = ["version", "createdBy"]
 		
 		model component:true
 		materialMain component:true

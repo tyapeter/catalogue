@@ -142,7 +142,12 @@
                             	<td><img src="${createLinkTo(dir:'images', file: productInstance.code+'-side.jpg' )}" /> </td>
                         	</tr>
                         	</g:if>
-                        	
+                        	<g:else >
+                        	<tr class="prop">
+                            	<td valign="top" class="name"><g:message code="product.imageSide.label" default="Image Side" /></td>
+                            	<td><img src="${createLinkTo(dir:'images', file: 'no-file.gif' )}" /> </td>
+                        	</tr>
+                        	</g:else>
                     		<tr class="prop">
                                 <td valign="top" class="name">
                                     <g:message code="product.index.label" default="Index " />
@@ -233,7 +238,7 @@
             								<td>${materialInstance.unit}</td>
             								<td>${materialInstance.material.unitType.name}</td>
             								<td>${materialInstance.idxx}</td>
-            								<td>${materialInstance.price}</td>
+            								<td> <script type="text/javascript">document.write(parseFloat(${materialInstance.unit})*parseFloat(${materialInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
@@ -247,6 +252,9 @@
             						 <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.label" default="Accesories" /></label>
 		                                </th>
+	                                  	<th valign="top" class="name" >
+			                                    <label for="productDetail"><g:message code="productDetail.accesories.unit.label" default="Unit" /></label>
+			                           	</th>
 		                               <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
 		                                </th>
@@ -262,9 +270,10 @@
             							<tr >
             								
             								<td>${accesoriesInstance.material.name}</td>
+            								<td>${accesoriesInstance.unit}</td>
             								<td>${accesoriesInstance.material.unitType.name}</td>
             								<td>${accesoriesInstance.idxx}</td>
-            								<td>${accesoriesInstance.price}</td>
+            								<td> <script type="text/javascript">document.write(parseFloat(${accesoriesInstance.unit})*parseFloat(${accesoriesInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
@@ -277,6 +286,9 @@
             					<thead>
             						 <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.label" default="Miscellaneous" /></label>
+		                                </th>
+		                                 <th valign="top" class="name" >
+		                                    <label for="product"><g:message code="productDetail.unit" default="Unit" /></label>
 		                                </th>
 		                               <th valign="top" class="name" >
 		                                    <label for="product"><g:message code="productDetail.material.unitType.label" default="Unit Type" /></label>
@@ -293,9 +305,10 @@
             							<tr >
             								
             								<td>${miscellaneousInstance.material.name}</td>
+            								<td>${miscellaneousInstance.unit}</td>
             								<td>${miscellaneousInstance.material.unitType.name}</td>
             								<td>${miscellaneousInstance.idxx}</td>
-            								<td>${miscellaneousInstance.price}</td>
+            								<td><script type="text/javascript">document.write(parseFloat(${miscellaneousInstance.unit})*parseFloat(${miscellaneousInstance.price}))</script></td>
             							</tr>
             						</g:each>
             					</tbody>
@@ -336,7 +349,12 @@
                             <td valign="top" class="value"><g:formatDate date="${productInstance?.lastUpdated}" /></td>
                             
                         </tr>
-                    
+                     <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.description.label" default="Description" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "description")}</td>
+                            
+                        </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.deleteFlag.label" default="Delete Flag" /></td>
                             

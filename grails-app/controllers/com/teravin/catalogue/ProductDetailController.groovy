@@ -50,7 +50,50 @@ class ProductDetailController {
 		
     }
 	
+	def listSearch = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		params.properties = ["Product.name","Product.model.name","Product.model.code"]
 
+		if (!params.sort && !params.order) {
+			params.sort = params.sort
+			params.order = params.order
+		}
+
+		def query = "+Product.deleteFlag:N "
+		if (params.test) {
+			query += "*${params.test}*"
+		}
+		
+		def results = new ArrayList()
+		def result = Product.search(query, params).results
+		results.add(result)
+			
+		def count = Product.countHits(query, properties: ["Product.name","Product.model.name","Product.model.code"])
+		results.add(count)
+		for (i in 0..<result.size()) {
+			println	"${result[i].toString()} "
+				
+		}
+		System.out.println(""+params.order)
+		System.out.println("results====="+results[1].toString())
+		withFormat {
+			html {
+				[productInstanceList: results[0], productInstanceTotal: results[1],test:params.test,order:params.order,sort:params.sort]
+			}
+			xml {
+				render Product.list( params ) as XML
+			}
+			json {
+				response.status = 200
+				if(params.callback) {
+					render "${params.callback}(${Product.list( params ) as JSON})"
+				}
+				else {
+					render "${Product.list( params ) as JSON}"
+				}
+			}
+		}
+	}
 	def listFront = {
 		params.max = Math.min(params.max ? params.int('max') : 8, 100)
 		
@@ -513,7 +556,7 @@ class ProductDetailController {
      def update = {
 		 
         def productInstance = Product.get(params.id)
-        productInstance.updatedBy = springSecurityService.principal.username
+       
 		
 		println("params===="+params)
 	
@@ -912,6 +955,7 @@ class ProductDetailController {
 						}
 					}
 					def imageTool = new ImageTool()
+					productInstance.updatedBy = springSecurityService.principal.username
 					if(!productInstance.hasErrors() && productInstance.save(flush: true)) {
 						if(!downloadedfileFront.empty){
 							String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${productInstance.code}.jpg"
@@ -924,6 +968,7 @@ class ProductDetailController {
 							imageTool.writeResult(imagepath, "JPEG")
 							imageTool.square()
 							productInstance.imagePathFront=imagepath
+							
 							
 						}
 						if(!downloadedfileSide.empty){
@@ -939,10 +984,13 @@ class ProductDetailController {
 							productInstance.imagePathSide=imagepath
 						}
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])}"
+						
+						
+						
+						redirect(action: "show", id:productInstance.id)
 						searchableService.startMirroring()
 						searchableService.index()
 						Product.index(productInstance)
-						redirect(action: "show", id:productInstance.id)
 					}
 					else {
 						searchableService.startMirroring()
