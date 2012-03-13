@@ -280,12 +280,15 @@ class ProductDetailController {
 				flash.message = e.getMessage()
 			}
 			materialList = new ArrayList()
-			if(params.materialName.class == String){
-				materialList.add(params.materialName)
-			}
-			else{
-				for(def i = 0; i<params.materialName.size(); i++){
-					materialList.add(params.materialName[i])
+			if(params.materialName!=null)
+			{
+				if(params.materialName.class == String ){
+					materialList.add(params.materialName)
+				}
+				else{
+					for(def i = 0; i<params.materialName.size(); i++){
+						materialList.add(params.materialName[i])
+					}
 				}
 			}
 			
@@ -338,7 +341,8 @@ class ProductDetailController {
 					redirect(action: "show", id: product.id)
 				}
 				else { 
-					
+					searchableService.startMirroring()
+					searchableService.index()
 					render(view: "create", model: [productInstance: product, materialList :materialList ])
 				}
 			}
@@ -941,6 +945,8 @@ class ProductDetailController {
 						redirect(action: "show", id:productInstance.id)
 					}
 					else {
+						searchableService.startMirroring()
+						searchableService.index()
 						render(view: "edit", model:[productInstance:productInstance])
 					}
 				}
