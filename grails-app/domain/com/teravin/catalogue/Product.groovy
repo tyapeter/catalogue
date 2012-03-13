@@ -50,7 +50,7 @@ class Product {
 		except = ["version", "createdBy",  "updatedBy"]
 		
 		model component:true
-		
+		materialMain component:true
 	}
 	static hasMany = [productDetails:ProductDetail]
 

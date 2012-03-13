@@ -4,7 +4,7 @@ import java.util.Date;
 
 class MaterialMain {
 	static auditable = true
-
+	static searchable = true
     String name
 	String code
     String description = ""

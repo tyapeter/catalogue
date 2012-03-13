@@ -80,6 +80,8 @@
 		<div id="searchwrapper">
 				<g:form url="[action:'listSearch',controller:'product']" >
 					<g:textField type="text" name="test" id="test" class="searchbox" />
+					<g:hiddenField type="text" name="sort" id="sort" value="Product.code" />
+					<g:hiddenField type="text" name="order" id="order" value="asc" />
 					<input type="image" src="${resource(dir:'images',file:'searchBox/searchBoxBlankImage.jpg')}" class="searchbox_submit" value="" />
 				</g:form>
 			</div>

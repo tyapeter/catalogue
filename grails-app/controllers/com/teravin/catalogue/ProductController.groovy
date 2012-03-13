@@ -25,8 +25,8 @@ class ProductController {
 		params.properties = ["Product.name","Product.model.name","Product.model.code"]
 
 		if (!params.sort && !params.order) {
-			params.sort = "Product.id"
-			params.order = "asc"
+			params.sort = params.sort
+			params.order = params.order
 		}
 
 		def query = "+Product.deleteFlag:N "
@@ -44,7 +44,25 @@ class ProductController {
 			println	"${result[i].toString()} "
 				
 		}
+		System.out.println(""+params.order)
 		System.out.println("results====="+results[1].toString())
+		withFormat {
+			html {
+				[productInstanceList: results[0], productInstanceTotal: results[1],test:params.test,order:params.order,sort:params.sort]
+			}
+			xml {
+				render Product.list( params ) as XML
+			}
+			json {
+				response.status = 200
+				if(params.callback) {
+					render "${params.callback}(${Product.list( params ) as JSON})"
+				}
+				else {
+					render "${Product.list( params ) as JSON}"
+				}
+			}
+		}
     }
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
