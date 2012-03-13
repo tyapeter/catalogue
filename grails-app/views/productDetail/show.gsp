@@ -349,7 +349,12 @@
                             <td valign="top" class="value"><g:formatDate date="${productInstance?.lastUpdated}" /></td>
                             
                         </tr>
-                    
+                     <tr class="prop">
+                            <td valign="top" class="name"><g:message code="product.description.label" default="Description" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: productInstance, field: "description")}</td>
+                            
+                        </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.deleteFlag.label" default="Delete Flag" /></td>
                             

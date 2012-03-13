@@ -1008,11 +1008,19 @@
                                    
                                 </td>
                             </tr>
-                       
+                       		 <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="description"><g:message code="productInstance.description.label" default="Description" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: productInstance, field: 'description', 'errors')}">
+                                    <g:textArea name="description" cols="40" rows="5" value="${productInstance?.description}" />
+                                </td>
+                            </tr>
                          
                         </tbody>
                     </table>
                 </div>
+                
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
