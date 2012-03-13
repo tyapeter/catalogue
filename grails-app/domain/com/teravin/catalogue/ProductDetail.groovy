@@ -2,8 +2,7 @@ package com.teravin.catalogue
 
 import com.teravin.catalogue.Product
 import com.teravin.catalogue.Material
-import com.teravin.catalogue.Accesories
-import com.teravin.catalogue.Miscellaneous
+
 
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.FactoryUtils;
@@ -30,14 +29,10 @@ class ProductDetail {
     static transients = [ '_deleted' ]
 	
 //	
-//	static searchable = true
-////		only ["unit","price","idxx"]
-////		product component=true
-////		root false 
-//	}
+	static searchable = true
 	
     static constraints = {
-//		product()
+
 		unit(nullable:true)
 		price(nullable:true)
 		idxx()

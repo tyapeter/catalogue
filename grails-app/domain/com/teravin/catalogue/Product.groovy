@@ -3,16 +3,20 @@ package com.teravin.catalogue
 import java.util.Set;
 
 import com.teravin.catalogue.maintenance.Color
+import com.teravin.catalogue.ProductDetail
+import com.teravin.catalogue.Model
 
 class Product {
 
     static auditable = true
+	
+
 	String name
 	String code
 	String materials
 	Model model
 	MaterialMain materialMain
-//	ProductType productType
+
 	Color color
     Double width
 	Double length
@@ -37,12 +41,17 @@ class Product {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-	List productDetails
+	List productDetails = new ArrayList()
 	String imagePathFront
 	String imagePathSide
 	String description = ""
 	
-
+	static searchable = {
+		except = ["version", "createdBy",  "updatedBy"]
+		
+		model component:true
+		
+	}
 	static hasMany = [productDetails:ProductDetail]
 
     static constraints = {
@@ -71,7 +80,7 @@ class Product {
         baseCost()
         idx(maxSize:3)
         createdBy(blank:false,maxSize:50)
-        dateCreated(blank:false)
+        dateCreated()
         updatedBy(maxSize:50)
         lastUpdated()
 		description(maxSize:500)
@@ -83,12 +92,7 @@ class Product {
     String toString() {
      "code :${code},name :${name},idxx: ${idxx},width : ${width},length: ${length},height: ${height},seatWidth : ${seatWidth},seatLength: ${seatLength},seatHeight: ${seatHeight}"
     }
-//	static searchable = {
-//		except = ["version", "createdBy", "dateCreated", "updatedBy", "lastUpdated"]
-//		model component:true
-////		only =["productDetails"]
-//	}
-
+	
 
 
 	

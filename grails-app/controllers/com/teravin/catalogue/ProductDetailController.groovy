@@ -15,7 +15,7 @@ class ProductDetailController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
     
     def springSecurityService
-
+	def searchableService
     def index = {
         redirect(action: "list", params: params)
     }
@@ -201,6 +201,8 @@ class ProductDetailController {
 							product.code = materialMain.code + "" + modelCategoryCode +""+ modelCode[0] + "" + materialCode + "" + colorCode.code
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
+//						productDetailInstance.dateCreated = new Date()
+//						productDetailInstance.lastUpdated = new Date()
 						
 						product.addToProductDetails(productDetailInstance)
 						
@@ -230,6 +232,9 @@ class ProductDetailController {
 							productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
+//						productDetailInstance.dateCreated = new Date()
+//						productDetailInstance.lastUpdated = new Date()
+						
 						product.addToProductDetails(productDetailInstance)
 						
 					}
@@ -257,7 +262,8 @@ class ProductDetailController {
 							productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-
+//						productDetailInstance.dateCreated = new Date()
+//						productDetailInstance.lastUpdated = new Date()
 						product.addToProductDetails(productDetailInstance)
 						
 					}
@@ -288,12 +294,17 @@ class ProductDetailController {
 			html {
 				
 				
-				
+				searchableService.stopMirroring()
 				def imageTool = new ImageTool()
 				
 				System.out.println("front====="+params.imageFront)
 				System.out.println("side===== "+downloadedfileSide)
-				if (!error && product.save(flush:true  )) {
+//				product.dateCreated = new Date()
+//				product.lastUpdated = new Date()
+//				
+//				product.productDetails.merge(flush:true) 
+				if (!error && product.save( flush:true)) {
+					
 					if(!downloadedfileFront.empty){
 						String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${product.code}.jpg"
 						new File(imagepath).deleteDir()
@@ -320,6 +331,10 @@ class ProductDetailController {
 						product.imagePathSide=imagepath
 					}
 					flash.message = "${message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), product.id])}"
+					
+					searchableService.startMirroring()
+					searchableService.index()
+					Product.index(product)
 					redirect(action: "show", id: product.id)
 				}
 				else { 
