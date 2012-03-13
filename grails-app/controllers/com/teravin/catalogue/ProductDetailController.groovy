@@ -561,6 +561,7 @@ class ProductDetailController {
 							return
 						}
 					}
+					searchableService.stopMirroring()
 					productInstance.properties = params
 					if(params.materialName!=null)
 					{
@@ -613,29 +614,33 @@ class ProductDetailController {
 									
 								}
 							}else{
-								def productDetailId
-								if( params.productDetailInstance.class.isArray()){
+								def productDetailId = params.productDetailInstance
+								if(params.productDetailInstance==null)
+									productDetailId=null
 									
-									if(i > params.productDetailInstance.size()-1)
-										productDetailId =null
-										else
-										productDetailId = params.productDetailInstance[i]
-							//		System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
-							//		System.out.println("array")
-								}else{
-									productDetailId = params.productDetailInstance
-									if(sizes<3 && i == 1)
-										productDetailId=null
-								//	System.out.println("notArray")
+								if(productDetailId!=null){
+									if( params.productDetailInstance.class.isArray()){
+										
+										if(i > params.productDetailInstance.size()-1)
+											productDetailId =null
+											else
+											productDetailId = params.productDetailInstance[i]
+								//		System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+								//		System.out.println("array")
+									}else{
+										productDetailId = params.productDetailInstance
+										if(sizes>1 && i>0 )
+											productDetailId=null
+									//	System.out.println("notArray")
+									}
 								}
-
 									if(productDetailId!=null)
 									{	System.out.println("productId===="+productDetailId)
 										
 											def productDetail = ProductDetail.get(productDetailId)
-//											System.out.println("2and i="+i)
-//											System.out.println("params.materialID[i]="+params.materialID[i])
-//											System.out.println("productDetailInstance="+productDetail)
+											System.out.println("2and i="+i)
+											System.out.println("params.materialID[i]="+params.materialID[i])
+											System.out.println("productDetailInstance="+productDetail)
 										productDetail.material = Material.get(params.materialID[i])
 										productDetail.price = Double.parseDouble(params.materialPrice[i])
 										productDetail.idxx = Double.parseDouble(params.materialIndex[i])
@@ -655,22 +660,24 @@ class ProductDetailController {
 											
 										}
 									}else{
-										productDetailInstance=new ProductDetail()
-										productDetailInstance.material= Material.get(params.materialID[i].toString())
-										productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
-										productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
-										productDetailInstance.unit = Double.parseDouble(params.materialUnit[i])
-										productDetailInstance.updatedBy = springSecurityService.principal.username
-										productDetailInstance.createdBy = springSecurityService.principal.username
-										
-										productDetailInstance.isPriceOverwrite="N"
-										
-										if(!flag)
-										{
-											materialCode = productDetailInstance.material.code
-											flag=true
+										if(params.materialDelete[i]=="false" && params.materialID[i].toString()!="" && params.materialID[i]!=null){
+											productDetailInstance=new ProductDetail()
+											productDetailInstance.material= Material.get(params.materialID[i].toString())
+											productDetailInstance.price = Double.parseDouble(params.materialPrice[i])
+											productDetailInstance.idxx = Double.parseDouble(params.materialIndex[i])
+											productDetailInstance.unit = Double.parseDouble(params.materialUnit[i])
+											productDetailInstance.updatedBy = springSecurityService.principal.username
+											productDetailInstance.createdBy = springSecurityService.principal.username
+											
+											productDetailInstance.isPriceOverwrite="N"
+											
+											if(!flag)
+											{
+												materialCode = productDetailInstance.material.code
+												flag=true
+											}
+											productInstance.addToProductDetails(productDetailInstance)
 										}
-										productInstance.addToProductDetails(productDetailInstance)
 										
 									}
 									
@@ -734,22 +741,26 @@ class ProductDetailController {
 									
 								}
 							}else{
-								def productDetailId
-								if( params.productDetailAccesoriesInstance.class.isArray()){
-									
-									if(i > params.productDetailAccesoriesInstance.size()-1)
-										productDetailId =null
-										else
-										productDetailId = params.productDetailAccesoriesInstance[i]
-									System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
-									System.out.println("array")
-								}else{
-									productDetailId = params.productDetailAccesoriesInstance
-									if(sizes<3 && i == 1)
+								def productDetailId = params.productDetailAccesoriesInstance
+									if(params.productDetailAccesoriesInstance==null)
 										productDetailId=null
-									System.out.println("notArray")
-								}
-
+									if(productDetailId!=null){
+										if( params.productDetailAccesoriesInstance.class.isArray()){
+											
+											if(i > params.productDetailAccesoriesInstance.size()-1)
+												productDetailId =null
+												else
+												productDetailId = params.productDetailAccesoriesInstance[i]
+											System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+											System.out.println("array")
+										}else{
+											productDetailId = params.productDetailAccesoriesInstance
+											
+											if(sizes>1 && i>0 )
+												productDetailId=null
+											System.out.println("notArray")
+										}
+									}
 									if(productDetailId!=null)
 									{	System.out.println("productId===="+productDetailId)
 										
@@ -772,17 +783,18 @@ class ProductDetailController {
 											
 										}
 									}else{
-										productDetailInstance=new ProductDetail()
-										productDetailInstance.material= Material.get(params.accesoriesID[i].toString())
-										productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
-										productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
-										productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
-										productDetailInstance.updatedBy = springSecurityService.principal.username
-										productDetailInstance.createdBy = springSecurityService.principal.username
-									
-										productDetailInstance.isPriceOverwrite="N"
-										productInstance.addToProductDetails(productDetailInstance)
-									
+											if(params.accesoriesDelete[i]=="false" && params.accesoriesID[i].toString()!="" && params.accesoriesID[i]!=null){
+												productDetailInstance=new ProductDetail()
+												productDetailInstance.material= Material.get(params.accesoriesID[i].toString())
+												productDetailInstance.price = Double.parseDouble(params.accesoriesPrice[i])
+												productDetailInstance.idxx = Double.parseDouble(params.accesoriesIndex[i])
+												productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
+												productDetailInstance.updatedBy = springSecurityService.principal.username
+												productDetailInstance.createdBy = springSecurityService.principal.username
+											
+												productDetailInstance.isPriceOverwrite="N"
+												productInstance.addToProductDetails(productDetailInstance)
+											}
 									}
 									
 								}
@@ -832,22 +844,26 @@ class ProductDetailController {
 									
 								}
 							}else{
-								def productDetailId
-								if( params.productDetailMiscellaneousInstance.class.isArray()){
-									
-									if(i > params.productDetailMiscellaneousInstance.size()-1)
-										productDetailId =null
-										else
-										productDetailId = params.productDetailMiscellaneousInstance[i]
-//									System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
-//									System.out.println("array")
-								}else{
-									productDetailId = params.productDetailMiscellaneousInstance
-									if(sizes<3 && i == 1)
+									def productDetailId = params.productDetailMiscellaneousInstance
+									if(params.productDetailMiscellaneousInstance==null)
 										productDetailId=null
-//									System.out.println("notArray")
-								}
-
+										
+									if(productDetailId!=null){
+										if( params.productDetailMiscellaneousInstance.class.isArray()){
+											
+											if(i > params.productDetailMiscellaneousInstance.size()-1)
+												productDetailId =null
+												else
+												productDetailId = params.productDetailMiscellaneousInstance[i]
+											System.out.println(" params.productDetailInstance.class.isArray()="+ params.productDetailInstance.size())
+											System.out.println("array")
+										}else{
+											productDetailId = params.productDetailMiscellaneousInstance
+											if(sizes>1 && i>0 )
+												productDetailId=null
+											System.out.println("notArray")
+										}
+									}
 									if(productDetailId!=null)
 									{	System.out.println("productId===="+productDetailId)
 										
@@ -870,17 +886,18 @@ class ProductDetailController {
 											
 										}
 									}else{
-										productDetailInstance=new ProductDetail()
-										productDetailInstance.material= Material.get(params.miscellaneousID[i].toString())
-										productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
-										productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
-										productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
-										productDetailInstance.updatedBy = springSecurityService.principal.username
-										productDetailInstance.createdBy = springSecurityService.principal.username
-									
-										productDetailInstance.isPriceOverwrite="N"
-										productInstance.addToProductDetails(productDetailInstance)
-									
+										if(params.miscellaneousDelete[i]=="false" && params.miscellaneousID[i].toString()!="" && params.miscellaneousID[i]!=null){
+											productDetailInstance=new ProductDetail()
+											productDetailInstance.material= Material.get(params.miscellaneousID[i].toString())
+											productDetailInstance.price = Double.parseDouble(params.miscellaneousPrice[i])
+											productDetailInstance.idxx = Double.parseDouble(params.miscellaneousIndex[i])
+											productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
+											productDetailInstance.updatedBy = springSecurityService.principal.username
+											productDetailInstance.createdBy = springSecurityService.principal.username
+										
+											productDetailInstance.isPriceOverwrite="N"
+											productInstance.addToProductDetails(productDetailInstance)
+										}
 									}
 									
 								}
@@ -918,6 +935,9 @@ class ProductDetailController {
 							productInstance.imagePathSide=imagepath
 						}
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])}"
+						searchableService.startMirroring()
+						searchableService.index()
+						Product.index(productInstance)
 						redirect(action: "show", id:productInstance.id)
 					}
 					else {
