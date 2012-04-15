@@ -57,7 +57,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${modelCategoryInstance?.description}" />
                                 </td>
                             </tr>
-                        
+                       %{-- 
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idx"><g:message code="modelCategory.idx.label" default="Idx" /></label>
@@ -93,7 +93,7 @@
                                     <g:textField name="deleteFlag" value="${modelCategoryInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
+                       --}% 
                         </tbody>
                     </table>
                 </div>

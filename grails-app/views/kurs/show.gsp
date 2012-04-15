@@ -35,21 +35,26 @@
                             <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "name")}</td>
                             
                         </tr>
-                    
+                    	 <tr class="prop">
+                            <td valign="top" class="name"><g:message code="kurs.kursValue.label" default="Kurs Value" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "kursValue")}</td>
+                            
+                        </tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="kurs.description.label" default="Description" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "description")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="kurs.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "idx")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="kurs.createdBy.label" default="Created By" /></td>
                             
@@ -77,20 +82,15 @@
                             <td valign="top" class="value"><g:formatDate date="${kursInstance?.lastUpdated}" /></td>
                             
                         </tr>
-                    
+                      %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="kurs.deleteFlag.label" default="Delete Flag" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "deleteFlag")}</td>
                             
                         </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="kurs.kursValue.label" default="Kurs Value" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: kursInstance, field: "kursValue")}</td>
-                            
-                        </tr>
+                    --}%
+                       
                     
                     </tbody>
                 </table>

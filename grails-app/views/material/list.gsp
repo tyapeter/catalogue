@@ -28,9 +28,11 @@
                         
                             <g:sortableColumn property="code" title="${message(code: 'material.code.label', default: 'Code')}" />
                         
+                            <g:sortableColumn property="price" title="${message(code: 'material.price.label', default: 'Price')}" />
+                            
                             <g:sortableColumn property="description" title="${message(code: 'material.description.label', default: 'Description')}" />
                         
-                            <g:sortableColumn property="idx" title="${message(code: 'material.idx.label', default: 'Idx')}" />
+                          %{--  <g:sortableColumn property="idx" title="${message(code: 'material.idx.label', default: 'Idx')}" /> --}%
                         
                             <g:sortableColumn property="idxx" title="${message(code: 'material.idxx.label', default: 'Idxx')}" />
                         
@@ -45,10 +47,12 @@
                             <td>${fieldValue(bean: materialInstance, field: "name")}</td>
                         
                             <td>${fieldValue(bean: materialInstance, field: "code")}</td>
+                            
+                             <td>${fieldValue(bean: materialInstance, field: "price")}</td>
                         
                             <td>${fieldValue(bean: materialInstance, field: "description")}</td>
                         
-                            <td>${fieldValue(bean: materialInstance, field: "idx")}</td>
+                           %{-- <td>${fieldValue(bean: materialInstance, field: "idx")}</td> --}%
                         
                             <td>${fieldValue(bean: materialInstance, field: "idxx")}</td>
                         

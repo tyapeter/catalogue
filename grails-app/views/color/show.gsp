@@ -49,7 +49,7 @@
                             <td valign="top" class="value">${fieldValue(bean: colorInstance, field: "description")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="color.idx.label" default="Idx" /></td>
                             
@@ -91,7 +91,7 @@
                             <td valign="top" class="value">${fieldValue(bean: colorInstance, field: "deleteFlag")}</td>
                             
                         </tr>
-                    
+                    --}%
                     </tbody>
                 </table>
             </div>

@@ -1017,7 +1017,7 @@
                                    
                                 </td>
                             </tr>
-                            
+                            %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="createdBy"><g:message code="product.createdBy.label" default="Created By" /></label>
@@ -1035,6 +1035,7 @@
                                     <g:textField name="updatedBy" maxlength="50" value="${productInstance?.updatedBy}" />
                                 </td>
                             </tr>
+                            --}%
                         	<tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="description"><g:message code="product.description.label" default="Description" /></label>
@@ -1043,6 +1044,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${productInstance?.description}" />
                                 </td>
                             </tr>
+                            %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="deleteFlag"><g:message code="product.deleteFlag.label" default="Delete Flag" /></label>
@@ -1051,7 +1053,7 @@
                                     <g:textField name="deleteFlag" value="${productInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
+                        	--}%
                         </tbody>
                     </table>
                 </div>

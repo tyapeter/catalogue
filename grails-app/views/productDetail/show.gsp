@@ -315,13 +315,14 @@
             				</table>
             			</div>
                        	</td></tr>
+                       	%{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "idx")}</td>
                             
                         </tr>
-                    
+                    	--}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.createdBy.label" default="Created By" /></td>
                             
@@ -355,13 +356,15 @@
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "description")}</td>
                             
                         </tr>
+                        
+                        %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="product.deleteFlag.label" default="Delete Flag" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: productInstance, field: "deleteFlag")}</td>
                             
                         </tr>
-                    
+                    --}%
                       
                     
                     </tbody>

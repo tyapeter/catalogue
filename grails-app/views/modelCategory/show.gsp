@@ -49,14 +49,14 @@
                             <td valign="top" class="value">${fieldValue(bean: modelCategoryInstance, field: "description")}</td>
                             
                         </tr>
-                    
+                   %{-- 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="modelCategory.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelCategoryInstance, field: "idx")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="modelCategory.createdBy.label" default="Created By" /></td>
                             
@@ -84,14 +84,14 @@
                             <td valign="top" class="value"><g:formatDate date="${modelCategoryInstance?.lastUpdated}" /></td>
                             
                         </tr>
-                    
+                   %{-- 
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="modelCategory.deleteFlag.label" default="Delete Flag" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelCategoryInstance, field: "deleteFlag")}</td>
                             
                         </tr>
-                    
+                    --}%
                     </tbody>
                 </table>
             </div>

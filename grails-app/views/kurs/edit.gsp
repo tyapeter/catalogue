@@ -39,7 +39,14 @@
                                     <g:textField name="name" maxlength="100" value="${kursInstance?.name}" />
                                 </td>
                             </tr>
-                        
+                        	<tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="kursValue"><g:message code="kurs.kursValue.label" default="Kurs Value" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: kursInstance, field: 'kursValue', 'errors')}">
+                                    <g:textField name="kursValue" value="${fieldValue(bean: kursInstance, field: 'kursValue')}" />
+                                </td>
+                            </tr>
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="description"><g:message code="kurs.description.label" default="Description" /></label>
@@ -48,7 +55,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${kursInstance?.description}" />
                                 </td>
                             </tr>
-                        
+                         %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idx"><g:message code="kurs.idx.label" default="Idx" /></label>
@@ -84,15 +91,8 @@
                                     <g:textField name="deleteFlag" value="${kursInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="kursValue"><g:message code="kurs.kursValue.label" default="Kurs Value" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: kursInstance, field: 'kursValue', 'errors')}">
-                                    <g:textField name="kursValue" value="${fieldValue(bean: kursInstance, field: 'kursValue')}" />
-                                </td>
-                            </tr>
+                        --}%
+                            
                         
                         </tbody>
                     </table>

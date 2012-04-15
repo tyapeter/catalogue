@@ -49,14 +49,14 @@
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "description")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "idx")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.idxx.label" default="Idxx" /></td>
                             
@@ -98,14 +98,14 @@
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "deleteFlag")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.isAccesories.label" default="Is Accesories" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "isAccesories")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.materialCategory.label" default="Material Category" /></td>
                             
@@ -119,14 +119,14 @@
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "price")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.type.label" default="Type" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: materialInstance, field: "type")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="material.unitType.label" default="Unit Type" /></td>
                             

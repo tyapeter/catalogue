@@ -30,7 +30,7 @@
                         
                             <g:sortableColumn property="description" title="${message(code: 'color.description.label', default: 'Description')}" />
                         
-                            <g:sortableColumn property="idx" title="${message(code: 'color.idx.label', default: 'Idx')}" />
+                          %{--  <g:sortableColumn property="idx" title="${message(code: 'color.idx.label', default: 'Idx')}" /> --}%
                         
                             <g:sortableColumn property="createdBy" title="${message(code: 'color.createdBy.label', default: 'Created By')}" />
                         
@@ -47,9 +47,9 @@
                             <td>${fieldValue(bean: colorInstance, field: "code")}</td>
                         
                             <td>${fieldValue(bean: colorInstance, field: "description")}</td>
-                        
+                        %{--
                             <td>${fieldValue(bean: colorInstance, field: "idx")}</td>
-                        
+                        --}%
                             <td>${fieldValue(bean: colorInstance, field: "createdBy")}</td>
                         
                         </tr>

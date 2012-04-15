@@ -131,7 +131,7 @@
                                     <g:textField name="cbm" value="${fieldValue(bean: modelInstance, field: 'cbm')}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idx"><g:message code="model.idx.label" default="Idx" /></label>
@@ -167,7 +167,7 @@
                                     <g:textField name="deleteFlag" value="${modelInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
+                        --}%
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="imageFile"><g:message code="model.imageFile.label" default="Image File" /></label>

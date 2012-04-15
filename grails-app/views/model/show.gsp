@@ -126,14 +126,14 @@
                             <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "cbm")}</td>
                             
                         </tr>
-                    
+                    %{--
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="model.idx.label" default="Idx" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: modelInstance, field: "idx")}</td>
                             
                         </tr>
-                    
+                    --}%
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="model.createdBy.label" default="Created By" /></td>
                             

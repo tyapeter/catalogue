@@ -54,7 +54,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${colorInstance?.description}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="idx"><g:message code="color.idx.label" default="Idx" /></label>
@@ -63,7 +63,7 @@
                                     <g:textField name="idx" value="${fieldValue(bean: colorInstance, field: 'idx')}" />
                                 </td>
                             </tr>
-                        
+                       
                             <tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="createdBy"><g:message code="color.createdBy.label" default="Created By" /></label>
@@ -90,7 +90,7 @@
                                     <g:textField name="deleteFlag" value="${colorInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
+                         --}%
                         </tbody>
                     </table>
                 </div>

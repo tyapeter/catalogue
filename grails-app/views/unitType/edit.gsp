@@ -48,7 +48,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${unitTypeInstance?.description}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idx"><g:message code="unitType.idx.label" default="Idx" /></label>
@@ -57,7 +57,7 @@
                                     <g:textField name="idx" value="${fieldValue(bean: unitTypeInstance, field: 'idx')}" />
                                 </td>
                             </tr>
-                        
+                       
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="createdBy"><g:message code="unitType.createdBy.label" default="Created By" /></label>
@@ -84,7 +84,7 @@
                                     <g:textField name="deleteFlag" value="${unitTypeInstance?.deleteFlag}" />
                                 </td>
                             </tr>
-                        
+                         --}%
                         </tbody>
                     </table>
                 </div>

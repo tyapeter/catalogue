@@ -57,7 +57,7 @@
                                     <g:textArea name="description" cols="40" rows="5" value="${materialInstance?.description}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idx"><g:message code="material.idx.label" default="Idx" /></label>
@@ -66,7 +66,7 @@
                                     <g:textField name="idx" value="${fieldValue(bean: materialInstance, field: 'idx')}" />
                                 </td>
                             </tr>
-                        
+                        --}%
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="idxx"><g:message code="material.idxx.label" default="Idxx" /></label>
@@ -75,7 +75,7 @@
                                     <g:textField name="idxx" value="${fieldValue(bean: materialInstance, field: 'idxx')}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="createdBy"><g:message code="material.createdBy.label" default="Created By" /></label>
@@ -111,7 +111,7 @@
                                     <g:textField name="isAccesories" value="${materialInstance?.isAccesories}" />
                                 </td>
                             </tr>
-                        
+                        --}%
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="materialCategory"><g:message code="material.materialCategory.label" default="Material Category" /></label>
@@ -129,7 +129,7 @@
                                     <g:textField name="price" value="${fieldValue(bean: materialInstance, field: 'price')}" />
                                 </td>
                             </tr>
-                        
+                        %{--
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="type"><g:message code="material.type.label" default="Type" /></label>
@@ -138,7 +138,7 @@
                                     <g:textField name="type" value="${materialInstance?.type}" />
                                 </td>
                             </tr>
-                        
+                        --}%
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="unitType"><g:message code="material.unitType.label" default="Unit Type" /></label>
