@@ -43,12 +43,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialType.idx.label" default="Idx" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialTypeInstance, field: "idx")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialType.idx.label" default="Idx" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialTypeInstance, field: "idx")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="materialType.createdBy.label" default="Created By" /></td>
@@ -78,12 +78,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialType.deleteFlag.label" default="Delete Flag" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialTypeInstance, field: "deleteFlag")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialType.deleteFlag.label" default="Delete Flag" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialTypeInstance, field: "deleteFlag")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                     </tbody>
                 </table>

@@ -43,12 +43,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialCategory.idx.label" default="Idx" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialCategoryInstance, field: "idx")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialCategory.idx.label" default="Idx" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialCategoryInstance, field: "idx")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="materialCategory.createdBy.label" default="Created By" /></td>
@@ -78,12 +78,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialCategory.deleteFlag.label" default="Delete Flag" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialCategoryInstance, field: "deleteFlag")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialCategory.deleteFlag.label" default="Delete Flag" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialCategoryInstance, field: "deleteFlag")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="materialCategory.materialType.label" default="Material Type" /></td>

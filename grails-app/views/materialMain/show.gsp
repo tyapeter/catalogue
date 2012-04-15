@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main2" />
-        <g:set var="entityName" value="${message(code: 'materialMain.label', default: 'MaterialMain')}" />
+        <g:set var="entityName" value="${message(code: 'materialMain.label', default: 'Material Main')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -50,12 +50,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialMain.idx.label" default="Idx" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialMainInstance, field: "idx")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialMain.idx.label" default="Idx" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialMainInstance, field: "idx")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="materialMain.createdBy.label" default="Created By" /></td>
@@ -85,12 +85,12 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="materialMain.deleteFlag.label" default="Delete Flag" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: materialMainInstance, field: "deleteFlag")}</td>
-                            
-                        </tr>
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="materialMain.deleteFlag.label" default="Delete Flag" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: materialMainInstance, field: "deleteFlag")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
                     
                     </tbody>
                 </table>

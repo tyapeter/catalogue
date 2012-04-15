@@ -11,6 +11,7 @@ class UrlMappings {
 		}
 
 		"/"(view:"/index")
+		"/backOffice"(view:"/index2")
 		"500"(view:'/error')
 	}
 }

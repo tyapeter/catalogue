@@ -28,7 +28,7 @@
                         
                             <g:sortableColumn property="description" title="${message(code: 'materialCategory.description.label', default: 'Description')}" />
                         
-                            <g:sortableColumn property="idx" title="${message(code: 'materialCategory.idx.label', default: 'Idx')}" />
+                            %{--<g:sortableColumn property="idx" title="${message(code: 'materialCategory.idx.label', default: 'Idx')}" />--}%
                         
                             <g:sortableColumn property="createdBy" title="${message(code: 'materialCategory.createdBy.label', default: 'Created By')}" />
                         
@@ -46,7 +46,7 @@
                         
                             <td>${fieldValue(bean: materialCategoryInstance, field: "description")}</td>
                         
-                            <td>${fieldValue(bean: materialCategoryInstance, field: "idx")}</td>
+                            %{--<td>${fieldValue(bean: materialCategoryInstance, field: "idx")}</td>--}%
                         
                             <td>${fieldValue(bean: materialCategoryInstance, field: "createdBy")}</td>
                         

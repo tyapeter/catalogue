@@ -58,41 +58,41 @@
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="idx"><g:message code="materialMain.idx.label" default="Idx" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'idx', 'errors')}">
-                                    <g:textField name="idx" value="${fieldValue(bean: materialMainInstance, field: 'idx')}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="createdBy"><g:message code="materialMain.createdBy.label" default="Created By" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'createdBy', 'errors')}">
-                                    <g:textField name="createdBy" maxlength="50" value="${materialMainInstance?.createdBy}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="updatedBy"><g:message code="materialMain.updatedBy.label" default="Updated By" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'updatedBy', 'errors')}">
-                                    <g:textField name="updatedBy" maxlength="50" value="${materialMainInstance?.updatedBy}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="deleteFlag"><g:message code="materialMain.deleteFlag.label" default="Delete Flag" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'deleteFlag', 'errors')}">
-                                    <g:textField name="deleteFlag" value="${materialMainInstance?.deleteFlag}" />
-                                </td>
-                            </tr>
+                            %{--<tr class="prop">--}%
+                                %{--<td valign="top" class="name">--}%
+                                  %{--<label for="idx"><g:message code="materialMain.idx.label" default="Idx" /></label>--}%
+                                %{--</td>--}%
+                                %{--<td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'idx', 'errors')}">--}%
+                                    %{--<g:textField name="idx" value="${fieldValue(bean: materialMainInstance, field: 'idx')}" />--}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
+                        %{----}%
+                            %{--<tr class="prop">--}%
+                                %{--<td valign="top" class="name">--}%
+                                  %{--<label for="createdBy"><g:message code="materialMain.createdBy.label" default="Created By" /></label>--}%
+                                %{--</td>--}%
+                                %{--<td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'createdBy', 'errors')}">--}%
+                                    %{--<g:textField name="createdBy" maxlength="50" value="${materialMainInstance?.createdBy}" />--}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
+                        %{----}%
+                            %{--<tr class="prop">--}%
+                                %{--<td valign="top" class="name">--}%
+                                  %{--<label for="updatedBy"><g:message code="materialMain.updatedBy.label" default="Updated By" /></label>--}%
+                                %{--</td>--}%
+                                %{--<td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'updatedBy', 'errors')}">--}%
+                                    %{--<g:textField name="updatedBy" maxlength="50" value="${materialMainInstance?.updatedBy}" />--}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
+                        %{----}%
+                            %{--<tr class="prop">--}%
+                                %{--<td valign="top" class="name">--}%
+                                  %{--<label for="deleteFlag"><g:message code="materialMain.deleteFlag.label" default="Delete Flag" /></label>--}%
+                                %{--</td>--}%
+                                %{--<td valign="top" class="value ${hasErrors(bean: materialMainInstance, field: 'deleteFlag', 'errors')}">--}%
+                                    %{--<g:textField name="deleteFlag" value="${materialMainInstance?.deleteFlag}" />--}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
                         
                         </tbody>
                     </table>
