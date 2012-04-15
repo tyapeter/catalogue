@@ -165,12 +165,12 @@
 	              
 	 					
 					},
-					  error: function(){
+					  /*error: function(){
 					  //alert(location.host);
 					  	window.location=  document.write(location.host+"/catalogue/login/auth");
 					 
 					  }
-
+					*/
 				});
            	});	
          	$('.signIn')
