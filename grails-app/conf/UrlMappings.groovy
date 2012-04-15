@@ -9,7 +9,7 @@ class UrlMappings {
 				// apply constraints here
 			}
 		}
-
+		"/undefined"(view: "/index")
 		"/"(view:"/index")
 		"/backOffice"(view:"/index2")
 		"500"(view:'/error')
