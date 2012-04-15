@@ -26,6 +26,7 @@
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="${message(code:'spinner.alt',default:'Loading...')}" />
         </div>
+       
 		<div id="menu">
 			<ul class="menu">
 				<li><g:link action="list" controller="productDetail"><span>PRODUCT         </span></g:link>	</li>

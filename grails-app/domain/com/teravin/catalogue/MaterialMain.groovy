@@ -14,7 +14,7 @@ class MaterialMain {
     Date dateCreated
     String updatedBy = ""
     Date lastUpdated
-
+	
     static constraints = {
         name(blank:false,maxSize:100)
 		code(blank:false,maxSize:100)

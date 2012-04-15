@@ -33,7 +33,7 @@ class Material {
         updatedBy(maxSize:50)
         lastUpdated()
     }
-
+	
     String toString() {
       "$name code:$code"
     }

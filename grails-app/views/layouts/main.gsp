@@ -60,9 +60,18 @@
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="${message(code:'spinner.alt',default:'Loading...')}" />
         </div>
 	<div class='signIn '>
-		<a href="#"><span>Sign Up</span></a> &nbsp;&nbsp;<a href="#" id="signIn" ><span>Sign In</span></a>
+		<sec:ifLoggedIn>
+        	Hi <sec:loggedInUserInfo field="username"/>
+       	 </sec:ifLoggedIn>
+		<a href="#"><span> &nbsp;&nbsp;&nbsp;&nbsp; Sign Up</span></a> &nbsp;&nbsp;
+		<sec:ifLoggedIn>
+        	<a href="${createLink(url: [controller: 'logout'])}"" class="mHdr">Logout</a></div>
+       </sec:ifLoggedIn>
+		<sec:ifNotLoggedIn>
+			<a href="${createLink(url: [controller: 'login'])}"" class="mHdr">Sign In</a></div>
+		</sec:ifNotLoggedIn>
 	</div>
-	
+		
 	<div id="menu">
 		<ul class="menu">
 			<li><a href="/catalogue/" class="parent"><span>Home</span></a>
@@ -79,10 +88,10 @@
 	</div>
 		<div id="searchwrapper">
 				<g:form url="[action:'listSearch',controller:'product']" >
-					<g:textField type="text" name="test" id="test" class="searchbox" />
+					<g:textField type="text" placeholder="Search products/models here" name="test" id="test" class="searchbox" />
 					<g:hiddenField type="text" name="sort" id="sort" value="Product.code" />
 					<g:hiddenField type="text" name="order" id="order" value="asc" />
-					<input type="image" src="${resource(dir:'images',file:'searchBox/searchBoxBlankImage.jpg')}" class="searchbox_submit" value="" />
+					<input  type="image" src="${resource(dir:'images',file:'searchBox/searchBoxBlankImage.jpg')}" class="searchbox_submit" value="" />
 				</g:form>
 			</div>
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>

@@ -54,7 +54,8 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div  class="information"> Search word : ${test}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp Sort by <g:link controller="product" action="listSearch" params="${[test:test,order:'desc',sort:'Product.lastUpdated']}" >Newest Collection </g:link> | <g:link controller="product" action="listSearch" params="${[test:test,order:'asc',sort:'Product.code']}" >Article No</g:link></div>
-            
+        
+        
             <div class="container">
 			
 				<div class="content">
@@ -69,6 +70,7 @@
 								</div>
 								<div class="es-carousel">
 									<ul>
+									  
 									 <g:each in="${productInstanceList}" status="i" var="productInstance">
 								
 										<li><a href="#"  >		
@@ -82,6 +84,7 @@
 	                        			</li>
 																			
 									</g:each>
+									  
 									</ul>
 									
 								</div>
@@ -174,7 +177,9 @@
                 <g:paginate total="${productInstanceTotal}"   />
             </div>
         </div>
-        
+       
+     
+         
          <script type="text/javascript">
          	var imageId;
          
@@ -228,6 +233,7 @@
     		
     		
     		</script>
+    		
     </body>
     	
     

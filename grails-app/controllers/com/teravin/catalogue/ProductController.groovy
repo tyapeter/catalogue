@@ -52,7 +52,7 @@ class ProductController {
 	
 	def listSearch = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		params.properties = ["Product.name","Product.model.name","Product.model.code"]
+		params.properties = ["Product.name","Product.code","Product.model.name","Product.model.code","Product.materialMain.name"]
 
 		if (!params.sort && !params.order) {
 			params.sort = params.sort
@@ -68,7 +68,7 @@ class ProductController {
 		def result = Product.search(query, params).results
 		results.add(result)
 			
-		def count = Product.countHits(query, properties: ["Product.name","Product.model.name","Product.model.code"])
+		def count = Product.countHits(query, properties: ["Product.name","Product.code","Product.model.name","Product.model.code","Product.materialMain.name"])
 		results.add(count)
 		for (i in 0..<result.size()) {
 			println	"${result[i].toString()} "
