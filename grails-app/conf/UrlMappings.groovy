@@ -10,7 +10,6 @@ class UrlMappings {
 			}
 		}
 		"/undefined"(view: "/index")
-		"/materialMain/getMaterialMenu"(view: "/index")
 		"/"(view:"/index")
 		"/backOffice"(view:"/index2")
 		"500"(view:'/error')

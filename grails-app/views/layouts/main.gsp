@@ -97,15 +97,7 @@
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>
         <g:layoutBody />
 	<div id="copyright">Copyright &copy; 2011 <a href="http://apycom.com/">Apycom jQuery Menus</a></div>
-	<div id='signInLogin'>
-		<div class='inner'>
-			<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-			</g:if>
-			<div class='fheader'>Sign In</div>
-			
-		</div>
-	</div>
+	
 	<script type="text/javascript">
 			var markSign = 0;
 			$('#signInLogin').hide();
