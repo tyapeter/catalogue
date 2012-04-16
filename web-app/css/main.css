@@ -333,6 +333,7 @@ top:30px;
 left:700px;
 -moz-left:700px;
 -moz-z-index:1000;
+-webkit-z-index:1000;
 z-index:1000;
 
 }
@@ -345,6 +346,7 @@ transition: all 0.7s ease 0s;
 padding: 6px 6px 4px;
 cursor:pointer;
 -moz-z-index:1000;
+-webkit-z-index:1000;
 z-index:1000;
 top:-30px;
 
