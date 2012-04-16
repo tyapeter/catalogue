@@ -333,6 +333,7 @@ top:30px;
 left:700px;
 -moz-left:700px;
 -moz-z-index:1000;
+-webkit-z-index:1000;
 z-index:1000;
 
 }
@@ -343,9 +344,11 @@ text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 transition: all 0.7s ease 0s;
 -moz-transition: all 0.7s ease 0s; 
 padding: 6px 6px 4px;
+z-index:1000;
 cursor:pointer;
 -moz-z-index:1000;
-z-index:1000;
+-webkit-transition-property: margin, box-shadow, z-index;
+
 top:-30px;
 
 position:absolute; 
