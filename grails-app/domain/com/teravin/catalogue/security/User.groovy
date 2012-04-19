@@ -1,5 +1,7 @@
 package com.teravin.catalogue.security
 
+import java.util.List;
+
 class User {
 
 	String username
@@ -9,6 +11,10 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
 
+//    List roles = new ArrayList()
+//
+//	hasMany = [ roles:Role]
+//	static belongsTo = Role
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false

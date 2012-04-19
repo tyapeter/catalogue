@@ -3,6 +3,7 @@ package com.teravin.catalogue.security
 import grails.converters.XML
 import grails.converters.JSON
 
+
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -17,6 +18,7 @@ class UserController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		params.sort = "id"
 		params.order = "asc"
+
         withFormat {
 			html {
 				[userInstanceList: User.list(params), userInstanceTotal: User.count()]
@@ -45,10 +47,41 @@ class UserController {
     def save = {
         def userInstance = new User(params)
 //        userInstance.createdBy = springSecurityService.principal.username
+        def md5pass = springSecurityService.encodePassword('password')
+        userInstance.password = md5pass
+        def UserRole = new UserRole()
+        def roleInstance;
+        def sizes
+
+
         withFormat {
 			html {
                 if (userInstance.save(flush: true)) {
                     flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
+                    if(params.roleName!=null)
+                    {
+
+                        if(params.roleName.class == String)
+                            sizes=1
+                        else
+                            sizes = params.roleName.size()
+
+                        for(def i = 0; i<sizes; i++){
+
+
+
+                            if(sizes==1){
+                                roleInstance =Role.findByAuthority(params.roleName)
+
+                            }else{
+                                roleInstance = Role.findByAuthority(params.roleName[i])
+
+                            }
+
+                            UserRole.create(userInstance,roleInstance ,true)
+
+                        }
+                    }
                     redirect(action: "show", id: userInstance.id)
                 }
                 else {
@@ -84,11 +117,19 @@ class UserController {
       withFormat {
         html {
             def userInstance = User.get( params.id )
+            def userRoleList = UserRole.findAllByUser(userInstance)
+            def roleList = new ArrayList()
+            def role
+            for (int i=0; i< userRoleList.size();i++){
+               role = Role.findById(userRoleList[i].role.id)
+               roleList.add(role)
+            }
+
             if(!userInstance) {
                 flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
                 redirect(action: "list")
             }
-            else { return [ userInstance : userInstance ] }
+            else { return [ userInstance : userInstance, roleList : roleList ] }
           }
           xml {
               if(params.id && User.get(params.id)) {
@@ -127,18 +168,61 @@ class UserController {
 
     def edit = {
         def userInstance = User.get(params.id)
+        def userRoleList = UserRole.findAllByUser(userInstance)
+        def roleList = new ArrayList()
+        def role
+        for (int i=0; i< userRoleList.size();i++){
+            role = Role.findById(userRoleList[i].role.id)
+            roleList.add(role)
+        }
         if (!userInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
         }
         else {
-            return [userInstance: userInstance]
+            return [userInstance: userInstance,roleList: roleList]
         }
     }
 
     def update = {
         def userInstance = User.get(params.id)
-        userInstance.updatedBy = springSecurityService.principal.username
+//        userInstance.updatedBy = springSecurityService.principal.username
+        UserRole.executeUpdate("delete from UserRole ur where ur.user.id=?",[userInstance.id])
+        System.out.println("testdekete")
+        def sizes
+        def roleInstance
+        if(params.roleName!=null)
+        {
+
+            if(params.roleName.class == String)
+                sizes=1
+            else
+                sizes = params.roleName.size()
+
+            for(def i = 0; i<sizes; i++){
+
+
+
+                if(sizes==1){
+                     System.out.println("params.roleDelete"+params.roleDelete)
+
+                    if(params.roleDelete=="false"){
+                        roleInstance =Role.findByAuthority(params.roleName)
+                        UserRole.create(userInstance,roleInstance ,true)
+                    }
+                }else{
+                    System.out.println("params.roleDelete[i]"+params.roleDelete[i])
+                    if(params.roleDelete[i]=="false"){
+                        roleInstance = Role.findByAuthority(params.roleName[i])
+                        UserRole.create(userInstance,roleInstance ,true)
+                    }
+                }
+
+            }
+
+
+
+        }
         withFormat {
 			html {
 				if(userInstance) {

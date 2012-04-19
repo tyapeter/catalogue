@@ -148,26 +148,12 @@
 	                  $("#materialsMenu").append(options); 
 	              
 	 					
-					},
-					  /*error: function(){
-					  //alert(location.host);
-					  	window.location=  document.write(location.host+"/catalogue/login/auth");
-					 
-					  }
-					*/
+					}
 				});
            	});	
          	$('.signIn')
          		.click(function() {
-               	/*if(markSign==0){
-               		$('#signInLogin').show();
-               		markSign=1;
-               	}else
-               	if(markSign==1){
-               		$('#signInLogin').hide();
-               		markSign=0;
-               	}*/
-				window.location=  document.write(location.host+"/catalogue/login/auth");
+             		window.location=  document.write(location.host+"/catalogue/login/auth");
            	});	
 		</script>
     </body>

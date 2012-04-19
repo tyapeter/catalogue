@@ -49,31 +49,72 @@
 			<div class='login_message'>${flash.message}</div>
 			</g:if>
 			<div class='fheader'>Please Login..</div>
-			<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
-				<p>
-					<label for='username'>Login ID</label>
-					<input type='text' class='text_' name='j_username' id='username' />
-				</p>
-				<p>
-					<label for='password'>Password</label>
-					<input type='password' class='text_' name='j_password' id='password' />
-				</p>
-				<p>
-					<label for='remember_me'>Remember me</label>
-					<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
-					<g:if test='${hasCookie}'>checked='checked'</g:if> />
-				</p>
-				<p>
-					<input type='submit' value='Login' />
-				</p>
-			</form>
+                <table>
+			%{--<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>--}%
+				%{--<p>--}%
+                <tr>
+                    <td>
+					<label for='username'>Login ID</label></td>
+					<td><input type='text' class='text_' name='j_username' id='username' /></td>
+                </tr>
+				%{--</p>--}%
+				%{--<p>--}%
+            <tr>
+                <td><label for='password'>Password</label></td>
+				<td><input type='password' class='text_' name='j_password' id='password' /></td>
+             </tr>
+				%{--</p>--}%
+				%{--<p>--}%
+                    <tr>
+					    <td><label for='remember_me'>Remember me</label></td>
+					    <td><input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me'
+					<g:if test='${hasCookie}'>checked='checked'</g:if> /></td>
+                    </tr>
+				%{--</p>--}%
+				%{--<p>--}%
+                    <tr>
+					    <td colspan=2><input type='submit' id="loginButton" value='Login' /></td>
+                    </tr>
+				%{--</p>--}%
+			%{--</form>--}%
+                </table>
 		</div>
 	</div>
 <script type='text/javascript'>
 <!--
-(function(){
-	document.forms['loginForm'].elements['j_username'].focus();
-})();
+//(function(){
+//	document.forms['loginForm'].elements['j_username'].focus();
+//})();
 // -->
+    $('#loginButton').click(function(){
+        %{--var url = "${createLink(url: [controller: 'login', action: 'auth'])}";--}%
+        var url= '${request.contextPath}/j_spring_security_check'
+        $.ajax({
+            url: url,
+            type: "post",
+            dataType: "json",
+            callback: "myCallback",
+            cache:false,
+            data: {  j_username: $('#username').val(), j_password:  $('#password').val()},
+            success: function( data ) {
+//                1. ROLE_USER,2 ROLE_CUSTOMER,3 ROLE_STAFF,4 ROLE_MANAGEMENT, 5 ROLE_ADMIN
+                if(data.success == true ){
+
+                   if(data.role=='ROLE_MANAGEMENT' || data.role=='ROLE_ADMIN')
+                        window.location="/catalogue/backOffice";
+                    else
+                        window.location="/catalogue/";
+
+                }
+//                response( $.map( data, function( item ) {
+////                    materialId=item.id;
+//                    return {
+//
+//                    }
+//                }));
+            }
+        });
+
+    });
 </script>
 </body>

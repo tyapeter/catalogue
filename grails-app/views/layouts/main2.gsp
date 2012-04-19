@@ -21,11 +21,62 @@
 	</style> 
     </head>
     <body>
- 
+    <style type="text/css">
+    div#menu {
+        top:65px;
+        width:700px;
+        margin: 0 auto;
+    }
+    div#copyright { display: none; }
+
+    #signInLogin .inner {
+        width:250px;
+        text-align:left;
+        padding:2px;
+        border-top:1px solid gray;
+        border-bottom:1px solid gray;
+        background-color:#fff;
+    }
+    #signInLogin .inner .fheader {
+        padding:2px;margin:2px 0px 2px 0;color:#2e3741;font-size:12px;font-weight:bold;
+    }
+    #signInLogin .inner .cssform p {
+        clear: left;
+        margin: 0;
+        padding: 1px 0 1px 0;
+        padding-left: 105px;
+        border-top: 1px solid gray;
+        margin-bottom: 5px;
+        height: 1%;
+    }
+    #signInLogin .inner .cssform input[type='text'] {
+        width: 120px;
+    }
+    #signInLogin .inner .cssform label {
+        font-weight: bold;
+        float: left;
+        margin-left: -105px;
+        width: 100px;
+    }
+    #signInLogin .inner .login_message {color:red;}
+    #signInLogin .inner .text_ {width:120px;}
+    #signInLogin .inner .chk {height:12px;}
+    </style>
         <div id="spinner" class="spinner" style="display:none;">
             <img src="${resource(dir:'images',file:'spinner.gif')}" alt="${message(code:'spinner.alt',default:'Loading...')}" />
         </div>
-       
+        <div class='signIn '>
+        <sec:ifLoggedIn>
+            Hi <sec:loggedInUserInfo field="username"/>
+        </sec:ifLoggedIn>
+
+        <sec:ifLoggedIn>
+            <a href="${createLink(url: [controller: 'logout'])}"" class="mHdr">Logout</a></div>
+        </sec:ifLoggedIn>
+        <sec:ifNotLoggedIn>
+            <a href="${createLink(url: [controller: 'login'])}"" class="mHdr">Sign In</a></div>
+        </sec:ifNotLoggedIn>
+        </div>
 		<div id="menu">
 			<ul class="menu">
 				<li><g:link action="list" controller="productDetail"><span>PRODUCT         </span></g:link>	</li>

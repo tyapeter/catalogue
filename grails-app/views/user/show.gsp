@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
+            <span class="menuButton"><a class="home"  href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
@@ -36,13 +36,31 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>
-                            
-                        </tr>
-                    
+                        %{--<tr class="prop">--}%
+                            %{--<td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>--}%
+                            %{----}%
+                            %{--<td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>--}%
+                            %{----}%
+                        %{--</tr>--}%
+                    <tr><td colspan=2>
+                        <div>
+                            <table class="roleTbl">
+                                <thead>
+                                <th valign="top" class="name" >
+                                    <label for="product"><g:message code="user.role.authority.label" default="Role" /></label>
+                                </th>
+
+                                </thead>
+                                <tbody>
+                                <g:each in="${roleList}" status="i" var="roleInstance">
+                                    <tr >
+                                        <td>${roleInstance.authority}</td>
+                                    </tr>
+                                </g:each>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td></tr>
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="user.accountExpired.label" default="Account Expired" /></td>
                             

@@ -45,6 +45,8 @@
             font-size:1.2em;
         }
         #pageBody {
+        	top:130px;
+        	position:absolute;
             margin-left:280px;
             margin-right:20px;
         }

@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder as SCH
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import com.teravin.catalogue.security.User
+import com.teravin.catalogue.security.Role
+import org.apache.commons.collections.iterators.ArrayListIterator
 
 class LoginController {
 
@@ -115,20 +117,14 @@ class LoginController {
 	def ajaxSuccess = {
         def user = User.findByUsername(springSecurityService.authentication.name);
         def role = user.getAuthorities();
-        try {
-            if (params.callback) {
-                render"${params.callback} (${[success: true, role: role.name, username: springSecurityService.authentication.name] as JSON})"
-            }
-            else {
-                render([success: true, role: role.name, username: springSecurityService.authentication.name] as JSON)
-            }
-        }
-        //catch unknown RuntimeException, redirect to Error 500 server Error page
-        catch (RuntimeException e) {
-            logger.error(e.getMessage(), e)
-            redirect(controller: "error", action: "serverError")
-            return
-        }
+        def roleList = new ArrayList()
+        System.out.println("role==="+role)
+
+////    1. ROLE_USER,2 ROLE_CUSTOMER,3 ROLE_STAFF,4 ROLE_MANAGEMENT, 5 ROLE_ADMIN     //always hardcode????
+
+
+              render([success: true, role: role.authority, username: springSecurityService.authentication.name] as JSON)
+
 	}
 
 	/**
