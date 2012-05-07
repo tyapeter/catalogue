@@ -174,12 +174,11 @@ class ProductDetailController {
     }
 
     def save = {
-		println(params)
 		def productDetailInstance
 		def product = new Product(params)
 		product.createdBy= springSecurityService.principal.username
 		if(params.name=="")
-			product.name=null
+			product.name=""
 		def error = false
 		def materialList
 		def accesoriesList
@@ -244,10 +243,7 @@ class ProductDetailController {
 							product.code = materialMain.code + "" + modelCategoryCode +""+ modelCode[0] + "" + materialCode + "" + colorCode.code
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-//						productDetailInstance.dateCreated = new Date()
-//						productDetailInstance.lastUpdated = new Date()
-						
-						product.addToProductDetails(productDetailInstance)
+                        product.addToProductDetails(productDetailInstance)
 						
 					}
 				}
@@ -275,9 +271,6 @@ class ProductDetailController {
 							productDetailInstance.unit = Double.parseDouble(params.accesoriesUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-//						productDetailInstance.dateCreated = new Date()
-//						productDetailInstance.lastUpdated = new Date()
-						
 						product.addToProductDetails(productDetailInstance)
 						
 					}
@@ -305,9 +298,7 @@ class ProductDetailController {
 							productDetailInstance.unit = Double.parseDouble(params.miscellaneousUnit[i])
 						}
 						productDetailInstance.createdBy = springSecurityService.principal.username
-//						productDetailInstance.dateCreated = new Date()
-//						productDetailInstance.lastUpdated = new Date()
-						product.addToProductDetails(productDetailInstance)
+        				product.addToProductDetails(productDetailInstance)
 						
 					}
 				}
@@ -343,12 +334,7 @@ class ProductDetailController {
 				searchableService.stopMirroring()
 				def imageTool = new ImageTool()
 				
-				System.out.println("front====="+params.imageFront)
-				System.out.println("side===== "+downloadedfileSide)
-//				product.dateCreated = new Date()
-//				product.lastUpdated = new Date()
-//				
-//				product.productDetails.merge(flush:true) 
+
 				if (!error && product.save( flush:true)) {
 					
 					if(!downloadedfileFront.empty){
@@ -386,7 +372,7 @@ class ProductDetailController {
 				else { 
 					searchableService.startMirroring()
 					searchableService.index()
-					render(view: "create", model: [productInstance: product, materialList :materialList ])
+              		render(view: "create", model: [productInstance: product, materialList :materialList ])
 				}
 			}
 			xml {
@@ -557,10 +543,6 @@ class ProductDetailController {
 		 
         def productInstance = Product.get(params.id)
        
-		
-		println("params===="+params)
-	
-	
 		def productDetailInstance
 	
 		def error = false

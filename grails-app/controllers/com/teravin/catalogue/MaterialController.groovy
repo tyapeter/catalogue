@@ -34,19 +34,7 @@ class MaterialController {
 		if( params.name ) {
 			def m = Material.createCriteria()
 			def materials = Material.executeQuery("from Material m where m.name like '%"+params.name+"%' and   m.deleteFlag='N' and m.materialCategory.materialType.name='material' or m.materialCategory.materialType.name='accesories'")
-		
-			
-			/*	def materials = m.list{
-				like('name','%'+params.name+'%')
-				materialCategory{
-					materialType{
-						eq('name',params.materialTypeName)
-						or
-						eq('name',params.materialTypeName2)
-						
-					}
-				}
-			}*/
+
 
 			
 			render materials as JSON

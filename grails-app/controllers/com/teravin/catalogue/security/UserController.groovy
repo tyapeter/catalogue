@@ -300,7 +300,7 @@ class UserController {
 
     def delete = {
         def userInstance = User.get(params.id)
-		userInstance.updatedBy = springSecurityService.principal.username
+//		userInstance.updatedBy = springSecurityService.principal.username
         withFormat {
 			html {
 				if(userInstance) {
@@ -371,7 +371,9 @@ class UserController {
 			html {
 				if(userInstance) {
 					try {
-						userInstance.delete(flush: true)
+						UserRole.removeAll(userInstance)
+                        userInstance.delete(flush: true)
+
 						flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
 						redirect(action: "list")
 					}

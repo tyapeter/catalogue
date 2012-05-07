@@ -16,7 +16,6 @@ class Product {
 	String materials
 	Model model
 	MaterialMain materialMain
-
 	Color color
     Double width
 	Double length
@@ -48,7 +47,6 @@ class Product {
 	
 	static searchable = {
 		except = ["version", "createdBy"]
-		
 		model component:true
 		materialMain component:true
 	}
@@ -59,7 +57,6 @@ class Product {
 		materials(nullable:true)
 		name()
         model()
-//        productType(nullable:true)
 		color(nullable:true)
 		width()
 		length()

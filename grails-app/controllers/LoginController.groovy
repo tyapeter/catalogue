@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.teravin.catalogue.security.User
 import com.teravin.catalogue.security.Role
 import org.apache.commons.collections.iterators.ArrayListIterator
+import javax.servlet.http.HttpServletResponse
 
 class LoginController {
 
@@ -28,6 +29,8 @@ class LoginController {
 	/**
 	 * Default action; redirects to 'defaultTargetUrl' if logged in, /login/auth otherwise.
 	 */
+
+
 	def index = {
 		if (springSecurityService.isLoggedIn()) {
 			redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
@@ -98,32 +101,32 @@ class LoginController {
 				msg = SpringSecurityUtils.securityConfig.errors.login.locked
 			}
 			else {
-				msg = SpringSecurityUtils.securityConfig.errors.login.fail
+//				msg = SpringSecurityUtils.securityConfig.errors.login.fail
+                msg = "invalid username or password"
 			}
 		}
 
 		if (springSecurityService.isAjax(request)) {
-			render([error: msg] as JSON)
+            render "{error: '${msg}'}"
 		}
 		else {
 			flash.message = msg
 			redirect action: auth, params: params
 		}
 	}
-
-	/**
+    def authAjax = {
+        response.sendError HttpServletResponse.SC_UNAUTHORIZED
+    }
+    /**
 	 * The Ajax success redirect url.
 	 */
 	def ajaxSuccess = {
+//        nocache(response)
         def user = User.findByUsername(springSecurityService.authentication.name);
         def role = user.getAuthorities();
         def roleList = new ArrayList()
-        System.out.println("role==="+role)
 
-////    1. ROLE_USER,2 ROLE_CUSTOMER,3 ROLE_STAFF,4 ROLE_MANAGEMENT, 5 ROLE_ADMIN     //always hardcode????
-
-
-              render([success: true, role: role.authority, username: springSecurityService.authentication.name] as JSON)
+        render([success: true, role: role.authority, username: springSecurityService.authentication.name] as JSON)
 
 	}
 
@@ -133,4 +136,12 @@ class LoginController {
 	def ajaxDenied = {
 		render([error: 'access denied'] as JSON)
 	}
+
+    private void nocache(response) {
+        response.setHeader('Cache-Control', 'no-cache') // HTTP 1.1
+        response.addDateHeader('Expires', 0)
+        response.setDateHeader('max-age', 0)
+        response.setIntHeader ('Expires', -1) //prevents caching at the proxy server
+        response.addHeader('cache-Control', 'private') //IE5.x only
+    }
 }

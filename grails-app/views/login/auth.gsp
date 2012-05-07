@@ -43,11 +43,20 @@
 </head>
 
 <body>
+    <div id="login-dialog-error" title="Login Error Message">
+        <div >
+            <table id="errorMessage" align=center >
+
+            </table>
+
+        </div>
+    </div>
+
 	<div id='login'>
 		<div class='inner'>
-			<g:if test='${flash.message}'>
-			<div class='login_message'>${flash.message}</div>
-			</g:if>
+			%{--<g:if test='${flash.message}'>--}%
+			<div class='login_message' id='login_message' >${flash.message}</div>
+			%{--</g:if>--}%
 			<div class='fheader'>Please Login..</div>
                 <table>
 			%{--<form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>--}%
@@ -79,41 +88,92 @@
 			%{--</form>--}%
                 </table>
 		</div>
-	</div>
+   	</div>
 <script type='text/javascript'>
 <!--
 //(function(){
 //	document.forms['loginForm'].elements['j_username'].focus();
 //})();
 // -->
-    $('#loginButton').click(function(){
-        %{--var url = "${createLink(url: [controller: 'login', action: 'auth'])}";--}%
-        var url= '${request.contextPath}/j_spring_security_check'
-        $.ajax({
-            url: url,
-            type: "post",
-            dataType: "json",
-            callback: "myCallback",
-            cache:false,
-            data: {  j_username: $('#username').val(), j_password:  $('#password').val()},
-            success: function( data ) {
-//                1. ROLE_USER,2 ROLE_CUSTOMER,3 ROLE_STAFF,4 ROLE_MANAGEMENT, 5 ROLE_ADMIN
-                if(data.success == true ){
 
-                   if(data.role=='ROLE_MANAGEMENT' || data.role=='ROLE_ADMIN')
-                        window.location="/catalogue/backOffice";
-                    else
-                        window.location="/catalogue/";
 
-                }
-//                response( $.map( data, function( item ) {
-////                    materialId=item.id;
-//                    return {
-//
-//                    }
-//                }));
+    $(document).ready(function(){
+        function processLogin() {
+            var options = "";
+            var urlAjaxSuccess = "${createLinkTo(dir:'')}" + "/j_spring_security_check?spring-security-redirect=/login/ajaxSuccess";
+
+            var user_id_val = $("#username").val();
+            var password_val = $("#password").val();
+
+            if (user_id_val == "" || user_id_val == null) {
+
+                options +='<tr><td align=center>Username is mandatory</td></tr>';
+                $("#errorMessage").html(options);
+                $("#login-dialog-error").dialog("open");
+
+                return;
+            } else if (password_val == "" || password_val == null) {
+
+                options +='<tr><td align=center>Password is mandatory</td></tr>';
+                $("#errorMessage").html(options);
+                $("#login-dialog-error").dialog("open");
+
+                return;
+            }else{
+                $.ajax({
+                    url: urlAjaxSuccess,
+                    type: "post",
+                    dataType: "json",
+                    callback: "callback",
+                    cache:false,
+                    data: {  j_username: $('#username').val(), j_password:  $('#password').val()},
+                    success: function( data ) {
+                        //                1. ROLE_USER,2 ROLE_CUSTOMER,3 ROLE_STAFF,4 ROLE_MANAGEMENT, 5 ROLE_ADMIN
+                        if(data.success == true ){
+
+                            if(data.role=='ROLE_MANAGEMENT' || data.role=='ROLE_ADMIN')
+                                window.location="/catalogue/backOffice";
+                            else
+                                window.location="/catalogue/";
+
+                        }
+
+                    },
+                    error : function(data){
+
+                        options +='<tr><td align=center>invalid username or password</td></tr>';
+                        $("#errorMessage").html(options);
+                        $("#login-dialog-error").dialog("open");
+                        $("#username").val('');
+                        $("#password").val('');
+
+                        return;
+                    }
+
+                });
             }
-        });
+
+        }
+        $( "#login-dialog-error" ).dialog({
+                autoOpen: false,
+                height: 150,
+                modal: true,
+                buttons: {
+                    "Ok": function() {
+                        $( this ).dialog( "close" );
+                            if ($("#username").val() == "" || $("#username").val() == null) {
+                                $("#username").focus();
+                            } else if ($("#password").val() == "" || $("#password").val() == null) {
+                                $("#password").focus();
+                            }
+
+                    }
+                }
+            });
+
+        $('#loginButton').click(function(){
+            processLogin();
+       });
 
     });
 </script>
