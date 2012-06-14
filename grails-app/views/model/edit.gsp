@@ -111,8 +111,33 @@
                                     <g:textField name="seatLength" value="${fieldValue(bean: modelInstance, field: 'seatLength')}" />
                                 </td>
                             </tr>
-                            
-                          
+
+                        <tr class="prop">
+                            <td valign="top" class="name">
+                                <label for="width"><g:message code="model.width.label" default="packing Width" /></label>
+                            </td>
+                            <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingWidth', 'errors')}">
+                                <g:textField name="seatWidth" value="${fieldValue(bean: modelInstance, field: 'packingWidth')}" />
+                            </td>
+                        </tr>
+
+                        <tr class="prop">
+                            <td valign="top" class="name">
+                                <label for="height"><g:message code="model.height.label" default="packing Height" /></label>
+                            </td>
+                            <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingHeight', 'errors')}">
+                                <g:textField name="seatHeight" value="${fieldValue(bean: modelInstance, field: 'packingHeight')}" />
+                            </td>
+                        </tr>
+
+                        <tr class="prop">
+                            <td valign="top" class="name">
+                                <label for="length"><g:message code="model.length.label" default="packing Length" /></label>
+                            </td>
+                            <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'packingtLength', 'errors')}">
+                                <g:textField name="seatLength" value="${fieldValue(bean: modelInstance, field: 'packingLength')}" />
+                            </td>
+                        </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
@@ -169,6 +194,10 @@
                             </tr>
                         --}%
                             <tr class="prop">
+                                <td valign="top" class="name"><g:message code="model.imageFile.label" default="Image File" /></td>
+                                <td><img src="${createLinkTo(dir:'images', file: modelInstance.id+'.jpg' )}" /> </td>
+                            </tr>
+                            <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="imageFile"><g:message code="model.imageFile.label" default="Image File" /></label>
                                 </td>
@@ -182,7 +211,7 @@
                                   <label for="modelCategory"><g:message code="model.modelCategory.label" default="Model Category" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'modelCategory', 'errors')}">
-                                    <g:select name="modelCategory.id" from="${com.teravin.catalogue.ModelCategory.list()}" optionKey="id" value="${modelInstance?.modelCategory?.id}"  />
+                                    <g:select name="modelCategory.id" from="${com.teravin.catalogue.ModelCategory.findAllWhere(deleteFlag: 'N')}" optionKey="id" value="${modelInstance?.modelCategory?.id}"  />
                                 </td>
                             </tr>
                         

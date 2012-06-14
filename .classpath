@@ -115,6 +115,8 @@
 	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="lib" path="lib"/>
 	<classpathentry kind="lib" path="lib"/>
+	<classpathentry kind="lib" path="lib"/>
+	<classpathentry kind="lib" path="lib"/>
 	<classpathentry exported="true" kind="lib" path="lib"/>
 	<classpathentry kind="output" path="web-app/WEB-INF/classes"/>
 </classpath>

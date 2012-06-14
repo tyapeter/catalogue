@@ -202,7 +202,7 @@
                                     <label for="modelCategory"><g:message code="model.modelCategory.label" default="Model Category" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: modelInstance, field: 'modelCategory', 'errors')}">
-                                    <g:select name="modelCategory.id" from="${com.teravin.catalogue.ModelCategory.list()}" optionKey="id" value="${modelInstance?.modelCategory?.id}"  />
+                                    <g:select name="modelCategory.id" from="${com.teravin.catalogue.ModelCategory.findAllWhere(deleteFlag: 'N')}" optionKey="id" value="${modelInstance?.modelCategory?.id}"  />
                                 </td>
                             </tr>
                         

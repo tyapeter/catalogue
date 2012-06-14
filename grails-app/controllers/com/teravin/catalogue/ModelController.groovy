@@ -179,20 +179,37 @@ class ModelController {
     def update = {
         def modelInstance = Model.get(params.id)
         modelInstance.updatedBy = springSecurityService.principal.username
+        def downloadedfile = request.getFile('imageFile')
+        if(downloadedfile.empty){
+            downloadedfile=false
+        }
+        def imageTool = new ImageTool()
         withFormat {
 			html {
 				if(modelInstance) {
 					if(params.version) {
 						def version = params.version.toLong()
 						if(modelInstance.version > version) {
-							
+
 							modelInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'model.label', default: 'Model')] as Object[], "Another user has updated this Model while you were editing")
 							render(view:"edit", model:[modelInstance:modelInstance])
 							return
 						}
 					}
 					modelInstance.properties = params
-					if(!modelInstance.hasErrors() && modelInstance.save(flush: true)) {
+					if(!modelInstance.hasErrors() && modelInstance.save(flush: true )) {
+                        if(downloadedfile)
+                        {
+                            String imagepath = grailsAttributes.getApplicationContext().getResource("images/").getFile().toString() + File.separatorChar + "${modelInstance.id}.jpg"
+                            downloadedfile.transferTo(new File(imagepath))
+                            println ""+imagepath
+                            imageTool.load(imagepath)
+                            imageTool.thumbnail(360)
+
+                            imageTool.writeResult(imagepath, "JPEG")
+                            imageTool.square()
+                            modelInstance.imagePath=imagepath
+                        }
 						flash.message = "${message(code: 'default.updated.message', args: [message(code: 'model.label', default: 'Model'), modelInstance.id])}"
 						redirect(action: "show", id:modelInstance.id)
 					}
@@ -252,7 +269,7 @@ class ModelController {
 				}
 			}
 		}
-    }
+    } as java.lang.Object
 
     def delete = {
         def modelInstance = Model.get(params.id)

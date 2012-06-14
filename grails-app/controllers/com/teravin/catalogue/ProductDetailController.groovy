@@ -318,6 +318,7 @@ class ProductDetailController {
 			{
 				if(params.materialName.class == String ){
 					materialList.add(params.materialName)
+                    materialList.add(params.materialUnit)
 				}
 				else{
 					for(def i = 0; i<params.materialName.size(); i++){

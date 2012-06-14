@@ -28,6 +28,8 @@ class Material {
         description(maxSize:500)
         idx(maxSize:3)
 		idxx(maxSize:10)
+        isAccesories(blank:true,maxSize:100)
+        type(blank:true,maxSize:100)
         createdBy(blank:false,maxSize:50)
         dateCreated(blank:false)
         updatedBy(maxSize:50)

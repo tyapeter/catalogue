@@ -13,6 +13,14 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/index2.gsp')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
+        <div id="dialog-add-product-error" title="Add Product Error Message">
+            <div >
+                <table id="errorMessage" align=center >
+
+                </table>
+
+            </div>
+        </div>
         <div class="body">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
@@ -479,8 +487,8 @@
 		                    					<td width="50%">
 		                                    		<g:textField class="materialName" name="materialName" id="materialName${i}" value="${material}" />
 		                                		</td>
-		                                		<td>
-		                                		
+		                                		<td width="10%">
+                                                    <g:textField class="materialUnit" name="materialUnit" id="materialUnit${i}" value="${material}" />
 		                                		</td>
 		                                		<td width="10%">
 		                                		<g:if test="${i == 0}">		                                		
